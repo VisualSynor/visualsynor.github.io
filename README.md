@@ -1,1 +1,0 @@
-# VisualSynor.github.io
