@@ -12,24 +12,26 @@
   --transition-speed: 0.3s; /* Velocidad de las transiciones */
 }
 
+html {
+    box-sizing: border-box; /* Asegura que el box-sizing se herede correctamente */
+}
+
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  margin: 0; /* Unificado */
+  padding: 0; /* Unificado */
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Unificado */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #323b49; /* Un fondo ligeramente gris para el cuerpo */
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding-top: 56.09px;
+  /* padding-top: 56.09px;  Asegúrate de que este padding coincida con la altura final de tu navbar-mobile */
 }
 
 /* --- Estilos de la Barra de Navegación Móvil --- */
-.navbar-mobile {
+.navbar-mobile {  
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.8rem 1.5rem; /*Tamaño de la barra navbar*/
+  padding: 0.5rem 1.5rem; /*Tamaño de la barra navbar*/
   color: var(--text-color-light);
   margin-bottom: 0;
   position: fixed; /* Fija la barra en la parte superior */
@@ -86,18 +88,26 @@ body {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+.lang-button i {
+    transition: transform 0.3s ease;
+}
+
+/* Cuando el selector está activo, gira la flecha */
+.language-selector.active .lang-button i {
+    transform: rotate(180deg);
+}
+
 .lang-dropdown-content {
     display: none;
     position: absolute;
-    background-color: var(--background-dark);
-    min-width: 60px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+    background-color: #333;
+    min-width: 80px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     border-radius: 5px;
-    top: 100%; /* Posiciona debajo del botón */
-    left: 0;
-    margin-top: 5px; /* Pequeño espacio */
     overflow: hidden;
+    margin-top: 5px;
+    right: 0; /* Alinea el dropdown a la derecha del botón */
 }
 
 .lang-dropdown-content a {
@@ -112,715 +122,405 @@ body {
     background-color: var(--primary-color);
 }
 
-/* Mostrar el dropdown cuando el botón de idioma está activo */
+/* Muestra el contenido desplegable cuando el padre tiene la clase 'active' */
 .language-selector.active .lang-dropdown-content {
     display: block;
 }
 
-/* En la media query para desktop (min-width: 768px), ajusta el navbar-actions */
-@media (min-width: 768px) {
-  .navbar-actions {
-    margin-left: auto; /* Para empujarlos a la derecha */
-    margin-right: 0; /* Eliminar margen extra */
-    order: 2; /* Para que aparezcan después del menú principal */
-  }
-
-  /* Ocultar o mostrar el selector de idioma en desktop */
-  .language-selector {
-    display: block; /* O display: none; si quieres ocultarlo */
-  }
-}
-
-/* --- Botón de Menú (Flecha) --- */
+/* --- Estilos del Botón de Menú Móvil --- */
 .menu-toggle {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform var(--transition-speed) ease-in-out;
-  outline: none; /* Quitar el contorno al hacer clic */
+  width: 40px; /* Tamaño del área de clic */
+  height: 40px;
+  position: relative; /* Para posicionar el icono de flecha */
+  z-index: 1001; /* Asegura que el botón esté por encima del menú */
 }
 
-.arrow-icon {
+/* Estilo de la flecha SVG o pseudo-elemento */
+.menu-toggle .arrow-icon {
   display: block;
-  width: 10px;
-  height: 10px;
-  border: solid var(--text-color-light);
-  border-width: 0 3px 3px 0;
-  transform: rotate(135deg); /* Flecha apuntando hacia la derecha (inicial) */
-  transition: transform var(--transition-speed) ease-in-out;
+  width: 15px; /* Tamaño de la flecha */
+  height: 15px;
+  border: solid var(--text-color-light); /* Color de la flecha */
+  border-width: 0 3px 3px 0; /* Solo bordes inferior y derecho */
+  transform: rotate(-225deg); /* Gira para que apunte hacia la izquierda */
+  transition: transform var(--transition-speed) ease;
 }
 
-/* Estado de la flecha cuando el menú está abierto (apuntando hacia abajo) */
+/* Cuando el menú está abierto, la flecha gira para apuntar a la derecha */
 .menu-toggle[aria-expanded="true"] .arrow-icon {
-  transform: rotate(45deg); /* Gira para apuntar hacia abajo */
+  transform: rotate(-315deg);
 }
 
-/* --- Menú Desplegable --- */
+/* --- Estilos del Menú de Navegación Móvil --- */
 .navbar-menu {
-  position: absolute;
-  top: 100%; /* Justo debajo de la barra de navegación */
-  left: 0;
-  width: 100%;
-  background-color: var(--background-dark);
-  box-shadow: 0 4px 6px var(--shadow-color);
-  overflow: hidden; /* Oculta el contenido cuando se anima el height */
-  max-height: 0; /* Oculto por defecto */
-  transition: max-height var(--transition-speed) ease-in-out,
-              opacity var(--transition-speed) ease-in-out;
-  opacity: 0; /* Inicialmente transparente */
+  position: fixed;
+  top: 0; /* Comienza desde la parte superior de la ventana */
+  right: -100%; /* Inicialmente fuera de la pantalla a la derecha */
+  width: 100%; /* Ocupa todo el ancho */
+  height: 100vh; /* Ocupa toda la altura de la ventana */
+  background-color: rgba(33, 37, 41, 0.95); /* Fondo oscuro semitransparente */
+  transition: right var(--transition-speed) ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra los elementos del menú verticalmente */
+  align-items: center; /* Centra los elementos del menú horizontalmente */
+  z-index: 999; /* Por debajo del botón de toggle, pero por encima del contenido */
+  padding-top: 60px; /* Espacio para el navbar fijo en la parte superior */
+}
+
+.navbar-menu.is-open {
+  right: 0; /* Se desliza hacia la pantalla */
 }
 
 .navbar-menu ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  text-align: center;
 }
 
 .navbar-menu li {
-  text-align: center;
-  padding: 0.8rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separador sutil */
-}
-
-.navbar-menu li:last-child {
-  border-bottom: none; /* No hay borde en el último elemento */
+  margin-bottom: 1.5rem; /* Espacio entre los elementos del menú */
 }
 
 .navbar-menu a {
   color: var(--text-color-light);
   text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 500;
-  display: block;
-  padding: 0.5rem 0;
-  transition: color var(--transition-speed) ease-in-out;
+  font-size: 1.8rem; /* Tamaño de fuente grande para la navegación móvil */
+  font-weight: 600;
+  transition: color var(--transition-speed) ease;
 }
 
-.navbar-menu a:hover,
-.navbar-menu a:focus {
+.navbar-menu a:hover {
   color: var(--primary-color); /* Color de acento al pasar el ratón */
 }
 
-/* Estado del menú cuando está abierto */
-.navbar-menu.is-open {
-  max-height: 300px; /* Suficiente altura para mostrar todos los elementos. Ajusta si necesitas más */
-  opacity: 1; /* Completamente visible */
-}
-
-/* Para navegadores de escritorio o pantallas más grandes */
-@media (min-width: 768px) {
-  .navbar-mobile {
-    justify-content: flex-start; /* Alinear elementos a la izquierda */
-    padding: 1rem 2rem;
-  }
-
-  .menu-toggle {
-    display: none; /* Ocultar el botón de flecha en pantallas grandes */
-  }
-
-  .navbar-brand {
-    margin-right: 2rem; /* Espacio entre el logo y el menú */
-  }
-
-  .navbar-menu {
-    position: static; /* Volver a la posición normal en el flujo */
-    max-height: none; /* Mostrar siempre el menú */
-    opacity: 1;
-    box-shadow: none;
-    background-color: transparent; /* Fondo transparente */
-    width: auto;
-  }
-
-  .navbar-menu ul {
-    display: flex; /* Mostrar los elementos del menú en línea */
-    gap: 1.5rem; /* Espacio entre los elementos */
-  }
-
-  .navbar-menu li {
-    border-bottom: none;
-    padding: 0;
-  }
-
-  .navbar-menu a {
-    padding: 0.25rem 0;
-    font-size: 1rem;
-  }
-}
-
-/* --- ESTILOS PARA LA SECCIÓN DEL VIDEO HERO --- */
-
+/* --- Estilos de la Sección Hero (Video) --- */
 .hero-video-container {
-  position: relative; /* Para posicionar la superposición y el video */
+  position: relative;
   width: 100%;
-  height: 40vh; /* Ocupa el 100% de la altura de la ventana */
-  overflow: hidden; /* Asegura que el video no se desborde */
-  display: flex; /* Para centrar el contenido de la superposición */
-  margin-top: 0;
-  align-items: center;
+  height: 60vh; /* Ocupa toda la altura de la ventana */
+  overflow: hidden;
+  display: flex;
   justify-content: center;
+  align-items: center;
   text-align: center;
-  color: var(--text-color-light); /* Color del texto de la superposición */
+  color: var(--text-color-light);
 }
 
-/* Contenedor responsivo para el video con relación de aspecto */
 .video-responsive {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%; /* El video ocupará todo el contenedor hero */
+  height: 100%;
   overflow: hidden;
-  /* El siguiente padding-top define la relación de aspecto para el contenido dentro de .video-responsive
-     Si el video tiene una relación de aspecto diferente al contenedor (ej. 16:9 y el contenedor es 21:9),
-     el 'object-fit: cover' se encargará de rellenar. */
 }
 
 .video-responsive video {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* MUY IMPORTANTE: Asegura que el video llene el contenedor sin distorsión, cortando los bordes si es necesario */
-  object-position: center; /* Centra el video dentro de su contenedor */
+  object-fit: cover; /* Asegura que el video cubra todo el contenedor */
+  filter: brightness(0.6); /* Oscurece el video para que el texto sea legible */
 }
 
-/* Superposición de texto y botón sobre el video */
-.hero-overlay {
-  position: relative; /* Para que esté por encima del video */
-  z-index: 2; /* Asegura que la superposición esté sobre el video */
-  background-color: rgba(0, 0, 0, 0.4); /* Fondo semi-transparente para mejor legibilidad */
-  padding: 2rem;
-  border-radius: 8px;
-  max-width: 80%; /* Limita el ancho del contenido */
+/* --- Estilos del Botón de Audio (MODIFICADO) --- */
+.video-controls {
+  position: absolute;
+  bottom: 20px; /* Distancia desde abajo */
+  right: 20px;  /* Distancia desde la derecha */
+  z-index: 3; /* Asegura que esté por encima del video */
+  /* display: flex;  Elimina esto si solo hay un botón y quieres controlarlo directamente */
+  /* align-items: center; */
+  /* gap: 10px; */
+
+  /* Estilos para el fondo del botón/contenedor */
+  background-color: rgba(255, 255, 255, 0.2); /* Fondo blanco semitransparente */
+  border-radius: 50%; /* Lo hace circular */
+  width: 50px; /* Ancho para el círculo */
+  height: 50px; /* Alto para el círculo */
+  display: flex; /* Para centrar el ícono dentro */
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+  backdrop-filter: blur(5px); /* Efecto de desenfoque, similar al de iOS */
+  -webkit-backdrop-filter: blur(5px); /* Compatibilidad con Safari */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Sombra sutil */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.hero-overlay h1 {
-  font-size: 2.5rem;
+.video-controls:hover {
+  background-color: rgba(255, 255, 255, 0.4); /* Un poco más opaco al pasar el ratón */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
+}
+
+.video-control-button {
+  background: none;
+  border: none;
+  color: #ffffff; /* Color del ícono blanco */
+  font-size: 1.8rem; /* Tamaño del ícono */
+  cursor: pointer;
+  padding: 0; /* Sin padding interno para el botón, ya lo controla el padre */
+  display: flex; /* Para centrar el ícono si hay un texto */
+  justify-content: center;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.video-control-button:hover {
+  color: var(--primary-color); /* Puedes cambiarlo a un color de acento o mantenerlo blanco */
+}
+
+.hero-content {
+  position: absolute; /* Se mantiene absoluto para superponerse al video */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2; /* Asegura que el texto esté por encima del video */
+  text-align: center;
+  color: var(--text-color-light); /* Asegura que el texto sea visible */
+  width: 90%;
+  max-width: 900px;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+/* --- Ajustes específicos para pantallas móviles en orientación vertical (portrait) --- */
+@media (max-width: 767px) and (orientation: portrait) {
+  .hero-video-container {
+    /* Aquí ajustamos la altura del contenedor principal para que tenga
+       la misma relación de aspecto que un video 16:9.
+       Esto reducirá el recorte lateral en pantallas móviles verticales. */
+    height: 56.25vw; /* Altura es 56.25% del ancho del viewport (para video 16:9) */
+    min-height: 250px; /* Opcional: asegura una altura mínima en pantallas muy pequeñas */
+
+    /* Puedes quitar las propiedades flexbox aquí si el hero-content es siempre absoluto */
+    display: block; /* Sobreescribe display:flex si no lo necesitas aquí */
+    justify-content: unset; /* Reinicia justify-content */
+    align-items: unset; /* Reinicia align-items */
+  }
+  /* El video dentro de .video-responsive seguirá usando object-fit: cover y llenará este nuevo contenedor */
+}
+
+/* --- Ajustes opcionales para pantallas móviles en orientación horizontal (landscape) --- */
+@media (max-width: 767px) and (orientation: landscape) {
+  .hero-video-container {
+    /* En móviles apaisados, mantener 100vh suele funcionar bien */
+    height: 100vh;
+  }
+}
+
+.hero-content h1 {
+  font-size: 2.8rem; /* Tamaño grande para el título */
   margin-bottom: 1rem;
-  color: var(--text-color-light);
+  line-height: 1.2;
 }
 
-.hero-overlay p {
+.hero-content p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
-  line-height: 1.6;
-  color: var(--text-color-light);
 }
 
-.hero-overlay .btn-primary {
+.cta-button {
   display: inline-block;
   background-color: var(--primary-color);
-  color: white;
+  color: var(--text-color-light);
   padding: 0.8rem 2rem;
+  border-radius: 5px;
   text-decoration: none;
-  border-radius: 50px;
   font-size: 1.1rem;
   font-weight: 600;
-  transition: background-color 0.3s ease;
+  transition: background-color var(--transition-speed) ease;
 }
 
-.hero-overlay .btn-primary:hover {
-  background-color: darken(var(--primary-color), 10%); /* Necesitarías una función darken si no usas SASS/LESS */
-  /* Si no usas preprocesadores, puedes usar un color fijo ligeramente más oscuro, ej: #0056b3 */
-  background-color: #0056b3;
+.cta-button:hover {
+  background-color: #0056b3; /* Un tono más oscuro */
 }
 
-/* Asegurar que el contenido no quede oculto por la barra fija */
-body {
-  padding-top: 60px; /* Ajusta esto a la altura real de tu navbar-mobile */
-  /* El resto de tus estilos de body */
-}
-
-/* Media Query para pantallas más grandes, si el video hero debe comportarse diferente */
-@media (min-width: 768px) {
-  .hero-video-container {
-    height: 80vh; /* Menos altura en desktop si no quieres que ocupe toda la pantalla */
-  }
-
-  .hero-overlay h1 {
-    font-size: 3.5rem;
-  }
-
-  .hero-overlay p {
-    font-size: 1.5rem;
-  }
-}
-
-/* --- ESTILOS PARA LA SECCIÓN DE SERVICIOS (DISEÑO CARPETA MÓVIL) --- */
-
+/* --- ESTILOS PARA LA SECCIÓN DE SERVICIOS (ACORDEÓN) --- */
 .services-section {
-  padding: 1.5rem; /* Aseguramos que no haya padding global en la sección */
-  background-color: var(--background-dark); /* Color de fondo general de la sección si las tarjetas no la cubren toda */
-  color: var(--text-color-light);
-  text-align: center;
-  position: relative; /* Necesario para z-index si hay superposiciones */
-  overflow: hidden; /* Ocultar cualquier desbordamiento si las tarjetas sobresalen un poco */
+  padding: 4rem 1.5rem; /* Espaciado general de la sección */
+  background-color: var(--background-dark); /* Fondo oscuro */
+  color: var(--text-color-light); /* Texto claro */
 }
 
 .services-grid-container {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0; /* Quitamos el gap para controlar el solapamiento con margin-bottom negativo */
-  width: 100%;
-  padding-bottom: 2rem; /* Espacio extra al final para que la última tarjeta no quede cortada */
+  display: grid;
+  gap: 1.5rem; /* Espacio entre los ítems de servicio */
+  /* Por defecto para móviles: una sola columna */
+  grid-template-columns: 1fr;
+  max-width: 1200px; /* Ancho máximo del contenedor de la cuadrícula */
+  margin: 0 auto; /* Centrar la cuadrícula */
 }
 
 .service-item {
   position: relative;
-  width: 100%;
-  background-color: var(--background-dark); /* Color base de la carpeta/pestaña */
-  color: var(--text-color-light);
-  padding: 1.2rem 1.5rem; /* Padding vertical y horizontal para la "pestaña" */
-  margin-bottom: -1rem; /* Clave para el solapamiento. Ajusta este valor si necesitas más/menos solapamiento */
-  border-radius: 5px; /* Solo esquinas superiores redondeadas para la pestaña */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para que destaque un poco */
-  overflow: hidden; /* Necesario para que el contenido oculto no se vea */
-  cursor: pointer;
-  display: flex;
-  flex-direction: column; /* Apila título, icono y contenido */
-  align-items: flex-start; /* **CAMBIO: Alinea todos los elementos internos a la izquierda** */
-  text-align: left; /* **CAMBIO: Alineación de texto a la izquierda** */
-  background-size: cover;
-  background-position: center;
-  transition: all 0.4s ease-in-out; /* Transición más suave para todos los cambios */
-  z-index: 1; /* Valor base para el apilamiento (será sobrescrito por nth-child) */
+  background-color: #2a3039; /* Un poco más claro que el fondo para que destaque */
+  border-radius: 8px;
+  overflow: hidden; /* Importante para el efecto de despliegue */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all var(--transition-speed) ease-in-out;
+  cursor: pointer; /* Indica que es clickeable */
 
-  /* Mantén tus estilos de background-image aquí para las imágenes de fondo con superposición */
+  display: flex; /* Para alinear el título principal, icono y contenido */
+  flex-direction: column; /* Contenido apilado verticalmente */
+  padding: 1.5rem; /* Espaciado interno de la tarjeta */
 }
 
-/* Asegúrate de que los z-index para el apilamiento estén correctos (el primer elemento encima) */
-.service-item:nth-child(1) {
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), /* Superposición oscura */
-        url('/assets/img-services/editing-img.jpg'); /* RUTA CORRECTA DE TU IMAGEN */
-    z-index: 4; /* El de arriba del todo */
-}
-.service-item:nth-child(2) {
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), /* Superposición oscura */
-        url('/assets/img-services/branding-img.jpg'); /* RUTA CORRECTA DE TU IMAGEN */
-    z-index: 3;
-}
-.service-item:nth-child(3) {
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), /* Superposición oscura */
-        url('/assets/img-services/photo-img.jpg'); /* RUTA CORRECTA DE TU IMAGEN */
-    z-index: 2;
-}
-.service-item:nth-child(4) {
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), /* Superposición oscura */
-        url('/assets/img-services/social-media.jpg'); /* RUTA CORRECTA DE TU IMAGEN */
-    z-index: 1; /* El de abajo del todo */
-}
-
-
-/* Título del servicio (visible siempre en la "pestaña") NUEVO*/
+/* Título principal del servicio */
 .service-item h3 {
-  font-size: 1.4rem;
-  margin: 0; /* Elimina márgenes extra para flexbox */
+  font-size: 1.6rem;
+  margin-bottom: 0.8rem;
+  color: var(--text-color-light);
   line-height: 1.2;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-  flex-grow: 1; /* Permite que el título ocupe el espacio */
 }
 
-/* Icono de expansión NUEVO*/
+/* Estilo del icono de expansión (flecha) */
 .expand-icon {
-  display: block; /* Aseguramos que sea un bloque para que flexbox lo posicione */
-  width: 15px;
-  height: 15px;
+  position: absolute; /* Posicionarlo de forma absoluta dentro del item */
+  top: 1.5rem;
+  right: 1.5rem;
+  display: block;
+  width: 20px;
+  height: 20px;
   border: solid var(--text-color-light);
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  transition: transform 0.3s ease;
-  margin-left: 1rem; /* Espacio entre el título y el icono */
-  flex-shrink: 0; /* Evita que el icono se encoja */
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg); /* Flecha apuntando hacia abajo por defecto */
+  transition: transform var(--transition-speed) ease-in-out;
 }
 
+/* Estado "expandido" para móvil */
+.service-item.is-expanded .expand-icon {
+  transform: rotate(-135deg); /* Gira hacia arriba cuando está expandido */
+}
 
-/* Contenedor del contenido expandible (párrafo y botón) */
+/* Contenedor del contenido oculto/desplegable */
 .service-content {
-  max-height: 0; /* Oculto por defecto */
+  max-height: 0; /* Por defecto oculto */
+  overflow: hidden;
   opacity: 0;
   visibility: hidden;
-  transition: max-height 0.5s ease-out, opacity 0.5s ease-out, visibility 0.5s ease-out, padding 0.5s ease-out;
-  padding-top: 0; /* Sin padding superior si está colapsado */
-  padding-left: 0; /* El padding horizontal ya lo maneja .service-item */
-  padding-right: 0;
-  width: 100%; /* Asegura que el contenido ocupe todo el ancho disponible */
+  transition: max-height var(--transition-speed) ease-out,
+              opacity var(--transition-speed) ease-out,
+              visibility var(--transition-speed) ease-out;
 }
 
-.service-content p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-top: 0.5rem; /* Espacio antes del párrafo */
-  margin-bottom: 1rem;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.view-more-btn {
-  display: inline-block;
-  background-color: var(--primary-color);
-  color: white;
-  padding: 0.6rem 1.2rem;
-  border-radius: 50px;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease;
-}
-
-
-/* ESTADO EXPANDIDO DE LA TARJETA (CARPETA ABIERTA) NUEVO */
-.service-item.is-expanded {
-  margin-bottom: 1.5rem; /* Elimina el solapamiento negativo para que ocupe su propio espacio */
-  border-radius: 5px; /* Redondea todas las esquinas para la carpeta abierta */
-  /* Ajusta padding-bottom si el contenido se ve muy pegado al borde inferior */
-  padding-bottom: 1.5rem; /* Más padding para el contenido expandido */
-  z-index: 10; /* Eleva la tarjeta abierta sobre las demás */
-}
-
-/* Rotación del icono de expansión cuando la tarjeta está abierta NUEVO */
-.service-item.is-expanded .expand-icon {
-  transform: rotate(-135deg); /* Gira la flecha hacia arriba */
-  margin-top: 0; /* Resetea el margen si lo modificaste antes */
-  margin-left: 1rem; /* Mantiene el espacio a la izquierda si el título no se extiende */
-}
-
-/* Contenido del servicio visible cuando la tarjeta está abierta NUEVO*/
+/* Cuando el item está expandido */
 .service-item.is-expanded .service-content {
-  max-height: 500px;
+  max-height: 500px; /* Suficiente altura para el contenido. Ajusta si es necesario */
   opacity: 1;
   visibility: visible;
-  padding-top: 1rem; /* Espacio entre el header y el párrafo */
-  padding-left: 0; /* Asegura que no haya padding extra aquí */
-  padding-right: 0;
-  text-align: left; /* **CLAVE: Asegura la alineación a la izquierda para el contenido** */
+  padding-top: 1rem; /* Pequeño padding entre el título y el contenido desplegado */
 }
-/*NUEVO service p*/
+
 .service-content p {
-  /* Asegura que el párrafo también esté alineado a la izquierda */
-  text-align: left;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
 }
 
-/* El texto vertical, oculto en móviles NUEVO*/
+.service-content .view-more-btn {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color var(--transition-speed) ease;
+}
+
+.service-content .view-more-btn:hover {
+  background-color: #0056b3; /* Un tono más oscuro */
+}
+
+/* Estilos para el texto vertical en el lateral de la tarjeta */
 .service-folder-header {
-  display: flex;
-  justify-content: space-between; /* Espacio entre título e icono */
-  align-items: center; /* Centra verticalmente */
-  width: 100%; /* Ocupa todo el ancho disponible */
-  margin-bottom: 0.5rem; /* Pequeño espacio debajo del header */
+  position: absolute;
+  top: 50%; /* Centrar verticalmente */
+  left: 0px; /* Ajusta esto para moverlo más a la izquierda si lo necesitas */
+  transform: translateY(-50%) rotate(-90deg); /* Centra y rota 90 grados a la izquierda */
+  transform-origin: 0% 0%; /* Punto de rotación en la esquina superior izquierda del elemento */
+  
+  white-space: nowrap; /* Evita que el texto se rompa */
+  font-size: 2.5rem; /* Ajusta el tamaño de la fuente */
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.1); /* Texto casi invisible por defecto */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  user-select: none;
+  pointer-events: none;
+  transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+/* Cuando el item está en hover o expandido, el título vertical se vuelve más visible */
+.service-item:hover .service-folder-header,
+.service-item.is-expanded .service-folder-header { /* is-expanded para móvil */
+  color: rgba(255, 255, 255, 0.4);
 }
 
 
-/* --- Media Query para pantallas de escritorio o más grandes (Restablecer estilos) --- */
-@media (min-width: 768px) {
-  .services-section {
-    padding: 0; /* Sin padding en sección */
-    display: flex;
-    flex-direction: row;
-    min-height: 100vh;
-    align-items: stretch;
-    text-align: left;
-    overflow: hidden; /* Necesario para que las franjas se vean bien */
-  }
-
-  .services-grid-container {
-    flex-direction: row;
-    height: 100%;
-    gap: 0; /* Sin gap entre las franjas */
-    padding-bottom: 0; /* Sin padding en desktop */
-  }
-
-  .service-section h2,
-  .service-section .section-description {
-    display: none;
-  }
-
-  .service-item {
-    flex: 1;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 0; /* Sin redondeos en desktop */
-    padding: 2rem;
-    margin-bottom: 0; /* Sin margen inferior en desktop */
-    box-shadow: none; /* Sin sombra en desktop si no la deseas */
-    z-index: auto; /* Restablecer z-index */
-    background-color: var(--background-dark); /* Color sólido para desktop */
-    background-image: none; /* Elimina la imagen de fondo en desktop si no la quieres */
-    transition: flex 0.5s ease, background-color 0.5s ease;
-  }
-
-  .service-item:last-child {
-    border-right: none;
-  }
-
-  .service-item:hover, .service-item.is-expanded-desktop {
-    flex: 3;
-    background-color: var(--primary-color);
-  }
-
-  .service-content {
-    max-height: none;
-    opacity: 1;
-    visibility: visible;
-    padding-top: 0;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .service-item h3 {
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-    text-shadow: none; /* Sin sombra de texto en desktop */
-  }
-
-  .service-item p {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-    opacity: 0; /* Ocultar por defecto */
-    transform: translateY(20px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .service-item:hover .service-content p,
-  .service-item:hover .service-content .view-more-btn,
-  .service-item.is-expanded-desktop .service-content p,
-  .service-item.is-expanded-desktop .service-content .view-more-btn {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .service-title-vertical {
-    display: block; /* Visible en desktop */
-    font-size: 2.5rem;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%) rotate(-90deg);
-    color: rgba(255, 255, 255, 0.08);
-    z-index: 0;
-  }
-
-  .expand-icon {
-    display: none; /* Ocultar en desktop */
-  }
-}
-
-/* --- Sección Quiénes Somos --- */
-.quienes-somos-section {
-    padding: 2.5rem 1rem; /* Ajustado para reducir el espacio superior */
+/* --- SECCIÓN CONTACTO --- */
+.contact-section {
+    padding: 4rem 1.5rem;
     background-color: var(--background-dark);
     color: var(--text-color-light);
     text-align: center;
 }
 
-.quienes-somos-section .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-.quienes-somos-section .section-title {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-}
-
-.quienes-somos-section .section-description {
-    font-size: 1.1rem;
-    margin-bottom: 3rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    color: rgba(255, 255, 255, 0.85);
-}
-
-.team-cards-container {
-    display: flex;
-    flex-direction: column; /* Por defecto: apiladas en móvil */
-    gap: 2rem; /* Espacio entre las tarjetas */
-    justify-content: center;
-    align-items: center;
-}
-
-.team-card {
-    background-color: #2a313a;
-    /*padding: 1rem; /* Reducimos un poco el padding general en móvil */
-    border-radius: 10px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    text-align: center;
-    max-width: 400px; /* Ancho máximo para cada tarjeta en móvil */
-    width: 95%; /* Ocupa un poco menos del ancho para márgenes sutiles */
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    border: 3px solid transparent; /* Borde inicial transparente para la transición */
-    cursor: pointer;
-    display: flex; /* Usamos flex para controlar el orden de los elementos */
-    flex-direction: column; /* Apilamos los elementos verticalmente */
-    align-items: center; /* Centramos horizontalmente los elementos */
-}
-
-/* --- Imagen de Perfil (Modificado para ocupar todo el ancho y recortarse) --- */
-.profile-img-wrapper {
-    width: 100%; /* Ocupa todo el ancho de la tarjeta */
-    max-height: 200px; /* Altura máxima para la imagen (ajusta según necesites) */
-    overflow: hidden; /* Recorta la imagen si excede el alto máximo */
-    margin: 0 auto 1rem auto; /* Centra horizontalmente y da espacio abajo */
-    border-radius: 10px 10px 0 0; /* Redondea solo la parte superior para integrarse con la tarjeta */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    border: none; /* Eliminamos el borde circular */
-}
-
-.profile-img {
-    width: 100%;
-    height: auto; /* La altura se ajusta proporcionalmente */
-    object-fit: cover; /* Cubre el contenedor manteniendo la proporción, puede recortar */
-    display: block;
-}
-
-.team-card h3 {
-    font-size: 1.8rem;
-    margin-top: 1rem; /* Espacio entre el nombre y la imagen */
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-}
-
-.team-card .role {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 1rem;
-}
-
-.team-card .description {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.85);
-    text-align: left; /* Alinea la descripción a la izquierda para mejor lectura */
-}
-
-/* --- Efectos Hover para los Bordes --- */
-.rafael-card:hover {
-    border-color: #28a745; /* Verde para Rafael */
-    transform: translateY(-5px); /* Efecto ligero de elevación */
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 15px #28a745; /* Sombra con el color del borde */
-}
-
-.valentina-card:hover {
-    border-color: #F5DEB3; /* Beige para Valentina */
-    transform: translateY(-5px); /* Efecto ligero de elevación */
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 15px #F5DEB3; /* Sombra con el color del borde */
-}
-
-
-/* --- Media Query para Escritorio --- */
-@media (min-width: 768px) {
-    .quienes-somos-section {
-        padding: 4rem 2rem; /* Padding original para desktop, ajusta si quieres menos */
-    }
-
-    .team-cards-container {
-        flex-direction: row; /* En escritorio, colócalas una al lado de la otra */
-        gap: 3rem; /* Más espacio entre las tarjetas en desktop */
-    }
-
-    .team-card {
-        flex: 1; /* Permite que las tarjetas ocupen un espacio flexible igual */
-        max-width: none; /* Desactiva el max-width para que flex las gestione */
-        /* Para que la imagen vuelva a ser circular en escritorio */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .profile-img-wrapper {
-        width: 150px; /* Tamaño del contenedor de la imagen */
-        height: 150px;
-        border-radius: 50%; /* Para hacer la imagen circular */
-        overflow: hidden;
-        margin: 0 auto 1.5rem auto; /* Centra la imagen y añade espacio abajo */
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        border: 3px solid rgba(255, 255, 255, 0.1); /* Borde sutil alrededor de la imagen */
-    }
-
-    .team-card .description {
-        text-align: center; /* Centramos la descripción en escritorio */
-    }
-}
-
-/* --- Sección de Contacto --- */
-.contact-section {
-    padding: 4rem 1rem;
-    background-color: var(--background-dark); /* Fondo oscuro general */
-    color: var(--text-color-light);
-}
-
 .contact-container {
+    max-width: 1000px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column; /* Apilado en móvil */
-    gap: 3rem; /* Espacio entre las columnas/elementos */
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
+    gap: 3rem;
 }
 
 .contact-info {
-    flex: 1; /* Ocupa espacio flexible */
-    padding: 1.5rem;
-    background-color: #2a313a; /* Fondo ligeramente más claro para la info */
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    flex: 1;
+    text-align: center; /* Centrado en móvil */
 }
 
 .contact-info h2 {
-    font-size: 2.2rem;
-    color: var(--primary-color);
+    font-size: 2.5rem;
     margin-bottom: 1.5rem;
-    text-align: center; /* Centrar título en móvil */
+    color: var(--primary-color);
 }
 
 .contact-info p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1.6;
-    margin-bottom: 1rem;
-    color: rgba(255, 255, 255, 0.85);
-    text-align: center; /* Centrar descripción en móvil */
-}
-
-.contact-details {
-    margin-top: 2rem;
     margin-bottom: 2rem;
 }
 
 .contact-details p {
     display: flex;
     align-items: center;
-    font-size: 1.1rem;
+    justify-content: center; /* Centrado en móvil */
+    gap: 10px;
+    font-size: 1rem;
     margin-bottom: 1rem;
-    color: var(--text-color-light);
-    text-align: left; /* Asegura que cada línea se alinee a la izquierda */
-    justify-content: center; /* Centra los íconos y texto */
 }
 
-.contact-details i {
+.contact-details p i {
     color: var(--primary-color);
-    margin-right: 0.8rem;
-    font-size: 1.3rem;
-    width: 25px; /* Ancho fijo para alinear iconos */
-    text-align: center;
+    font-size: 1.2rem;
 }
 
 .social-links {
     margin-top: 2rem;
-    text-align: center;
+    text-align: center; /* Centrado en móvil */
 }
 
 .social-links a {
     color: var(--text-color-light);
     font-size: 1.8rem;
-    margin: 0 0.8rem;
+    margin: 0 1rem;
     transition: color 0.3s ease;
 }
 
@@ -829,66 +529,65 @@ body {
 }
 
 .contact-form-wrapper {
-    flex: 1; /* Ocupa espacio flexible */
-    padding: 1.5rem;
-    background-color: #2a313a; /* Fondo ligeramente más claro para el formulario */
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    flex: 1;
+    background-color: #2a3039;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .contact-form .form-group {
     margin-bottom: 1.5rem;
+    text-align: left; /* Alinea los inputs y labels a la izquierda */
 }
 
 .contact-form input[type="text"],
 .contact-form input[type="email"],
 .contact-form textarea {
     width: 100%;
-    padding: 0.8rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-    background-color: #3b424d; /* Fondo de los campos */
+    padding: 0.8rem;
+    border: 1px solid #444;
+    background-color: #333;
     color: var(--text-color-light);
+    border-radius: 5px;
     font-size: 1rem;
-    outline: none; /* Elimina el contorno al enfocar */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Asegura que padding no aumente el ancho total */
 }
 
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+    color: #aaa;
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
+    outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3); /* Sombra de enfoque */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.3);
 }
 
 .contact-form textarea {
-    resize: vertical; /* Permite redimensionar solo verticalmente */
-    min-height: 100px;
+    resize: vertical; /* Permite redimensionar verticalmente */
 }
 
 .contact-form .submit-btn {
-    display: block;
-    width: 100%;
-    padding: 1rem;
     background-color: var(--primary-color);
-    color: white;
+    color: var(--text-color-light);
+    padding: 0.8rem 2rem;
     border: none;
-    border-radius: 50px;
+    border-radius: 5px;
+    cursor: pointer;
     font-size: 1.1rem;
     font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color var(--transition-speed) ease;
+    width: 100%; /* Ocupa todo el ancho en móvil */
 }
 
 .contact-form .submit-btn:hover {
-    background-color: #0056b3; /* Un tono más oscuro de primary-color */
-    transform: translateY(-2px);
+    background-color: #0056b3;
 }
 
+/* Oculta visualmente, pero accesible para lectores de pantalla */
 .visually-hidden {
     position: absolute;
     width: 1px;
@@ -929,17 +628,99 @@ body {
     }
 }
 
+
+/* --- Media Query para Escritorio (Servicios) --- */
+@media (min-width: 768px) {
+  .services-grid-container {
+    display: flex; /* Usamos flexbox para el efecto de expansión */
+    justify-content: center;
+    align-items: stretch; /* Asegura que todos los items tengan la misma altura */
+    gap: 0; /* Eliminar el gap si quieres que los bordes se toquen */
+    border-radius: 8px; /* Aplicar a todo el contenedor para esquinas redondeadas */
+    overflow: hidden; /* Asegura que los bordes redondeados se vean bien */
+  }
+
+  .service-item {
+    flex: 1; /* Todos los items tienen el mismo ancho inicial */
+    border-right: 1px solid rgba(255, 255, 255, 0.1); /* Separador vertical */
+    border-radius: 0; /* Quitar border-radius individuales si los tenía */
+    padding: 2rem; /* Más padding en desktop */
+    flex-direction: column; /* Contenido apilado normal */
+    justify-content: space-between; /* Espacia el contenido verticalmente */
+  }
+
+  .service-item:first-child {
+    border-top-left-radius: 8px; /* Redondear esquina del primer item */
+    border-bottom-left-radius: 8px;
+  }
+
+  .service-item:last-child {
+    border-right: none; /* Eliminar el borde derecho del último item */
+    border-top-right-radius: 8px; /* Redondear esquina del último item */
+    border-bottom-right-radius: 8px;
+  }
+
+  /* Efecto de ampliación al hacer hover en desktop */
+  .service-item:hover { /* El efecto de ampliación principal será con hover */
+    flex: 3; /* El item se amplía para ocupar más espacio */
+    background-color: var(--primary-color); /* Cambia de color al expandirse/hover */
+    /* Si quieres que se 'fije' al hacer clic en desktop, necesitarías JS y la clase .is-expanded-desktop */
+  }
+
+  /* Si deseas un efecto de clic que se "fije" en desktop, puedes usar esta clase con JS */
+  .service-item.is-expanded-desktop {
+    flex: 3;
+    background-color: var(--primary-color);
+  }
+
+  /* El título vertical se hace más visible al hacer hover/expandir */
+  .service-item:hover .service-folder-header,
+  .service-item.is-expanded-desktop .service-folder-header {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Ocultar la flecha de expansión en desktop si no la usas */
+  .service-item .expand-icon {
+    display: none;
+  }
+
+  /* El contenido siempre es visible en desktop, pero animamos su aparición en hover */
+  .service-content {
+    max-height: none; /* No restringir altura en desktop */
+    opacity: 1;
+    visibility: visible;
+    padding-top: 0; /* No padding extra aquí */
+    transition: none; /* Desactivar transiciones de height/opacity para desktop */
+  }
+
+  /* Estilos específicos para el texto y botón que se muestran con el hover/expansión */
+  .service-item .service-content p,
+  .service-item .service-content .view-more-btn {
+    opacity: 0; /* Por defecto oculto en desktop */
+    transform: translateY(10px); /* Un pequeño desplazamiento hacia abajo */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .service-item:hover .service-content p,
+  .service-item.is-expanded-desktop .service-content p,
+  .service-item:hover .service-content .view-more-btn,
+  .service-item.is-expanded-desktop .service-content .view-more-btn {
+    opacity: 1; /* Visible al hacer hover/expandir */
+    transform: translateY(0); /* Vuelve a su posición original */
+  }
+
+  /* El título H3 también puede cambiar, centrado en desktop */
+  .service-item h3 {
+    text-align: center;
+    margin-top: 1rem;
+  }
+}
+
 /* --- Estilos del Pie de Página (Copyright) --- */
 .footer {
-    background-color: #1a1a1a; /* Un color de fondo más oscuro para el pie de página */
-    color: rgba(255, 255, 255, 0.6);
+    background-color: #1a1e22; /* Un tono más oscuro para el pie de página */
+    color: #bbb;
     padding: 1.5rem 1rem;
     text-align: center;
     font-size: 0.9rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Línea sutil en la parte superior */
-}
-
-.footer .container {
-    max-width: 1200px;
-    margin: 0 auto;
 }
