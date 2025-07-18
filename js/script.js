@@ -2,8 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // 1. Seleccionar los elementos del DOM
     const menuToggle = document.querySelector('.menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
-    const languageSelector = document.querySelector('.language-selector'); // Selector de idioma
-    const langButton = document.querySelector('.lang-button'); // Botón del selector de idioma
+    const languageSelector = document.querySelector('.language-selector');
+    const langButton = document.querySelector('.lang-button');
+    const langLinks = document.querySelectorAll('.lang-dropdown-content a'); // Nuevas líneas para los enlaces de idioma
 
     // 2. Añadir un 'event listener' al botón de la flecha
     menuToggle.addEventListener('click', function() {
@@ -20,28 +21,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Event listener para el botón del selector de idioma
-    if (langButton) {
-        langButton.addEventListener('click', function(event) {
-            event.stopPropagation(); // Evita que el clic se propague al documento
-            if (languageSelector) { // Asegura que el selector exista
-                languageSelector.classList.toggle('active'); // Alterna la clase 'active'
-            }
-        });
-    }
-
-    // Opcional: Cerrar el menú y el selector de idioma si se hace clic fuera de ellos (para mejorar la UX)
+    // Opcional: Cerrar el menú si se hace clic fuera de él (para mejorar la UX)
     document.addEventListener('click', function(event) {
         const isClickInsideNavbar = menuToggle.contains(event.target) || mobileMenu.contains(event.target);
-        const isClickInsideLanguageSelector = languageSelector && languageSelector.contains(event.target);
+        const isClickInsideLangSelector = languageSelector && languageSelector.contains(event.target); // Nueva línea
 
         if (!isClickInsideNavbar && mobileMenu.classList.contains('is-open')) {
             mobileMenu.classList.remove('is-open');
             menuToggle.setAttribute('aria-expanded', 'false');
         }
-
-        // Cierra el selector de idioma si se hace clic fuera de él
-        if (languageSelector && !isClickInsideLanguageSelector && languageSelector.classList.contains('active')) {
+        // Cierra el selector de idioma si se hace clic fuera de él y no en el botón
+        if (languageSelector && languageSelector.classList.contains('active') && !isClickInsideLangSelector) {
             languageSelector.classList.remove('active');
         }
     });
@@ -55,51 +45,54 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Lógica para el cambio de idioma al hacer clic en las opciones del desplegable
-    const langLinks = document.querySelectorAll('.lang-dropdown-content a');
+    // Event listener para el botón del selector de idioma
+    if (langButton) {
+        langButton.addEventListener('click', function(event) {
+            event.stopPropagation(); // Evita que el clic se propague al documento
+            if (languageSelector) { // Asegura que el selector exista
+                languageSelector.classList.toggle('active'); // Alterna la clase 'active' para mostrar/ocultar el dropdown
+            }
+        });
+    }
 
+    // Lógica para cambiar de idioma
     langLinks.forEach(link => {
         link.addEventListener('click', function(event) {
-            event.preventDefault(); // Evita que el navegador siga el enlace de forma predeterminada
-
-            const selectedLang = this.getAttribute('data-lang'); // Obtiene 'en' o 'es'
-            let newUrl = window.location.origin; // Obtiene la base de la URL (ej. http://localhost:8000)
-
+            event.preventDefault(); // Evita el comportamiento predeterminado del enlace
+            const selectedLang = this.getAttribute('data-lang');
             if (selectedLang === 'en') {
-                // Si se selecciona inglés, redirige a la versión en inglés
-                // ASUMIMOS que tendrás un archivo en 'en/index.html' o 'index-en.html'
-                // Ajusta esta URL según cómo organices tus archivos de idioma.
-                // Ejemplo para un subdirectorio 'en':
-                newUrl += '/en/en_index.html';
-                // O si está en el mismo nivel con un nombre diferente (menos recomendado para SEO):
-                // newUrl += '/index-en.html';
+                window.location.href = '/en/en_index.html'; // Navega a la versión en inglés
             } else if (selectedLang === 'es') {
-                // Si se selecciona español, redirige a la versión en español (tu index.html actual)
-                newUrl += '/index.html';
-            }
-
-            // Realiza la redirección a la nueva URL
-            window.location.href = newUrl;
-
-            // Opcional: Cierra el desplegable de idioma después de la selección
-            if (languageSelector && languageSelector.classList.contains('active')) {
-                languageSelector.classList.remove('active');
+                window.location.href = '/index.html'; // Navega a la versión en español
             }
         });
     });
 
-    // Lógica de acordeón para la sección de servicios
+    // Lógica para los acordeones de servicios (tu código existente)
     const serviceItems = document.querySelectorAll('.service-item');
 
     serviceItems.forEach(item => {
         item.addEventListener('click', function() {
-            if (window.innerWidth < 768) { // Lógica para móviles
-                // Si ya está expandido, contráelo. Si no, expándelo.
-                this.classList.toggle('is-expanded');
-            } else { // Lógica para desktop (al pasar el ratón o al hacer clic si lo prefieres)
-                // Actualmente, la lógica de desktop usa hover en CSS.
-                // Si deseas que el clic funcione para desktop, puedes descomentar y ajustar esto.
-                // Por ejemplo, para que el clic "bloquee" un panel expandido:
+            // Lógica para móvil (expandir/contraer)
+            if (window.innerWidth < 768) {
+                // Si el item ya está expandido, lo contrae
+                if (this.classList.contains('is-expanded')) {
+                    this.classList.remove('is-expanded');
+                } else {
+                    // Cierra cualquier otro item expandido
+                    serviceItems.forEach(otherItem => {
+                        if (otherItem !== this) {
+                            otherItem.classList.remove('is-expanded');
+                        }
+                    });
+                    // Expande el item clicado
+                    this.classList.add('is-expanded');
+                }
+            } else {
+                // Lógica para desktop (expande el hover)
+                // En desktop, el hover maneja la expansión. Este clic podría usarse para "fijar" un panel
+                // si quisieras un comportamiento diferente al solo hover. Por ahora, lo dejamos como estaba.
+                // Si quieres que el clic "bloquee" un panel expandido, descomenta:
                 // serviceItems.forEach(otherItem => {
                 //     if (otherItem !== item) {
                 //         otherItem.classList.remove('is-expanded-desktop');
@@ -135,4 +128,35 @@ document.addEventListener('DOMContentLoaded', function() {
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
     }
+
+        // --- AQUÍ ES DONDE DEBES AÑADIR LA LÓGICA DEL BOTÓN DE AUDIO ---
+    const heroVideo = document.getElementById('heroVideo');
+    const muteToggle = document.getElementById('muteToggle');
+
+    if (heroVideo && muteToggle) {
+        // Asegurarse de que el video empiece silenciado (atributo 'muted' en HTML también lo hace)
+        heroVideo.muted = true;
+
+        // Event listener para el botón de mute/unmute
+        muteToggle.addEventListener('click', function() {
+            heroVideo.muted = !heroVideo.muted; // Alternar el estado de muted
+
+            // Cambiar el ícono según el estado de mute
+            if (heroVideo.muted) {
+                muteToggle.innerHTML = '<i class="fas fa-volume-mute"></i>'; // Icono de silenciado
+            } else {
+                muteToggle.innerHTML = '<i class="fas fa-volume-up"></i>'; // Icono de sonido
+            }
+        });
+
+        // Opcional: Sincronizar el icono si el estado de volumen/mute cambia por otras razones
+        heroVideo.addEventListener('volumechange', function() {
+            if (heroVideo.muted || heroVideo.volume === 0) {
+                muteToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            } else {
+                muteToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
+        });
+    }
+
 });
