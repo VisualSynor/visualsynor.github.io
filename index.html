@@ -9,11 +9,8 @@
 </head>
 <body>
 
-    <!--Barra de navegacion de la web-->
     <header class="navbar-mobile">
         <div class="navbar-brand">
-            <!--Logotipo Temporal #CAMBIO-->
-            <!--<img src="RUTA-LOGO" alt="Visual Synor Logo" class="logo">-->
             <a href="#" class="logo">Visual Synnor</a>
         </div>
         
@@ -32,9 +29,9 @@
         </button>
         <nav id="mobile-menu" class="navbar-menu">
             <ul>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#quienes-somos">Quienes somos</a></li>
-                <li><a href="#portafolio">Portafolio</a></li>
+                <li><a href="#services">Servicios</a></li>
+                <li><a href="#acerca-nosotros">Acerca de nosotros</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
         </nav>
@@ -42,25 +39,22 @@
 
     <section class="hero-video-container">
         <div class="video-responsive">
-            <video autoplay loop muted playsinline>
-                <source src="/hero-video/video-prueba.mp4" type="video/mp4">
-                <!--VIDEO EN FORMATO WEBM-->
-                <source src="#">
-                Tu navegador no soporta el video, Porfavor actualiza tu navegador
+            <video autoplay loop muted playsinline id="heroVideo">
+                <source src="/hero-video/Hero-video-base.mp4" type="video/mp4">
+                Tu navegador no soporta el tag de video.
             </video>
         </div>
-        <!--<div class="hero-overlay">
-            <h1>Visual Synor: Creatividad en Movimiento</h1>
-            <p>Transformamos ideas en experiencias visuales impactantes</p>
-            <a href="#contacto" class="btn-primary">¡Hablemos de tu proyecto!</a>
-        </div>-->
+
+    <div class="video-controls">
+        <button id="muteToggle" class="video-control-button">
+            <i class="fas fa-volume-mute"></i> </button>
+    </div>
     </section>
 
-<body>
-    <section id="servicios" class="services-section">
+    <section id="services" class="services-section">
         <div class="services-grid-container">
+
             <div class="service-item">
-                <div class="service-folder-header">Producción Audiovisual</div>
                 <h3>Producción Audiovisual Integral</h3> <span class="expand-icon"></span>
                 <div class="service-content">
                     <p>Desde la dirección y grabación de eventos y series guionadas, hasta la edición y postproducción de alto nivel. Creamos videos corporativos, publicitarios y contenido dinámico que capta miradas.</p>
@@ -69,75 +63,52 @@
             </div>
 
             <div class="service-item">
-                <div class="service-folder-header">Diseño Gráfico</div>
-                <h3>Diseño Gráfico & Branding Estratégico</h3> <span class="expand-icon"></span>
-                <div class="service-content">
-                    <p>Desarrollamos identidades de marca únicas, logotipos y material gráfico que comunican eficazmente. Nuestra versatilidad abarca desde diseños editoriales y conceptuales hasta estilos corporativos y deportivos.</p>
-                    <a href="#" class="view-more-btn">Ver más</a>
-                </div>
-            </div>
-
-            <div class="service-item">
-                <div class="service-folder-header">Fotografía Profesional</div>
-                <h3>Fotografía Artística & Contenido Visual</h3> <span class="expand-icon"></span>
-                <div class="service-content">
-                    <p>Sesiones fotográficas profesionales para productos, marcas y eventos, con dirección de arte que asegura imágenes impactantes. Creamos narrativas visuales que elevan tu presencia.</p>
-                    <a href="#" class="view-more-btn">Ver más</a>
-                </div>
-            </div>
-
-            <div class="service-item">
-                <div class="service-folder-header">Estrategia Digital</div>
                 <h3>Estrategia Digital & Contenido de redes</h3> <span class="expand-icon"></span>
                 <div class="service-content">
                     <p>Gestión experta de redes sociales, desarrollo de estrategias de contenido y creación de mensajes atractivos. Diseñamos experiencias digitales que conectan tu marca con su audiencia.</p>
                     <a href="#" class="view-more-btn">Ver más</a>
                 </div>
             </div>
+
+            <div class="service-item">
+                <h3>Automatizaciones con IA</h3> <span class="expand-icon"></span>
+                <div class="service-content">
+                    <p>Gestión experta de redes sociales, desarrollo de estrategias de contenido y creación de mensajes atractivos. Diseñamos experiencias digitales que conectan tu marca con su audiencia.</p>
+                    <a href="#" class="view-more-btn">Ver más</a>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <section id="quienes-somos" class="quienes-somos-section">
-    <div class="container">
-        <h2 class="section-title">Quiénes Somos</h2>
-        <p class="section-description">Conoce al equipo detrás de Visual Synor, la pasión que nos mueve y la visión que compartimos en cada proyecto.</p>
-
-        <div class="team-cards-container">
-            <div class="team-card rafael-card">
-                <div class="profile-img-wrapper">
-                    <img src="/assets/team/foto-rafael.jpg" alt="Rafael Valenciano - Co-fundador" class="profile-img">
-                </div>
-                <h3>Rafael Valenciano</h3>
-                <p class="role">Co-fundador & Director Creativo</p>
-                <p class="description">Apasionado por la narrativa visual y la innovación tecnológica. Con años de experiencia en producción audiovisual y diseño estratégico, lidera la visión creativa de cada campaña para contar historias que resuenen.</p>
-            </div>
-
-            <div class="team-card valentina-card">
-                <div class="profile-img-wrapper">
-                    <img src="/assets/team/foto-valentina.jpg" alt="Valentina Salgado - Co-fundadora" class="profile-img">
-                </div>
-                <h3>Valentina Salgado</h3>
-                <p class="role">Co-fundadora & Estratega Digital</p>
-                <p class="description">Especialista en construir puentes entre marcas y audiencias en el entorno digital. Con una sólida experiencia en marketing y gestión de redes sociales, diseña estrategias que impulsan el crecimiento y la conexión auténtica.</p>
-            </div>
+    <section id="acerca-nosotros" class="about-us-section">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>This is where you can add content about your company, its mission, values, and team.</p>
         </div>
-    </div>
+    </section>
+
+    <section id="portfolio" class="portfolio-section">
+        <div class="container">
+            <h2>Portfolio</h2>
+            <p>Showcase your best projects here! Add images, descriptions, and links to your work.</p>
+        </div>
     </section>
 
     <section id="contacto" class="contact-section">
-    <div class="container contact-container">
+    <div class="contact-container">
         <div class="contact-info">
             <h2>Hablemos de tu proyecto</h2>
-            <p>Estamos aquí para ayudarte a transformar tus ideas en realidades visuales impactantes. ¡Contáctanos!</p>
+            <p>Estamos listos para escucharte y convertir tus ideas en realidad. Ponte en contacto con nosotros.</p>
             <div class="contact-details">
-                <p><i class="fas fa-envelope"></i> info@visualsynor.com</p>
-                <p><i class="fas fa-phone-alt"></i> +57 300 123 4567</p>
-                <p><i class="fas fa-map-marker-alt"></i> Bogotá, Colombia</p>
+                <p><i class="fas fa-phone-alt"></i> +57 320 6211833</p>
+                <p><i class="fas fa-envelope"></i> visualsyanor@gmail.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> Cali, Colombia</p>
             </div>
             <div class="social-links">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.facebook.com/tupagina" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/tupagina" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/tunumero" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             </div>
         </div>
         <div class="contact-form-wrapper">
@@ -174,5 +145,4 @@
 
     <script src="/js/script.js"></script>
 
-</body>
 </html>
