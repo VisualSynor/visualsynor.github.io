@@ -158,5 +158,30 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    // --- Lógica de Filtrado del Portafolio ---
+const filterButtons = document.querySelectorAll('.portfolio-filters .filter-btn');
+const portfolioItems = document.querySelectorAll('.portfolio-grid .portfolio-item');
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        // Eliminar 'active' de todos los botones
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        // Añadir 'active' al botón clickeado
+        this.classList.add('active');
+
+        const filterValue = this.getAttribute('data-filter'); // 'all', 'branding', 'web', etc.
+
+        portfolioItems.forEach(item => {
+            const itemCategory = item.getAttribute('data-category');
+
+            if (filterValue === 'all' || itemCategory === filterValue) {
+                item.style.display = 'block'; // Mostrar el elemento
+            } else {
+                item.style.display = 'none'; // Ocultar el elemento
+            }
+        });
+    });
+});
 
 });
