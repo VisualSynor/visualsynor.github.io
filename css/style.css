@@ -201,6 +201,93 @@ body {
   color: var(--primary-color); /* Color de acento al pasar el ratón */
 }
 
+/* --- Media Query para Escritorio (Desktop: Navbar Completo) --- */
+@media (min-width: 768px) {
+    .navbar-mobile {
+        /* Cambiamos a justify-content: space-between para distribuir los elementos */
+        justify-content: space-between; 
+        padding: 20px 50px; 
+    }
+
+    .navbar-brand {
+        /* El logo se mantendrá a la izquierda por 'space-between' */
+        /* Puedes añadir un margen a la derecha si quieres más espacio entre el logo y el resto */
+        margin-right: 30px; /* Ajusta este valor según cuánto espacio necesites */
+    }
+
+    /* Ocultar el botón de despliegue (hamburguesa) en escritorio */
+    .menu-toggle {
+        display: none;
+    }
+
+    /* El menú de navegación se hace visible y horizontal */
+    .navbar-menu {
+        position: static; 
+        width: auto; 
+        height: auto; 
+        background-color: transparent; 
+        transform: translateX(0); 
+        flex-direction: row; 
+        /* Usamos flex-grow: 1 para que el menú ocupe el espacio central disponible */
+        flex-grow: 1; 
+        /* Quitamos margin-left: auto de aquí, ya que space-between lo manejará */
+        margin-left: 0; 
+        padding: 0;
+        /* Alinea los enlaces a la derecha dentro del espacio que ocupa el menú */
+        justify-content: flex-end; 
+    }
+
+    .navbar-menu ul {
+        display: flex; 
+        width: auto;
+        /* Espacio entre los enlaces de navegación y el selector de idioma */
+        margin-right: 30px; 
+    }
+
+    .navbar-menu ul li {
+        margin: 0 15px; 
+    }
+
+    .navbar-menu ul li a {
+        font-size: 1em; 
+        padding: 5px 0; 
+    }
+
+    /* Asegurar que el contenedor del selector de idioma sea visible en escritorio */
+    .navbar-actions {
+        display: flex; /* Aseguramos que sea flex para alinear el selector */
+        align-items: center; /* Centra verticalmente el selector */
+        /* No necesitas margin-left aquí porque justify-content: space-between lo posicionará */
+    }
+    
+    /* Estilos para el Language Selector dentro de .navbar-actions (si es tu estructura actual) */
+    .navbar-actions .language-selector {
+        position: relative; /* Mantener para el dropdown */
+        display: block; /* O flex si lo necesitas */
+    }
+
+    .navbar-actions .language-selector .lang-dropdown-content {
+        /* Para que el dropdown se muestre al hacer hover en escritorio */
+        display: none; /* Oculto por defecto */
+        position: absolute;
+        top: calc(100% + 5px); /* Posición debajo del botón */
+        left: 50%;
+        transform: translateX(-50%); /* Centrar bajo el botón */
+        /* Asegúrate de que tenga un color de fondo y z-index adecuados */
+        background-color: var(--background-dark); 
+        border: 1px solid var(--primary-color);
+        border-radius: 5px;
+        min-width: 80px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+        flex-direction: column;
+    }
+
+    .navbar-actions .language-selector:hover .lang-dropdown-content {
+        display: flex; /* Mostrar al hacer hover */
+    }
+}
+
 /* --- Estilos de la Sección Hero (Video) --- */
 .hero-video-container {
   position: relative;
@@ -340,6 +427,99 @@ body {
 
 .cta-button:hover {
   background-color: #0056b3; /* Un tono más oscuro */
+}
+
+/* Estilos para la Sección de Servicios en Fondo Oscuro */
+.services-section {
+    padding: 100px 20px; /* Espaciado generoso */
+    text-align: center; /* Centrar todo el contenido */
+    background-color: #1a1a1a; /* Fondo muy oscuro, casi negro */
+    color: #f0f0f0; /* Color de texto base para el resto de la sección */
+}
+
+.services-section h2 {
+    font-size: 3.5em; /* Título grande y llamativo */
+    color: #50c878; /* Verde Esmeralda Vibrante */
+    margin-bottom: 25px; /* Espacio debajo del título */
+    text-transform: uppercase; /* Mayúsculas para el título */
+    letter-spacing: 4px; /* Un poco de espaciado entre letras */
+    font-weight: 700; /* Negrita para el título */
+    text-shadow: 0 0 10px rgba(80, 200, 120, 0.4); /* Sombra sutil para el brillo */
+}
+
+.services-section .section-intro {
+    font-size: 1.4em; /* Texto introductorio legible */
+    color: #e0e0e0; /* Un blanco suave para contrastar con el fondo */
+    max-width: 900px; /* Limitar el ancho para una mejor lectura */
+    margin: 0 auto 60px auto; /* Centrar el párrafo y añadir espacio debajo */
+    line-height: 1.8; /* Buen espaciado entre líneas para legibilidad */
+    font-weight: 300; /* Fuente más ligera para elegancia */
+    opacity: 0.9; /* Ligeramente transparente para suavizar */
+}
+
+/* Estilos para los items de servicio individuales (opcional, para mantener coherencia) */
+/* Asegúrate de que estos también contrasten bien con el fondo oscuro */
+.service-item {
+    background-color: #2b2b2b; /* Un gris oscuro para los contenedores de servicio */
+    border: 1px solid #3a3a3a; /* Borde sutil */
+    color: #f0f0f0; /* Texto claro dentro de los items */
+    padding: 30px;
+    margin-bottom: 20px; /* Espacio entre los items */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+}
+
+.service-item h3 {
+    color: #66d9ef; /* Un color de acento para los títulos de los servicios */
+    font-size: 1.6em;
+    margin-bottom: 15px;
+}
+
+.service-item p {
+    color: #c0c0c0; /* Texto de descripción de servicio */
+}
+
+.service-item .view-more-btn {
+    color: #50c878; /* Mismo verde esmeralda para los botones "Ver más" */
+    border: 1px solid #50c878;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.service-item .view-more-btn:hover {
+    background-color: #50c878;
+    color: #1a1a1a; /* Texto oscuro al pasar el ratón */
+}
+
+
+/* Adaptación Responsiva (para pantallas más pequeñas) */
+@media (max-width: 768px) {
+    .services-section h2 {
+        font-size: 2.5em;
+        letter-spacing: 2px;
+    }
+
+    .services-section .section-intro {
+        font-size: 1.1em;
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-section h2 {
+        font-size: 2em;
+        letter-spacing: 1px;
+    }
+    .services-section .section-intro {
+        font-size: 1em;
+    }
+    .service-item {
+        padding: 20px;
+    }
 }
 
 /* --- ESTILOS PARA LA SECCIÓN DE SERVICIOS (ACORDEÓN) --- */
@@ -714,6 +894,257 @@ body {
     text-align: center;
     margin-top: 1rem;
   }
+}
+
+/* --- Sección Quienes Somos (About Us) --- */
+.about-us-section {
+    padding: 80px 0; /* Padding superior e inferior para espacio */
+    background-color: var(--background-dark); /* Color de fondo oscuro (ajusta según tu tema) */
+    color: var(--text-color-light); /* Texto claro para contraste */
+}
+
+.about-us-container {
+    display: flex;
+    flex-direction: column; /* Por defecto en columna para móviles */
+    gap: 40px; /* Espacio entre la imagen y el contenido */
+    align-items: center; /* Centra los elementos horizontalmente en móvil */
+    text-align: center; /* Centra el texto en móvil */
+}
+
+.about-us-image-wrapper {
+    width: 90%; /* Ancho de la imagen en móvil */
+    max-width: 500px; /* Límite máximo para que no sea muy grande en tablets */
+    border-radius: 10px; /* Bordes redondeados para la imagen */
+    overflow: hidden; /* Asegura que la imagen no se salga del radio */
+    box-shadow: 0 10px 30px var(--shadow-color); /* Sombra para profundidad */
+}
+
+.about-us-image-wrapper img {
+    width: 100%;
+    height: auto; /* Mantiene la proporción de la imagen */
+    display: block; /* Elimina espacio extra debajo de la imagen */
+    object-fit: cover; /* Asegura que la imagen cubra el contenedor sin distorsionarse */
+}
+
+.about-us-content {
+    flex: 1; /* Permite que el contenido tome el espacio disponible */
+    max-width: 600px; /* Límite de ancho para el texto */
+}
+
+.about-us-content .subtitle {
+    font-size: 0.9em;
+    color: var(--primary-color); /* Color de tu color primario */
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.about-us-content h2 {
+    font-size: 2.5em; /* Tamaño grande para el título */
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.about-us-content p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* Estilos básicos para el botón si no los tienes ya */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border: 1px solid var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: darken(var(--primary-color), 10%); /* Usar un color fijo si no usas preprocesadores */
+    color: var(--text-color-light);
+}
+
+
+/* --- Media Query para Escritorio (Desktop) --- */
+@media (min-width: 768px) {
+    .about-us-container {
+        flex-direction: row; /* Cambia a fila para desktop */
+        text-align: left; /* Alinea el texto a la izquierda */
+        gap: 60px; /* Más espacio entre imagen y texto en desktop */
+        justify-content: center; /* Centra el contenido en el contenedor */
+    }
+
+    .about-us-image-wrapper {
+        width: 50%; /* La imagen ocupa la mitad del espacio */
+        max-width: none; /* Elimina el max-width para que se ajuste al 50% */
+    }
+
+    .about-us-content {
+        width: 50%; /* El contenido ocupa la otra mitad */
+    }
+
+    .about-us-content .subtitle,
+    .about-us-content h2,
+    .about-us-content p {
+        text-align: left; /* Asegura que el texto esté alineado a la izquierda */
+    }
+}
+
+/* Opcional: Ajustes para pantallas aún más grandes */
+@media (min-width: 1200px) {
+    .about-us-container {
+        gap: 80px;
+    }
+    .about-us-content h2 {
+        font-size: 3em;
+    }
+}
+
+/* --- Sección Portafolio --- */
+.portfolio-section {
+    padding: 80px 0;
+    background-color: var(--background-dark); /* Fondo oscuro */
+    color: var(--text-color-light); /* Texto claro */
+    text-align: center;
+}
+
+.portfolio-section .subtitle {
+    font-size: 0.9em;
+    color: var(--primary-color);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.portfolio-section h2 {
+    font-size: 2.8em;
+    margin-bottom: 50px; /* Más espacio debajo del título */
+}
+
+/* --- Filtros del Portafolio --- */
+.portfolio-filters {
+    margin-bottom: 50px;
+    display: flex;
+    flex-wrap: wrap; /* Permite que los botones se envuelvan en líneas nuevas */
+    justify-content: center;
+    gap: 15px; /* Espacio entre los botones */
+}
+
+.filter-btn {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 10px 25px;
+    border-radius: 30px; /* Bordes más redondeados */
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.filter-btn:hover,
+.filter-btn.active { /* Estilo para el botón activo y al pasar el ratón */
+    background-color: var(--primary-color);
+    color: var(--background-dark); /* Color del texto del botón activo/hover */
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4); /* Sombra para el botón activo */
+}
+
+/* --- Cuadrícula del Portafolio --- */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Columnas responsivas */
+    gap: 25px; /* Espacio entre los elementos */
+}
+
+.portfolio-item {
+    position: relative;
+    overflow: hidden; /* Oculta cualquier desbordamiento, especialmente útil para border-radius */
+    border-radius: 8px; /* Bordes redondeados para cada elemento */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-5px); /* Pequeño efecto de elevación al pasar el ratón */
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 250px; /* Altura fija para las imágenes del portafolio */
+    object-fit: cover; /* Recorta la imagen para que rellene el espacio */
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.portfolio-item:hover img {
+    transform: scale(1.05); /* Zoom ligero en la imagen al pasar el ratón */
+}
+
+/* --- Capa de Superposición (Overlay) --- */
+.portfolio-item .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* Por defecto oculto */
+    transition: opacity 0.3s ease;
+}
+
+.portfolio-item:hover .overlay {
+    opacity: 1; /* Visible al pasar el ratón */
+}
+
+.overlay-content {
+    color: var(--text-color-light);
+    text-align: center;
+    padding: 20px;
+}
+
+.overlay-content h3 {
+    font-size: 1.6em;
+    margin-bottom: 10px;
+}
+
+.overlay-content p {
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+/* --- Media Queries para Responsividad (Ajustes Adicionales) --- */
+@media (min-width: 768px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Ligeramente más grandes en tablets */
+        gap: 30px;
+    }
+
+    .portfolio-section h2 {
+        font-size: 3.5em;
+    }
+}
+
+@media (min-width: 1024px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 columnas fijas en pantallas grandes */
+    }
 }
 
 /* --- Estilos del Pie de Página (Copyright) --- */
