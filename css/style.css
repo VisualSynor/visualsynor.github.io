@@ -1,0 +1,1233 @@
+/* Añade esto al principio de tu archivo CSS */
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* Variables CSS para facilitar la personalización */
+:root {
+  --primary-color: #007bff; /* Azul vibrante para el acento */
+  --text-color-light: #f8f9fa; /* Texto claro para fondos oscuros */
+  --background-dark: #212529; /* Fondo oscuro principal */
+  --shadow-color: rgba(0, 0, 0, 0.2); /* Sombra sutil */
+  --transition-speed: 0.3s; /* Velocidad de las transiciones */
+}
+
+html {
+    box-sizing: border-box; /* Asegura que el box-sizing se herede correctamente */
+}
+
+body {
+  margin: 0; /* Unificado */
+  padding: 0; /* Unificado */
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Unificado */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #323b49; /* Un fondo ligeramente gris para el cuerpo */
+  /* padding-top: 56.09px;  Asegúrate de que este padding coincida con la altura final de tu navbar-mobile */
+}
+
+/* --- Estilos de la Barra de Navegación Móvil --- */
+.navbar-mobile {  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1.5rem; /*Tamaño de la barra navbar*/
+  color: var(--text-color-light);
+  margin-bottom: 0;
+  position: fixed; /* Fija la barra en la parte superior */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  background-color: var(--background-dark);
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+/*REMPLAZAR POR LOGO*/
+.navbar-brand .logo {
+ /*height: 40px; /* Ajusta el tamaño de tu logo */
+  /*width: auto;
+  /*display: block; /* Elimina espacio extra debajo de la imagen */
+
+    /* Asegúrate de que el texto del logo sea visible */
+  color: var(--text-color-light); /* Hace el texto del logo blanco/claro */
+  text-decoration: none; /* Elimina el subrayado por defecto de los enlaces */
+  font-size: 1rem; /* Ajusta el tamaño del texto del logo */
+  font-weight: 700; /* Lo hace más audaz */
+}
+
+/* Nuevo contenedor para acciones (solo idioma) */
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Espacio entre el selector de idioma y el enlace de Davinci */
+    margin-left: auto; /* Empuja este grupo hacia la derecha, antes del toggle */
+    margin-right: 1rem; /* Espacio antes del botón de menú */
+}
+
+/* Selector de Idioma */
+.language-selector {
+    position: relative;
+    display: inline-block;
+}
+
+.lang-button {
+    background-color: transparent;
+    color: var(--text-color-light);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.4rem 0.6rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: background-color 0.3s ease;
+}
+
+.lang-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.lang-button i {
+    transition: transform 0.3s ease;
+}
+
+/* Cuando el selector está activo, gira la flecha */
+.language-selector.active .lang-button i {
+    transform: rotate(180deg);
+}
+
+.lang-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    min-width: 80px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 5px;
+    right: 0; /* Alinea el dropdown a la derecha del botón */
+}
+
+.lang-dropdown-content a {
+    color: var(--text-color-light);
+    padding: 8px 12px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.9rem;
+}
+
+.lang-dropdown-content a:hover {
+    background-color: var(--primary-color);
+}
+
+/* Muestra el contenido desplegable cuando el padre tiene la clase 'active' */
+.language-selector.active .lang-dropdown-content {
+    display: block;
+}
+
+/* --- Estilos del Botón de Menú Móvil --- */
+.menu-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Tamaño del área de clic */
+  height: 40px;
+  position: relative; /* Para posicionar el icono de flecha */
+  z-index: 1001; /* Asegura que el botón esté por encima del menú */
+}
+
+/* Estilo de la flecha SVG o pseudo-elemento */
+.menu-toggle .arrow-icon {
+  display: block;
+  width: 15px; /* Tamaño de la flecha */
+  height: 15px;
+  border: solid var(--text-color-light); /* Color de la flecha */
+  border-width: 0 3px 3px 0; /* Solo bordes inferior y derecho */
+  transform: rotate(-225deg); /* Gira para que apunte hacia la izquierda */
+  transition: transform var(--transition-speed) ease;
+}
+
+/* Cuando el menú está abierto, la flecha gira para apuntar a la derecha */
+.menu-toggle[aria-expanded="true"] .arrow-icon {
+  transform: rotate(-315deg);
+}
+
+/* --- Estilos del Menú de Navegación Móvil --- */
+.navbar-menu {
+  position: fixed;
+  top: 0; /* Comienza desde la parte superior de la ventana */
+  right: -100%; /* Inicialmente fuera de la pantalla a la derecha */
+  width: 100%; /* Ocupa todo el ancho */
+  height: 100vh; /* Ocupa toda la altura de la ventana */
+  background-color: rgba(33, 37, 41, 0.95); /* Fondo oscuro semitransparente */
+  transition: right var(--transition-speed) ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra los elementos del menú verticalmente */
+  align-items: center; /* Centra los elementos del menú horizontalmente */
+  z-index: 999; /* Por debajo del botón de toggle, pero por encima del contenido */
+  padding-top: 60px; /* Espacio para el navbar fijo en la parte superior */
+}
+
+.navbar-menu.is-open {
+  right: 0; /* Se desliza hacia la pantalla */
+}
+
+.navbar-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.navbar-menu li {
+  margin-bottom: 1.5rem; /* Espacio entre los elementos del menú */
+}
+
+.navbar-menu a {
+  color: var(--text-color-light);
+  text-decoration: none;
+  font-size: 1.8rem; /* Tamaño de fuente grande para la navegación móvil */
+  font-weight: 600;
+  transition: color var(--transition-speed) ease;
+}
+
+.navbar-menu a:hover {
+  color: var(--primary-color); /* Color de acento al pasar el ratón */
+}
+
+/* --- Media Query para Escritorio (Desktop: Navbar Completo) --- */
+@media (min-width: 768px) {
+    .navbar-mobile {
+        /* Cambiamos a justify-content: space-between para distribuir los elementos */
+        justify-content: space-between; 
+        padding: 20px 50px; 
+    }
+
+    .navbar-brand {
+        /* El logo se mantendrá a la izquierda por 'space-between' */
+        /* Puedes añadir un margen a la derecha si quieres más espacio entre el logo y el resto */
+        margin-right: 30px; /* Ajusta este valor según cuánto espacio necesites */
+    }
+
+    /* Ocultar el botón de despliegue (hamburguesa) en escritorio */
+    .menu-toggle {
+        display: none;
+    }
+
+    /* El menú de navegación se hace visible y horizontal */
+    .navbar-menu {
+        position: static; 
+        width: auto; 
+        height: auto; 
+        background-color: transparent; 
+        transform: translateX(0); 
+        flex-direction: row; 
+        /* Usamos flex-grow: 1 para que el menú ocupe el espacio central disponible */
+        flex-grow: 1; 
+        /* Quitamos margin-left: auto de aquí, ya que space-between lo manejará */
+        margin-left: 0; 
+        padding: 0;
+        /* Alinea los enlaces a la derecha dentro del espacio que ocupa el menú */
+        justify-content: flex-end; 
+    }
+
+    .navbar-menu ul {
+        display: flex; 
+        width: auto;
+        /* Espacio entre los enlaces de navegación y el selector de idioma */
+        margin-right: 30px; 
+    }
+
+    .navbar-menu ul li {
+        margin: 0 15px; 
+    }
+
+    .navbar-menu ul li a {
+        font-size: 1em; 
+        padding: 5px 0; 
+    }
+
+    /* Asegurar que el contenedor del selector de idioma sea visible en escritorio */
+    .navbar-actions {
+        display: flex; /* Aseguramos que sea flex para alinear el selector */
+        align-items: center; /* Centra verticalmente el selector */
+        /* No necesitas margin-left aquí porque justify-content: space-between lo posicionará */
+    }
+    
+    /* Estilos para el Language Selector dentro de .navbar-actions (si es tu estructura actual) */
+    .navbar-actions .language-selector {
+        position: relative; /* Mantener para el dropdown */
+        display: block; /* O flex si lo necesitas */
+    }
+
+    .navbar-actions .language-selector .lang-dropdown-content {
+        /* Para que el dropdown se muestre al hacer hover en escritorio */
+        display: none; /* Oculto por defecto */
+        position: absolute;
+        top: calc(100% + 5px); /* Posición debajo del botón */
+        left: 50%;
+        transform: translateX(-50%); /* Centrar bajo el botón */
+        /* Asegúrate de que tenga un color de fondo y z-index adecuados */
+        background-color: var(--background-dark); 
+        border: 1px solid var(--primary-color);
+        border-radius: 5px;
+        min-width: 80px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+        flex-direction: column;
+    }
+
+    .navbar-actions .language-selector:hover .lang-dropdown-content {
+        display: flex; /* Mostrar al hacer hover */
+    }
+}
+
+/* --- Estilos de la Sección Hero (Video) --- */
+.hero-video-container {
+  position: relative;
+  width: 100%;
+  height: 60vh; /* Ocupa toda la altura de la ventana */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--text-color-light);
+}
+
+.video-responsive {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.video-responsive video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que el video cubra todo el contenedor */
+  filter: brightness(0.6); /* Oscurece el video para que el texto sea legible */
+}
+
+/* --- Estilos del Botón de Audio (MODIFICADO) --- */
+.video-controls {
+  position: absolute;
+  bottom: 20px; /* Distancia desde abajo */
+  right: 20px;  /* Distancia desde la derecha */
+  z-index: 3; /* Asegura que esté por encima del video */
+  /* display: flex;  Elimina esto si solo hay un botón y quieres controlarlo directamente */
+  /* align-items: center; */
+  /* gap: 10px; */
+
+  /* Estilos para el fondo del botón/contenedor */
+  background-color: rgba(255, 255, 255, 0.2); /* Fondo blanco semitransparente */
+  border-radius: 50%; /* Lo hace circular */
+  width: 50px; /* Ancho para el círculo */
+  height: 50px; /* Alto para el círculo */
+  display: flex; /* Para centrar el ícono dentro */
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+  backdrop-filter: blur(5px); /* Efecto de desenfoque, similar al de iOS */
+  -webkit-backdrop-filter: blur(5px); /* Compatibilidad con Safari */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Sombra sutil */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-controls:hover {
+  background-color: rgba(255, 255, 255, 0.4); /* Un poco más opaco al pasar el ratón */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
+}
+
+.video-control-button {
+  background: none;
+  border: none;
+  color: #ffffff; /* Color del ícono blanco */
+  font-size: 1.8rem; /* Tamaño del ícono */
+  cursor: pointer;
+  padding: 0; /* Sin padding interno para el botón, ya lo controla el padre */
+  display: flex; /* Para centrar el ícono si hay un texto */
+  justify-content: center;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.video-control-button:hover {
+  color: var(--primary-color); /* Puedes cambiarlo a un color de acento o mantenerlo blanco */
+}
+
+.hero-content {
+  position: absolute; /* Se mantiene absoluto para superponerse al video */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2; /* Asegura que el texto esté por encima del video */
+  text-align: center;
+  color: var(--text-color-light); /* Asegura que el texto sea visible */
+  width: 90%;
+  max-width: 900px;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+/* --- Ajustes específicos para pantallas móviles en orientación vertical (portrait) --- */
+@media (max-width: 767px) and (orientation: portrait) {
+  .hero-video-container {
+    /* Aquí ajustamos la altura del contenedor principal para que tenga
+       la misma relación de aspecto que un video 16:9.
+       Esto reducirá el recorte lateral en pantallas móviles verticales. */
+    height: 56.25vw; /* Altura es 56.25% del ancho del viewport (para video 16:9) */
+    min-height: 250px; /* Opcional: asegura una altura mínima en pantallas muy pequeñas */
+
+    /* Puedes quitar las propiedades flexbox aquí si el hero-content es siempre absoluto */
+    display: block; /* Sobreescribe display:flex si no lo necesitas aquí */
+    justify-content: unset; /* Reinicia justify-content */
+    align-items: unset; /* Reinicia align-items */
+  }
+  /* El video dentro de .video-responsive seguirá usando object-fit: cover y llenará este nuevo contenedor */
+}
+
+/* --- Ajustes opcionales para pantallas móviles en orientación horizontal (landscape) --- */
+@media (max-width: 767px) and (orientation: landscape) {
+  .hero-video-container {
+    /* En móviles apaisados, mantener 100vh suele funcionar bien */
+    height: 100vh;
+  }
+}
+
+.hero-content h1 {
+  font-size: 2.8rem; /* Tamaño grande para el título */
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+  padding: 0.8rem 2rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: background-color var(--transition-speed) ease;
+}
+
+.cta-button:hover {
+  background-color: #0056b3; /* Un tono más oscuro */
+}
+
+/* Estilos para la Sección de Servicios en Fondo Oscuro */
+.services-section {
+    padding: 100px 20px; /* Espaciado generoso */
+    text-align: center; /* Centrar todo el contenido */
+    background-color: #1a1a1a; /* Fondo muy oscuro, casi negro */
+    color: #f0f0f0; /* Color de texto base para el resto de la sección */
+}
+
+.services-section h2 {
+    font-size: 3.5em; /* Título grande y llamativo */
+    color: #50c878; /* Verde Esmeralda Vibrante */
+    margin-bottom: 25px; /* Espacio debajo del título */
+    text-transform: uppercase; /* Mayúsculas para el título */
+    letter-spacing: 4px; /* Un poco de espaciado entre letras */
+    font-weight: 700; /* Negrita para el título */
+    text-shadow: 0 0 10px rgba(80, 200, 120, 0.4); /* Sombra sutil para el brillo */
+}
+
+.services-section .section-intro {
+    font-size: 1.4em; /* Texto introductorio legible */
+    color: #e0e0e0; /* Un blanco suave para contrastar con el fondo */
+    max-width: 900px; /* Limitar el ancho para una mejor lectura */
+    margin: 0 auto 60px auto; /* Centrar el párrafo y añadir espacio debajo */
+    line-height: 1.8; /* Buen espaciado entre líneas para legibilidad */
+    font-weight: 300; /* Fuente más ligera para elegancia */
+    opacity: 0.9; /* Ligeramente transparente para suavizar */
+}
+
+/* Estilos para los items de servicio individuales (opcional, para mantener coherencia) */
+/* Asegúrate de que estos también contrasten bien con el fondo oscuro */
+.service-item {
+    background-color: #2b2b2b; /* Un gris oscuro para los contenedores de servicio */
+    border: 1px solid #3a3a3a; /* Borde sutil */
+    color: #f0f0f0; /* Texto claro dentro de los items */
+    padding: 30px;
+    margin-bottom: 20px; /* Espacio entre los items */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+}
+
+.service-item h3 {
+    color: #66d9ef; /* Un color de acento para los títulos de los servicios */
+    font-size: 1.6em;
+    margin-bottom: 15px;
+}
+
+.service-item p {
+    color: #c0c0c0; /* Texto de descripción de servicio */
+}
+
+.service-item .view-more-btn {
+    color: #50c878; /* Mismo verde esmeralda para los botones "Ver más" */
+    border: 1px solid #50c878;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.service-item .view-more-btn:hover {
+    background-color: #50c878;
+    color: #1a1a1a; /* Texto oscuro al pasar el ratón */
+}
+
+
+/* Adaptación Responsiva (para pantallas más pequeñas) */
+@media (max-width: 768px) {
+    .services-section h2 {
+        font-size: 2.5em;
+        letter-spacing: 2px;
+    }
+
+    .services-section .section-intro {
+        font-size: 1.1em;
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-section h2 {
+        font-size: 2em;
+        letter-spacing: 1px;
+    }
+    .services-section .section-intro {
+        font-size: 1em;
+    }
+    .service-item {
+        padding: 20px;
+    }
+}
+
+/* --- ESTILOS PARA LA SECCIÓN DE SERVICIOS (ACORDEÓN) --- */
+.services-section {
+  padding: 4rem 1.5rem; /* Espaciado general de la sección */
+  background-color: var(--background-dark); /* Fondo oscuro */
+  color: var(--text-color-light); /* Texto claro */
+}
+
+.services-grid-container {
+  display: grid;
+  gap: 1.5rem; /* Espacio entre los ítems de servicio */
+  /* Por defecto para móviles: una sola columna */
+  grid-template-columns: 1fr;
+  max-width: 1200px; /* Ancho máximo del contenedor de la cuadrícula */
+  margin: 0 auto; /* Centrar la cuadrícula */
+}
+
+.service-item {
+  position: relative;
+  background-color: #2a3039; /* Un poco más claro que el fondo para que destaque */
+  border-radius: 8px;
+  overflow: hidden; /* Importante para el efecto de despliegue */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all var(--transition-speed) ease-in-out;
+  cursor: pointer; /* Indica que es clickeable */
+
+  display: flex; /* Para alinear el título principal, icono y contenido */
+  flex-direction: column; /* Contenido apilado verticalmente */
+  padding: 1.5rem; /* Espaciado interno de la tarjeta */
+}
+
+/* Título principal del servicio */
+.service-item h3 {
+  font-size: 1.6rem;
+  margin-bottom: 0.8rem;
+  color: var(--text-color-light);
+  line-height: 1.2;
+}
+
+/* Estilo del icono de expansión (flecha) */
+.expand-icon {
+  position: absolute; /* Posicionarlo de forma absoluta dentro del item */
+  top: 1.5rem;
+  right: 1.5rem;
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: solid var(--text-color-light);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg); /* Flecha apuntando hacia abajo por defecto */
+  transition: transform var(--transition-speed) ease-in-out;
+}
+
+/* Estado "expandido" para móvil */
+.service-item.is-expanded .expand-icon {
+  transform: rotate(-135deg); /* Gira hacia arriba cuando está expandido */
+}
+
+/* Contenedor del contenido oculto/desplegable */
+.service-content {
+  max-height: 0; /* Por defecto oculto */
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: max-height var(--transition-speed) ease-out,
+              opacity var(--transition-speed) ease-out,
+              visibility var(--transition-speed) ease-out;
+}
+
+/* Cuando el item está expandido */
+.service-item.is-expanded .service-content {
+  max-height: 500px; /* Suficiente altura para el contenido. Ajusta si es necesario */
+  opacity: 1;
+  visibility: visible;
+  padding-top: 1rem; /* Pequeño padding entre el título y el contenido desplegado */
+}
+
+.service-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.service-content .view-more-btn {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color var(--transition-speed) ease;
+}
+
+.service-content .view-more-btn:hover {
+  background-color: #0056b3; /* Un tono más oscuro */
+}
+
+/* Estilos para el texto vertical en el lateral de la tarjeta */
+.service-folder-header {
+  position: absolute;
+  top: 50%; /* Centrar verticalmente */
+  left: 0px; /* Ajusta esto para moverlo más a la izquierda si lo necesitas */
+  transform: translateY(-50%) rotate(-90deg); /* Centra y rota 90 grados a la izquierda */
+  transform-origin: 0% 0%; /* Punto de rotación en la esquina superior izquierda del elemento */
+  
+  white-space: nowrap; /* Evita que el texto se rompa */
+  font-size: 2.5rem; /* Ajusta el tamaño de la fuente */
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.1); /* Texto casi invisible por defecto */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  user-select: none;
+  pointer-events: none;
+  transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+/* Cuando el item está en hover o expandido, el título vertical se vuelve más visible */
+.service-item:hover .service-folder-header,
+.service-item.is-expanded .service-folder-header { /* is-expanded para móvil */
+  color: rgba(255, 255, 255, 0.4);
+}
+
+
+/* --- SECCIÓN CONTACTO --- */
+.contact-section {
+    padding: 4rem 1.5rem;
+    background-color: var(--background-dark);
+    color: var(--text-color-light);
+    text-align: center;
+}
+
+.contact-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column; /* Apilado en móvil */
+    gap: 3rem;
+}
+
+.contact-info {
+    flex: 1;
+    text-align: center; /* Centrado en móvil */
+}
+
+.contact-info h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.contact-info p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.contact-details p {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrado en móvil */
+    gap: 10px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.contact-details p i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.social-links {
+    margin-top: 2rem;
+    text-align: center; /* Centrado en móvil */
+}
+
+.social-links a {
+    color: var(--text-color-light);
+    font-size: 1.8rem;
+    margin: 0 1rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+}
+
+.contact-form-wrapper {
+    flex: 1;
+    background-color: #2a3039;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.contact-form .form-group {
+    margin-bottom: 1.5rem;
+    text-align: left; /* Alinea los inputs y labels a la izquierda */
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #444;
+    background-color: #333;
+    color: var(--text-color-light);
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Asegura que padding no aumente el ancho total */
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: #aaa;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.3);
+}
+
+.contact-form textarea {
+    resize: vertical; /* Permite redimensionar verticalmente */
+}
+
+.contact-form .submit-btn {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background-color var(--transition-speed) ease;
+    width: 100%; /* Ocupa todo el ancho en móvil */
+}
+
+.contact-form .submit-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Oculta visualmente, pero accesible para lectores de pantalla */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Media Query para Escritorio (contact-section) */
+@media (min-width: 768px) {
+    .contact-container {
+        flex-direction: row; /* Columnas lado a lado en desktop */
+        align-items: flex-start; /* Alinea el contenido al inicio de cada columna */
+        text-align: left;
+    }
+
+    .contact-info h2,
+    .contact-info p {
+        text-align: left; /* Alinea a la izquierda en desktop */
+    }
+
+    .contact-details p {
+        justify-content: flex-start; /* Alinea los íconos y texto a la izquierda */
+    }
+
+    .social-links {
+        text-align: left; /* Alinea los iconos de redes sociales a la izquierda */
+    }
+
+    .contact-form .submit-btn {
+        width: auto; /* El botón no ocupa el 100% en desktop */
+        padding: 0.8rem 2.5rem; /* Ajusta el padding para que sea similar a otros botones */
+        margin-left: auto; /* Centra el botón si es necesario o alinea a la derecha */
+        margin-right: auto;
+    }
+}
+
+
+/* --- Media Query para Escritorio (Servicios) --- */
+@media (min-width: 768px) {
+  .services-grid-container {
+    display: flex; /* Usamos flexbox para el efecto de expansión */
+    justify-content: center;
+    align-items: stretch; /* Asegura que todos los items tengan la misma altura */
+    gap: 0; /* Eliminar el gap si quieres que los bordes se toquen */
+    border-radius: 8px; /* Aplicar a todo el contenedor para esquinas redondeadas */
+    overflow: hidden; /* Asegura que los bordes redondeados se vean bien */
+  }
+
+  .service-item {
+    flex: 1; /* Todos los items tienen el mismo ancho inicial */
+    border-right: 1px solid rgba(255, 255, 255, 0.1); /* Separador vertical */
+    border-radius: 0; /* Quitar border-radius individuales si los tenía */
+    padding: 2rem; /* Más padding en desktop */
+    flex-direction: column; /* Contenido apilado normal */
+    justify-content: space-between; /* Espacia el contenido verticalmente */
+  }
+
+  .service-item:first-child {
+    border-top-left-radius: 8px; /* Redondear esquina del primer item */
+    border-bottom-left-radius: 8px;
+  }
+
+  .service-item:last-child {
+    border-right: none; /* Eliminar el borde derecho del último item */
+    border-top-right-radius: 8px; /* Redondear esquina del último item */
+    border-bottom-right-radius: 8px;
+  }
+
+  /* Efecto de ampliación al hacer hover en desktop */
+  .service-item:hover { /* El efecto de ampliación principal será con hover */
+    flex: 3; /* El item se amplía para ocupar más espacio */
+    background-color: var(--primary-color); /* Cambia de color al expandirse/hover */
+    /* Si quieres que se 'fije' al hacer clic en desktop, necesitarías JS y la clase .is-expanded-desktop */
+  }
+
+  /* Si deseas un efecto de clic que se "fije" en desktop, puedes usar esta clase con JS */
+  .service-item.is-expanded-desktop {
+    flex: 3;
+    background-color: var(--primary-color);
+  }
+
+  /* El título vertical se hace más visible al hacer hover/expandir */
+  .service-item:hover .service-folder-header,
+  .service-item.is-expanded-desktop .service-folder-header {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Ocultar la flecha de expansión en desktop si no la usas */
+  .service-item .expand-icon {
+    display: none;
+  }
+
+  /* El contenido siempre es visible en desktop, pero animamos su aparición en hover */
+  .service-content {
+    max-height: none; /* No restringir altura en desktop */
+    opacity: 1;
+    visibility: visible;
+    padding-top: 0; /* No padding extra aquí */
+    transition: none; /* Desactivar transiciones de height/opacity para desktop */
+  }
+
+  /* Estilos específicos para el texto y botón que se muestran con el hover/expansión */
+  .service-item .service-content p,
+  .service-item .service-content .view-more-btn {
+    opacity: 0; /* Por defecto oculto en desktop */
+    transform: translateY(10px); /* Un pequeño desplazamiento hacia abajo */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .service-item:hover .service-content p,
+  .service-item.is-expanded-desktop .service-content p,
+  .service-item:hover .service-content .view-more-btn,
+  .service-item.is-expanded-desktop .service-content .view-more-btn {
+    opacity: 1; /* Visible al hacer hover/expandir */
+    transform: translateY(0); /* Vuelve a su posición original */
+  }
+
+  /* El título H3 también puede cambiar, centrado en desktop */
+  .service-item h3 {
+    text-align: center;
+    margin-top: 1rem;
+  }
+}
+
+/* --- Sección Quienes Somos (About Us) --- */
+.about-us-section {
+    padding: 80px 0; /* Padding superior e inferior para espacio */
+    background-color: var(--background-dark); /* Color de fondo oscuro (ajusta según tu tema) */
+    color: var(--text-color-light); /* Texto claro para contraste */
+}
+
+.about-us-container {
+    display: flex;
+    flex-direction: column; /* Por defecto en columna para móviles */
+    gap: 40px; /* Espacio entre la imagen y el contenido */
+    align-items: center; /* Centra los elementos horizontalmente en móvil */
+    text-align: center; /* Centra el texto en móvil */
+}
+
+.about-us-image-wrapper {
+    width: 90%; /* Ancho de la imagen en móvil */
+    max-width: 500px; /* Límite máximo para que no sea muy grande en tablets */
+    border-radius: 10px; /* Bordes redondeados para la imagen */
+    overflow: hidden; /* Asegura que la imagen no se salga del radio */
+    box-shadow: 0 10px 30px var(--shadow-color); /* Sombra para profundidad */
+}
+
+.about-us-image-wrapper img {
+    width: 100%;
+    height: auto; /* Mantiene la proporción de la imagen */
+    display: block; /* Elimina espacio extra debajo de la imagen */
+    object-fit: cover; /* Asegura que la imagen cubra el contenedor sin distorsionarse */
+}
+
+.about-us-content {
+    flex: 1; /* Permite que el contenido tome el espacio disponible */
+    max-width: 600px; /* Límite de ancho para el texto */
+}
+
+.about-us-content .subtitle {
+    font-size: 0.9em;
+    color: var(--primary-color); /* Color de tu color primario */
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.about-us-content h2 {
+    font-size: 2.5em; /* Tamaño grande para el título */
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.about-us-content p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* Estilos básicos para el botón si no los tienes ya */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border: 1px solid var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: darken(var(--primary-color), 10%); /* Usar un color fijo si no usas preprocesadores */
+    color: var(--text-color-light);
+}
+
+
+/* --- Media Query para Escritorio (Desktop) --- */
+@media (min-width: 768px) {
+    .about-us-container {
+        flex-direction: row; /* Cambia a fila para desktop */
+        text-align: left; /* Alinea el texto a la izquierda */
+        gap: 60px; /* Más espacio entre imagen y texto en desktop */
+        justify-content: center; /* Centra el contenido en el contenedor */
+    }
+
+    .about-us-image-wrapper {
+        width: 50%; /* La imagen ocupa la mitad del espacio */
+        max-width: none; /* Elimina el max-width para que se ajuste al 50% */
+    }
+
+    .about-us-content {
+        width: 50%; /* El contenido ocupa la otra mitad */
+    }
+
+    .about-us-content .subtitle,
+    .about-us-content h2,
+    .about-us-content p {
+        text-align: left; /* Asegura que el texto esté alineado a la izquierda */
+    }
+}
+
+/* Opcional: Ajustes para pantallas aún más grandes */
+@media (min-width: 1200px) {
+    .about-us-container {
+        gap: 80px;
+    }
+    .about-us-content h2 {
+        font-size: 3em;
+    }
+}
+
+/* --- Sección Portafolio --- */
+.portfolio-section {
+    padding: 80px 0;
+    background-color: var(--background-dark); /* Fondo oscuro */
+    color: var(--text-color-light); /* Texto claro */
+    text-align: center;
+}
+
+.portfolio-section .subtitle {
+    font-size: 0.9em;
+    color: var(--primary-color);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.portfolio-section h2 {
+    font-size: 2.8em;
+    margin-bottom: 50px; /* Más espacio debajo del título */
+}
+
+/* --- Filtros del Portafolio --- */
+.portfolio-filters {
+    margin-bottom: 50px;
+    display: flex;
+    flex-wrap: wrap; /* Permite que los botones se envuelvan en líneas nuevas */
+    justify-content: center;
+    gap: 15px; /* Espacio entre los botones */
+}
+
+.filter-btn {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 10px 25px;
+    border-radius: 30px; /* Bordes más redondeados */
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.filter-btn:hover,
+.filter-btn.active { /* Estilo para el botón activo y al pasar el ratón */
+    background-color: var(--primary-color);
+    color: var(--background-dark); /* Color del texto del botón activo/hover */
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4); /* Sombra para el botón activo */
+}
+
+/* --- Cuadrícula del Portafolio --- */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Columnas responsivas */
+    gap: 25px; /* Espacio entre los elementos */
+}
+
+.portfolio-item {
+    position: relative;
+    overflow: hidden; /* Oculta cualquier desbordamiento, especialmente útil para border-radius */
+    border-radius: 8px; /* Bordes redondeados para cada elemento */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-5px); /* Pequeño efecto de elevación al pasar el ratón */
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 250px; /* Altura fija para las imágenes del portafolio */
+    object-fit: cover; /* Recorta la imagen para que rellene el espacio */
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.portfolio-item:hover img {
+    transform: scale(1.05); /* Zoom ligero en la imagen al pasar el ratón */
+}
+
+/* --- Capa de Superposición (Overlay) --- */
+.portfolio-item .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* Por defecto oculto */
+    transition: opacity 0.3s ease;
+}
+
+.portfolio-item:hover .overlay {
+    opacity: 1; /* Visible al pasar el ratón */
+}
+
+.overlay-content {
+    color: var(--text-color-light);
+    text-align: center;
+    padding: 20px;
+}
+
+.overlay-content h3 {
+    font-size: 1.6em;
+    margin-bottom: 10px;
+}
+
+.overlay-content p {
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+/* --- Media Queries para Responsividad (Ajustes Adicionales) --- */
+@media (min-width: 768px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Ligeramente más grandes en tablets */
+        gap: 30px;
+    }
+
+    .portfolio-section h2 {
+        font-size: 3.5em;
+    }
+}
+
+@media (min-width: 1024px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 columnas fijas en pantallas grandes */
+    }
+}
+
+/* --- Estilos para el mensaje de Feedback del Formulario --- */
+.form-feedback-message {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #28a745; /* Un verde vibrante para éxito */
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    /* Ocultar inicialmente y preparar para la animación */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    /* Asegurarse de que no ocupe espacio si está oculto */
+    max-height: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Clase para mostrar el mensaje (añadida por JS) */
+.form-feedback-message.show {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 200px; /* Suficiente altura para el mensaje */
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+/* Estilo para mensajes de error (opcional) */
+.form-feedback-message.error {
+    background-color: #dc3545; /* Rojo para errores */
+}
+
+/* --- Botón Flotante de WhatsApp --- */
+.whatsapp-float {
+    position: fixed; /* Mantiene el botón fijo en la pantalla */
+    bottom: 25px; /* Distancia desde la parte inferior de la ventana */
+    right: 25px; /* Distancia desde la parte derecha de la ventana */
+    z-index: 9999; /* Asegura que el botón esté por encima de todos los demás elementos */
+}
+
+.whatsapp-float a {
+    display: flex; /* Para centrar el icono dentro del círculo */
+    justify-content: center;
+    align-items: center;
+    background-color: #25d366; /* Color verde oficial de WhatsApp */
+    color: white; /* Color del icono */
+    width: 65px; /* Ancho del botón */
+    height: 65px; /* Alto del botón (igual al ancho para que sea un círculo perfecto) */
+    border-radius: 50%; /* Hace el botón completamente redondo */
+    text-align: center;
+    font-size: 2.5em; /* Tamaño del icono de WhatsApp */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Sombra para darle un efecto 3D/flotante */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Transiciones suaves al interactuar */
+    text-decoration: none; /* Elimina el subrayado del enlace */
+}
+
+.whatsapp-float a:hover {
+    transform: scale(1.1); /* Agranda el botón ligeramente al pasar el ratón */
+    background-color: #1da851; /* Un verde ligeramente más oscuro al pasar el ratón */
+}
+
+/* Ajustes para Responsividad (opcional, para pantallas más pequeñas) */
+@media (max-width: 767px) {
+    .whatsapp-float {
+        bottom: 15px; /* Reduce la distancia desde abajo en móviles */
+        right: 15px; /* Reduce la distancia desde la derecha en móviles */
+    }
+    .whatsapp-float a {
+        width: 55px; /* Reduce el tamaño del botón en móviles */
+        height: 55px;
+        font-size: 2em; /* Reduce el tamaño del icono en móviles */
+    }
+}
+
+/* --- Estilos del Pie de Página (Copyright) --- */
+.footer {
+    background-color: #1a1e22; /* Un tono más oscuro para el pie de página */
+    color: #bbb;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
