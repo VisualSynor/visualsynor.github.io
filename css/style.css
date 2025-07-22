@@ -1147,6 +1147,48 @@ body {
     }
 }
 
+/* --- Botón Flotante de WhatsApp --- */
+.whatsapp-float {
+    position: fixed; /* Mantiene el botón fijo en la pantalla */
+    bottom: 25px; /* Distancia desde la parte inferior de la ventana */
+    right: 25px; /* Distancia desde la parte derecha de la ventana */
+    z-index: 9999; /* Asegura que el botón esté por encima de todos los demás elementos */
+}
+
+.whatsapp-float a {
+    display: flex; /* Para centrar el icono dentro del círculo */
+    justify-content: center;
+    align-items: center;
+    background-color: #25d366; /* Color verde oficial de WhatsApp */
+    color: white; /* Color del icono */
+    width: 65px; /* Ancho del botón */
+    height: 65px; /* Alto del botón (igual al ancho para que sea un círculo perfecto) */
+    border-radius: 50%; /* Hace el botón completamente redondo */
+    text-align: center;
+    font-size: 2.5em; /* Tamaño del icono de WhatsApp */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Sombra para darle un efecto 3D/flotante */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Transiciones suaves al interactuar */
+    text-decoration: none; /* Elimina el subrayado del enlace */
+}
+
+.whatsapp-float a:hover {
+    transform: scale(1.1); /* Agranda el botón ligeramente al pasar el ratón */
+    background-color: #1da851; /* Un verde ligeramente más oscuro al pasar el ratón */
+}
+
+/* Ajustes para Responsividad (opcional, para pantallas más pequeñas) */
+@media (max-width: 767px) {
+    .whatsapp-float {
+        bottom: 15px; /* Reduce la distancia desde abajo en móviles */
+        right: 15px; /* Reduce la distancia desde la derecha en móviles */
+    }
+    .whatsapp-float a {
+        width: 55px; /* Reduce el tamaño del botón en móviles */
+        height: 55px;
+        font-size: 2em; /* Reduce el tamaño del icono en móviles */
+    }
+}
+
 /* --- Estilos del Pie de Página (Copyright) --- */
 .footer {
     background-color: #1a1e22; /* Un tono más oscuro para el pie de página */
