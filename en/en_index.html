@@ -29,7 +29,7 @@
         </button>
         <nav id="mobile-menu" class="navbar-menu">
             <ul>
-                <li><a href="#services">Services</a></li>
+                <li><a href="#servicios-destacados">Services</a></li>
                 <li><a href="#about-us">About Us</a></li>
                 <li><a href="#portfolio">Portfolio</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -51,140 +51,88 @@
     </div>
     </section>
 
-    <section id="services" class="services-section">
-        <h2>COMPREHENSIVE SERVICES FOR YOUR BRAND</h2>
-        <p>At Visual Synor, we are dedicated to offering a full range of creative and technology services. From conceptualization to final execution, our expert team is committed to excellence and the results your project deserves.</p>
-        <div class="services-grid-container">
-
-            <div class="service-item">
-                <h3>Integral Audiovisual Production</h3> <span class="expand-icon"></span>
-                <div class="service-content">
-                    <p>From directing and recording events and scripted series, to high-level editing and post-production. We create corporate, advertising, and dynamic content that grabs attention.</p>
-                    <a href="#" class="view-more-btn">View More</a>
-                </div>
-            </div>
-
-            <div class="service-item">
-                <h3>Digital Strategy & Social Media Content</h3> <span class="expand-icon"></span>
-                <div class="service-content">
-                    <p>Expert social media management, content strategy development, and attractive message creation. We design digital experiences that connect your brand with its audience.</p>
-                    <a href="#" class="view-more-btn">View More</a>
-                </div>
-            </div>
-
-            <div class="service-item">
-                <h3>Automatizer IA</h3> <span class="expand-icon"></span>
-                <div class="service-content">
-                    <p>Revolutionize your business with artificial intelligence solutions. We implement smart automations to optimize repetitive processes, improve efficiency, and enhance decision-making, allowing you to focus your resources on what truly matters: the growth of your brand.</p>
-                    <a href="#" class="view-more-btn">View More</a>
-                </div>
-            </div>
+        <section id="servicios-destacados" class="servicios-destacados-section">
+        <div class="container">
+            <p class="subtitle">NUESTROS SERVICIOS ESPECIALES</p>
+            <h2>Explora Nuestras Soluciones Destacadas</h2>
+            <p class="description">Sumérgete en la innovación con nuestros servicios más avanzados, diseñados para transformar tu presencia digital y optimizar tus operaciones.</p>
             
+            <img src="/assets/img-services/servicios-producion-ia-vfx-paudiovisual-inteligencia-artificial-contenido.jpg" alt="Imagen apaisada de servicios" class="landscape-img">
 
+            <div class="destacados-cards-wrapper">
+                <div class="destacado-card">
+                    <div class="card-image" style="background-image: url('/assets/img-services/automatizaciones-inteligencia-artificial-web-ia-corporativo.jpeg');"></div>
+                    <div class="card-overlay">
+                        <h3>Desarrollo Web Personalizado</h3>
+                        <p>Creamos sitios web únicos y optimizados para tu negocio, con diseño responsivo y experiencia de usuario excepcional.</p>
+                    </div>
+                </div>
+                <div class="destacado-card">
+                    <div class="card-image" style="background-image: url('/assets/img-services/produccion-audiovisual-inteligencia\ artificial.jpg');"></div>
+                    <div class="card-overlay">
+                        <h3>Marketing Digital Avanzado</h3>
+                        <p>Estrategias SEO, SEM y de contenido para aumentar tu visibilidad y atraer a tu audiencia ideal.</p>
+                    </div>
+                </div>
+                <div class="destacado-card">
+                    <div class="card-image" style="background-image: url('/assets/img-services/social-media-marketing-digital-metricas.jpeg');"></div>
+                    <div class="card-overlay">
+                        <h3>Consultoría de Branding Creativo</h3>
+                        <p>Desarrollamos la identidad visual y narrativa de tu marca para una conexión emocional duradera.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
+        </section>
 
     <section id="about-us" class="about-us-section">
     <div class="container about-us-container">
         <div class="about-us-image-wrapper">
-            <img src="/assets/img/tu-imagen-about-us.jpg" alt="Equipo de trabajo o visión de la empresa">
+            <img src="/assets/rafael-valenciano.jpeg" alt="Equipo de trabajo o visión de la empresa">
         </div>
         <div class="about-us-content">
             <p class="subtitle">NUESTRA ESENCIA</p>
             <h2>Acerca de Visual Synor</h2>
             <p>En Visual Synor, somos un equipo de apasionados por la creatividad y la innovación visual. Nos especializamos en transformar ideas en experiencias memorables, combinando diseño gráfico, producción audiovisual, fotografía y estrategias digitales. Nuestra misión es potenciar la identidad de tu marca y conectar con tu audiencia de manera impactante, construyendo puentes entre tu visión y el éxito comercial.</p>
-            <a href="#contacto" class="btn btn-primary">Contáctanos</a>
+            <a href="#contact" class="btn btn-primary">Contáctanos</a>
         </div>
     </div>
     </section>
 
-    <section id="portfolio" class="portfolio-section">
+<section id="interactive-portfolio" class="interactive-portfolio-section">
     <div class="container">
-        <p class="subtitle">NUESTRO TRABAJO</p>
-        <h2>Explora Nuestro Portafolio</h2>
+        <h2 class="section-title">NUESTROS PROYECTOS DESTACADOS</h2>
+        <p class="section-description">Explora una selección de nuestros trabajos más recientes y descubre la creatividad detrás de cada proyecto.</p>
 
-        <div class="portfolio-filters">
-            <button class="filter-btn active" data-filter="all">ALL</button>
-            <button class="filter-btn" data-filter="branding">Branding</button>
-            <button class="filter-btn" data-filter="web">Web</button>
-            <button class="filter-btn" data-filter="photography">Fotografía</button>
-            <button class="filter-btn" data-filter="audiovisual">Audiovisual</button>
-        </div>
-
-        <div class="portfolio-grid">
-            <div class="portfolio-item" data-category="branding">
-                <img src="/assets/img/portfolio/branding-project1.jpg" alt="Diseño de Branding para Empresa X">
-                <div class="overlay">
-                    <div class="overlay-content">
-                        <h3>Marca Corporativa Elegante</h3>
-                        <p>Branding</p>
-                    </div>
+        <div class="interactive-portfolio-content">
+            <div id="portfolio-youtube-player" class="portfolio-background-video"></div>
+            <div class="portfolio-details-wrapper">
+                <div class="portfolio-details">
+                    <h3 id="project-title">Título del Proyecto</h3>
+                    <p id="project-description">Breve descripción del proyecto seleccionado. Aquí podrás ver los detalles principales y una vista previa de lo que trata.</p>
+                    <a href="#" id="view-more-button" class="btn btn-primary">Ver más</a>
                 </div>
             </div>
 
-            <div class="portfolio-item" data-category="web">
-                <img src="/assets/img/portfolio/web-project1.jpg" alt="Diseño Web para Tienda Online">
-                <div class="overlay">
-                    <div class="overlay-content">
-                        <h3>E-commerce Moderno</h3>
-                        <p>Web Design</p>
+            <div class="portfolio-cards-wrapper">
+                <div class="portfolio-cards-container">
+                    <div class="portfolio-card" data-project-id="4" data-title="Tesoros Olvidados" data-description="Producción audiovisual de la segunda temporada de una serie de aventura, encargándonos de la dirección, grabación y postproducción." data-link="https://hipernextmedia.com/hiper/index.php/producciones/documentales/tesoros-olvidados" data-youtube-id="Qc1ZXXjSGu8">
+                        <img src="/assets/portfolio/Tesoros-olvidados-trailer-aventura.jpeg" alt="Tesoros Olvidados">
+                    </div>
+                    <div class="portfolio-card" data-project-id="5" data-title="Very Well" data-description="Serie de comedia de turismo con enfoque en la enseñanza de inglés, un proyecto integral desde el guion hasta la edición final." data-link="https://hipernextmedia.com/hiper/index.php/producciones/series/very-well" data-youtube-id="bxkGkN2RxcY">
+                        <img src="/assets/portfolio/ingles-serie-turismo-verywell-comedia.jpeg" alt="Very Well">
+                    </div>
+                    <div class="portfolio-card" data-project-id="6" data-title="Ana María" data-description="Cortometraje de acción y suspenso ambientado en Cali, explorando temáticas de drama y conflicto a través de una intensa narrativa." data-link="https://hipernextmedia.com/hiper/index.php/producciones/series/ana-maria" data-youtube-id="_ATmIwS3naw">
+                        <img src="/assets/portfolio/accion-suspenso-drama-taxi-cali.jpeg" alt="Ana Maria">
+                    </div>
+                    <div class="portfolio-card" data-project-id="7" data-title="En la Otra Orilla" data-description="Serie dramática que aborda la corrupción policial y el conflicto armado, ofreciendo una perspectiva cruda y realista de la sociedad." data-link="https://hipernextmedia.com/hiper/index.php/producciones/series/la-otra-orilla" data-youtube-id="VdxSonMgwSg">
+                        <img src="/assets/portfolio/policia-corrupcion-conflicto armado-serie-abuelos.jpg" alt="En la Otra Orilla">
                     </div>
                 </div>
             </div>
-
-            <div class="portfolio-item" data-category="photography">
-                <img src="/assets/img/portfolio/photography-project1.jpg" alt="Fotografía de Producto Creativa">
-                <div class="overlay">
-                    <div class="overlay-content">
-                        <h3>Sesión de Producto Innovadora</h3>
-                        <p>Fotografía</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="portfolio-item" data-category="audiovisual">
-                <img src="/assets/portfolio/Tesoros-olvidados-trailer-aventura.jpeg" alt="Video Promocional para Lanzamiento">
-                <div class="overlay">
-                    <div class="overlay-content">
-                        <h3>Tesoros Olvidados <br>Segunda Temporada</h3>
-                        <p>Audiovisual</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="portfolio-item" data-category="audiovisual">
-                <img src="/assets/portfolio/ingles-serie-turismo-verywell-comedia.jpeg" alt="Video Promocional para Lanzamiento">
-                <div class="overlay">
-                    <div class="overlay-content">
-                        <h3>Very Well</h3>
-                        <p>Audiovisual</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="portfolio-item" data-category="audiovisual">
-                <img src="/assets/portfolio/accion-suspenso-drama-taxi-cali.jpeg" alt="Video Promocional para Lanzamiento">
-                <div class="overlay">
-                    <div class="overlay-content">
-                        <h3>Ana Maria</h3>
-                        <p>Audiovisual</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="portfolio-item" data-category="audiovisual">
-                <img src="/assets/portfolio/policia-corrupcion-conflicto armado-serie-abuelos.jpg" alt="Video Promocional para Lanzamiento">
-                <div class="overlay">
-                    <div class="overlay-content">
-                        <h3>En la otra orilla</h3>
-                        <p>Audiovisual</p>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
-    </section>
+</section>
 
     <section id="contact" class="contact-section">
     <div class="contact-container">
@@ -203,24 +151,24 @@
             </div>
         </div>
         <div class="contact-form-wrapper">
-            <form class="contact-form">
+            <form class="contact-form" action="https://formspree.io/f/xpwlpqge" method="post">
                 <div class="form-group">
-                    <label for="name" class="visually-hidden">Name</label>
-                    <input type="text" id="name" name="name" placeholder="Full Name" required>
+                    <label for="name" class="visually-hidden">Nombre</label>
+                    <input type="text" id="name" name="name" placeholder="Nombre completo" required>
                 </div>
                 <div class="form-group">
                     <label for="email" class="visually-hidden">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Email Address" required>
+                    <input type="email" id="email" name="_replyto" placeholder="Correo electrónico" required>
                 </div>
                 <div class="form-group">
-                    <label for="subject" class="visually-hidden">Subject</label>
-                    <input type="text" id="subject" name="subject" placeholder="Subject">
+                    <label for="subject" class="visually-hidden">Asunto</label>
+                    <input type="text" id="subject" name="_subject" placeholder="Asunto">
                 </div>
                 <div class="form-group">
-                    <label for="message" class="visually-hidden">Message</label>
-                    <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                    <label for="message" class="visually-hidden">Mensaje</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Tu mensaje" required></textarea>
                 </div>
-                <button type="submit" class="submit-btn">Send Message</button>
+                <button type="submit" class="submit-btn">Enviar Mensaje</button>
             </form>
         </div>
     </div>
