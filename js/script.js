@@ -68,120 +68,142 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Lógica para los acordeones de servicios (tu código existente)
-    const serviceItems = document.querySelectorAll('.service-item');
+    // Nueva Lógica de la Sección de Portafolio Interactivo
+    const projectTitle = document.getElementById('project-title');
+    const projectDescription = document.getElementById('project-description');
+    const viewMoreButton = document.getElementById('view-more-button');
+    const portfolioCards = document.querySelectorAll('.portfolio-card');
+    const portfolioBackgroundVideoContainer = document.getElementById('portfolio-youtube-player'); // Ahora es el div contenedor del reproductor
 
-    serviceItems.forEach(item => {
-        item.addEventListener('click', function() {
-            // Lógica para móvil (expandir/contraer)
-            if (window.innerWidth < 768) {
-                // Si el item ya está expandido, lo contrae
-                if (this.classList.contains('is-expanded')) {
-                    this.classList.remove('is-expanded');
-                } else {
-                    // Cierra cualquier otro item expandido
-                    serviceItems.forEach(otherItem => {
-                        if (otherItem !== this) {
-                            otherItem.classList.remove('is-expanded');
-                        }
-                    });
-                    // Expande el item clicado
-                    this.classList.add('is-expanded');
-                }
-            } else {
-                // Lógica para desktop (expande el hover)
-                // En desktop, el hover maneja la expansión. Este clic podría usarse para "fijar" un panel
-                // si quisieras un comportamiento diferente al solo hover. Por ahora, lo dejamos como estaba.
-                // Si quieres que el clic "bloquee" un panel expandido, descomenta:
-                // serviceItems.forEach(otherItem => {
-                //     if (otherItem !== item) {
-                //         otherItem.classList.remove('is-expanded-desktop');
-                //     }
-                // });
-                // this.classList.toggle('is-expanded-desktop');
+    let player; // Variable para almacenar la instancia del reproductor de YouTube
+
+    // 1. Cargar la API de YouTube IFrame Player de forma asíncrona
+    function loadYouTubeAPI() {
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+
+    // 2. Esta función se ejecutará automáticamente cuando la API de YouTube esté lista
+    window.onYouTubeIframeAPIReady = function() {
+        // Inicializa el reproductor con el ID del primer video (si existe)
+        const initialVideoId = portfolioCards.length > 0 ? portfolioCards[0].getAttribute('data-youtube-id') : null;
+        
+        player = new YT.Player('portfolio-youtube-player', {
+            videoId: initialVideoId, // El ID del primer video
+            playerVars: {
+                autoplay: 1,      // Autoreproducir
+                mute: 1,          // Silenciar (necesario para autoplay en muchos navegadores)
+                loop: 1,          // Bucle infinito
+                controls: 0,      // Ocultar controles del reproductor
+                playlist: initialVideoId, // Necesario para que loop funcione con un solo video
+                showinfo: 0,      // Ocultar título del video
+                modestbranding: 1, // Ocultar logo de YouTube (un poco)
+                fs: 0,            // Deshabilitar botón de pantalla completa
+                rel: 0,           // No mostrar videos relacionados al finalizar
+                autohide: 1,      // Ocultar la barra de progreso
+                start: 0          // Iniciar desde el principio
+            },
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
             }
+        });
+    };
+
+    // 3. La API llamará a esta función cuando el reproductor de video esté listo
+    function onPlayerReady(event) {
+        event.target.playVideo(); // Asegura que el video se reproduzca
+        // Si quieres que el primer proyecto se active visualmente al cargar el video:
+        if (portfolioCards.length > 0) {
+             // Simulate a click on the first card to load its details and apply active class
+             portfolioCards[0].click(); 
+        } else {
+             updateProjectDetails("", "", "", "", true); // Muestra el mensaje por defecto si no hay tarjetas
+        }
+    }
+
+    // 4. La API llama a esta función cuando el estado del reproductor cambia (play, pause, end, etc.)
+    function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.ENDED) {
+            // Reinicia el video si termina y el bucle no lo hace automáticamente
+            player.seekTo(0);
+            player.playVideo();
+        }
+    }
+
+    // Función para actualizar los detalles del proyecto y el video de YouTube
+    function updateProjectDetails(title, description, link, youtubeId, defaultText = false) {
+        if (defaultText) {
+            projectTitle.textContent = "Selecciona un Proyecto";
+            projectDescription.textContent = "Haz clic en una de las tarjetas de la derecha para ver los detalles del proyecto aquí.";
+            viewMoreButton.style.display = 'none'; // Oculta el botón
+            viewMoreButton.removeAttribute('href'); // Limpia el href
+            viewMoreButton.removeAttribute('target'); // Limpia el target
+            // Si no hay tarjeta seleccionada, pausar el video o cargar un video por defecto vacío
+            if (player && typeof player.pauseVideo === 'function') {
+                player.pauseVideo();
+            }
+        } else {
+            projectTitle.textContent = title;
+            projectDescription.textContent = description;
+            viewMoreButton.style.display = 'inline-block'; // Muestra el botón
+            viewMoreButton.href = link; // Asigna el link de la tarjeta
+            viewMoreButton.target = "_blank"; // Abre en una nueva pestaña
+
+            // Cambiar el video de YouTube si se proporciona un ID y el reproductor existe
+            if (player && youtubeId) {
+                // `loadVideoById` reproduce el video inmediatamente
+                // `cueVideoById` solo lo carga, lo que es útil si quieres control de inicio más fino
+                player.loadVideoById(youtubeId, 0); // Carga y reproduce el nuevo video desde el segundo 0
+            }
+        }
+    }
+
+    // Añadir listener de clic a cada tarjeta del portafolio
+    portfolioCards.forEach(card => {
+        card.addEventListener('click', function() {
+            // Eliminar la clase 'active' de todas las tarjetas
+            portfolioCards.forEach(item => item.classList.remove('active'));
+
+            // Añadir la clase 'active' a la tarjeta clicada
+            this.classList.add('active');
+
+            // Obtener datos de la tarjeta clicada
+            const title = this.getAttribute('data-title');
+            const description = this.getAttribute('data-description');
+            const link = this.getAttribute('data-link');
+            const youtubeId = this.getAttribute('data-youtube-id'); // Obtiene el ID del video de YouTube
+
+            updateProjectDetails(title, description, link, youtubeId); // Pasa el ID del video a la función
         });
     });
 
-    // Opcional: Para resetear el estado de los acordeones si la ventana cambia de tamaño
-    let resizeTimeout;
-    window.addEventListener('resize', function() {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            if (window.innerWidth >= 768) {
-                // Al pasar a desktop, asegura que no haya tarjetas expandidas de móvil
-                serviceItems.forEach(item => {
-                    item.classList.remove('is-expanded');
-                });
-            } else {
-                // Al volver a móvil, si quieres que se colapsen por defecto
-                serviceItems.forEach(item => {
-                    // Puedes dejar esto si quieres que al cambiar de tamaño se cierren
-                    // item.classList.remove('is-expanded');
-                });
-            }
-        }, 250); // Pequeño retraso para evitar ejecuciones excesivas
-    });
+    // Carga la API de YouTube cuando el DOM esté listo
+    loadYouTubeAPI();
 
-    // Script para el año actual en el footer
-    const yearSpan = document.getElementById('current-year');
-    if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-    }
-
-        // --- AQUÍ ES DONDE DEBES AÑADIR LA LÓGICA DEL BOTÓN DE AUDIO ---
+    // Lógica para el botón de silenciar/desactivar silencio del video principal
     const heroVideo = document.getElementById('heroVideo');
-    const muteToggle = document.getElementById('muteToggle');
+    const muteToggleButton = document.getElementById('muteToggle');
 
-    if (heroVideo && muteToggle) {
-        // Asegurarse de que el video empiece silenciado (atributo 'muted' en HTML también lo hace)
-        heroVideo.muted = true;
+    if (heroVideo && muteToggleButton) {
+        // Establecer el estado inicial del icono basado en la propiedad 'muted' del video
+        if (heroVideo.muted) {
+            muteToggleButton.innerHTML = '<i class="fas fa-volume-mute"></i>';
+        } else {
+            muteToggleButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+        }
 
-        // Event listener para el botón de mute/unmute
-        muteToggle.addEventListener('click', function() {
-            heroVideo.muted = !heroVideo.muted; // Alternar el estado de muted
-
-            // Cambiar el ícono según el estado de mute
+        muteToggleButton.addEventListener('click', function() {
             if (heroVideo.muted) {
-                muteToggle.innerHTML = '<i class="fas fa-volume-mute"></i>'; // Icono de silenciado
+                heroVideo.muted = false; // Desactivar silencio
+                muteToggleButton.innerHTML = '<i class="fas fa-volume-up"></i>'; // Cambiar a icono de sonido
             } else {
-                muteToggle.innerHTML = '<i class="fas fa-volume-up"></i>'; // Icono de sonido
-            }
-        });
-
-        // Opcional: Sincronizar el icono si el estado de volumen/mute cambia por otras razones
-        heroVideo.addEventListener('volumechange', function() {
-            if (heroVideo.muted || heroVideo.volume === 0) {
-                muteToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
-            } else {
-                muteToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                heroVideo.muted = true; // Silenciar
+                muteToggleButton.innerHTML = '<i class="fas fa-volume-mute"></i>'; // Cambiar a icono de mute
             }
         });
     }
-    
-    // --- Lógica de Filtrado del Portafolio ---
-const filterButtons = document.querySelectorAll('.portfolio-filters .filter-btn');
-const portfolioItems = document.querySelectorAll('.portfolio-grid .portfolio-item');
-
-filterButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        // Eliminar 'active' de todos los botones
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        // Añadir 'active' al botón clickeado
-        this.classList.add('active');
-
-        const filterValue = this.getAttribute('data-filter'); // 'all', 'branding', 'web', etc.
-
-        portfolioItems.forEach(item => {
-            const itemCategory = item.getAttribute('data-category');
-
-            if (filterValue === 'all' || itemCategory === filterValue) {
-                item.style.display = 'block'; // Mostrar el elemento
-            } else {
-                item.style.display = 'none'; // Ocultar el elemento
-            }
-        });
-    });
-});
 
 });
