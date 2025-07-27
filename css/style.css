@@ -429,221 +429,191 @@ body {
   background-color: #0056b3; /* Un tono más oscuro */
 }
 
-/* Estilos para la Sección de Servicios en Fondo Oscuro */
-.services-section {
-    padding: 100px 20px; /* Espaciado generoso */
-    text-align: center; /* Centrar todo el contenido */
-    background-color: #1a1a1a; /* Fondo muy oscuro, casi negro */
-    color: #f0f0f0; /* Color de texto base para el resto de la sección */
+/* --- NUEVA SECCIÓN DE SERVICIOS DESTACADOS --- */
+.servicios-destacados-section {
+    padding: 80px 0;
+    background-color: var(--background-dark);
+    color: var(--text-color-light);
+    text-align: center;
 }
 
-.services-section h2 {
-    font-size: 3.5em; /* Título grande y llamativo */
-    color: #50c878; /* Verde Esmeralda Vibrante */
-    margin-bottom: 25px; /* Espacio debajo del título */
-    text-transform: uppercase; /* Mayúsculas para el título */
-    letter-spacing: 4px; /* Un poco de espaciado entre letras */
-    font-weight: 700; /* Negrita para el título */
-    text-shadow: 0 0 10px rgba(80, 200, 120, 0.4); /* Sombra sutil para el brillo */
+.servicios-destacados-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
-.services-section .section-intro {
-    font-size: 1.4em; /* Texto introductorio legible */
-    color: #e0e0e0; /* Un blanco suave para contrastar con el fondo */
-    max-width: 900px; /* Limitar el ancho para una mejor lectura */
-    margin: 0 auto 60px auto; /* Centrar el párrafo y añadir espacio debajo */
-    line-height: 1.8; /* Buen espaciado entre líneas para legibilidad */
-    font-weight: 300; /* Fuente más ligera para elegancia */
-    opacity: 0.9; /* Ligeramente transparente para suavizar */
+.servicios-destacados-section .subtitle {
+    font-size: 0.9em;
+    color: var(--primary-color);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
 }
 
-/* Estilos para los items de servicio individuales (opcional, para mantener coherencia) */
-/* Asegúrate de que estos también contrasten bien con el fondo oscuro */
-.service-item {
-    background-color: #2b2b2b; /* Un gris oscuro para los contenedores de servicio */
-    border: 1px solid #3a3a3a; /* Borde sutil */
-    color: #f0f0f0; /* Texto claro dentro de los items */
-    padding: 30px;
-    margin-bottom: 20px; /* Espacio entre los items */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+.servicios-destacados-section h2 {
+    font-size: 2.8em;
+    margin-bottom: 20px;
+    color: var(--text-color-light); /* Asegura que el título principal sea claro */
 }
 
-.service-item h3 {
-    color: #66d9ef; /* Un color de acento para los títulos de los servicios */
-    font-size: 1.6em;
-    margin-bottom: 15px;
+.servicios-destacados-section .description {
+    font-size: 1.1em;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    color: #bbb;
 }
 
-.service-item p {
-    color: #c0c0c0; /* Texto de descripción de servicio */
+.landscape-img {
+    width: 100%;
+    max-width: 900px; /* Ajusta esto según el tamaño deseado */
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    margin-bottom: 60px; /* Espacio debajo de la imagen */
+    display: block; /* Elimina espacio extra */
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.service-item .view-more-btn {
-    color: #50c878; /* Mismo verde esmeralda para los botones "Ver más" */
-    border: 1px solid #50c878;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 20px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+/* Contenedor de las tarjetas de servicios destacados (con scroll horizontal) */
+.destacados-cards-wrapper {
+    display: flex;
+    overflow-x: auto; /* Habilita el desplazamiento horizontal */
+    -webkit-overflow-scrolling: touch; /* Suaviza el scroll en iOS */
+    scroll-snap-type: x mandatory; /* Para que las tarjetas se ajusten al desplazarse */
+    padding-bottom: 20px; /* Espacio para la barra de desplazamiento */
+    margin-bottom: 20px;
+    gap: 30px; /* Espacio entre las tarjetas */
+    justify-content: flex-start; /* Alinea las tarjetas al inicio del contenedor */
+    padding-left: 15px; /* Padding a los lados para que no estén pegadas */
+    padding-right: 15px;
 }
 
-.service-item .view-more-btn:hover {
-    background-color: #50c878;
-    color: #1a1a1a; /* Texto oscuro al pasar el ratón */
+/* Oculta la barra de desplazamiento por defecto */
+.destacados-cards-wrapper::-webkit-scrollbar {
+    height: 12px; /* Altura de la barra de desplazamiento */
+}
+
+/* Estilo del track de la barra de desplazamiento */
+.destacados-cards-wrapper::-webkit-scrollbar-track {
+    background: #444; /* Color del fondo de la barra */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+/* Estilo del thumb (indicador de desplazamiento) */
+.destacados-cards-wrapper::-webkit-scrollbar-thumb {
+    background: var(--primary-color); /* Color del indicador */
+    border-radius: 2px; /* Hace el indicador rectangular */
+    border: 3px solid #444; /* Borde para el efecto rectangular más pronunciado */
+}
+
+/* Estilo del thumb al pasar el ratón */
+.destacados-cards-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #0056b3; /* Color más oscuro al pasar el ratón */
 }
 
 
-/* Adaptación Responsiva (para pantallas más pequeñas) */
-@media (max-width: 768px) {
-    .services-section h2 {
-        font-size: 2.5em;
-        letter-spacing: 2px;
+/* Estilos para cada tarjeta individual */
+.destacado-card {
+    flex: 0 0 300px; /* Ancho fijo para cada tarjeta, no se encogen */
+    width: 300px; /* Ancho explícito para fallback */
+    height: 400px; /* Altura para el formato rectangular vertical */
+    background-color: #2a3039;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    position: relative; /* Para posicionar el overlay */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    scroll-snap-align: start; /* Para que se ajusten al inicio al desplazarse */
+}
+
+.destacado-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.destacado-card .card-image {
+    width: 100%;
+    height: 100%; /* La imagen de fondo cubre toda la tarjeta */
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+}
+
+.destacado-card:hover .card-image {
+    transform: scale(1.05); /* Zoom en la imagen al pasar el ratón */
+}
+
+.destacado-card .card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /* Degradado de oscuro a transparente */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0) 100%);
+    color: var(--text-color-light);
+    padding: 20px;
+    text-align: left;
+    min-height: 120px; /* Asegura que el overlay tenga un tamaño mínimo */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Alinea el contenido al final del overlay */
+}
+
+.destacado-card .card-overlay h3 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    line-height: 1.3;
+    color: var(--primary-color);
+}
+
+.destacado-card .card-overlay p {
+    font-size: 0.95em;
+    line-height: 1.5;
+    color: #ccc;
+}
+
+/* Media Queries para Responsividad de la nueva sección */
+@media (min-width: 768px) {
+    .destacados-cards-wrapper {
+        justify-content: center; /* Centra las tarjetas en desktop */
+        flex-wrap: wrap; /* Permite que las tarjetas se envuelvan si hay espacio */
+        overflow-x: hidden; /* Deshabilita el scroll horizontal en desktop */
+        padding-left: 0;
+        padding-right: 0;
+        /* Elimina estilos de scrollbar para desktop si no quieres custom scrollbar allí */
+        scrollbar-width: none; /* Firefox */
+    }
+    .destacados-cards-wrapper::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Edge */
     }
 
-    .services-section .section-intro {
-        font-size: 1.1em;
-        margin-bottom: 40px;
+    .destacado-card {
+        flex: 0 0 calc(33.333% - 20px); /* 3 columnas con espacio */
+        max-width: 350px; /* Ancho máximo en desktop */
+        margin-bottom: 30px; /* Espacio inferior cuando se envuelven */
     }
 }
 
 @media (max-width: 480px) {
-    .services-section h2 {
+    .servicios-destacados-section h2 {
         font-size: 2em;
-        letter-spacing: 1px;
     }
-    .services-section .section-intro {
-        font-size: 1em;
+    .destacado-card {
+        flex: 0 0 280px; /* Ligeramente más pequeñas en móviles muy pequeños */
+        width: 280px;
+        height: 380px;
     }
-    .service-item {
-        padding: 20px;
+    .destacados-cards-wrapper {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }
-
-/* --- ESTILOS PARA LA SECCIÓN DE SERVICIOS (ACORDEÓN) --- */
-.services-section {
-  padding: 4rem 1.5rem; /* Espaciado general de la sección */
-  background-color: var(--background-dark); /* Fondo oscuro */
-  color: var(--text-color-light); /* Texto claro */
-}
-
-.services-grid-container {
-  display: grid;
-  gap: 1.5rem; /* Espacio entre los ítems de servicio */
-  /* Por defecto para móviles: una sola columna */
-  grid-template-columns: 1fr;
-  max-width: 1200px; /* Ancho máximo del contenedor de la cuadrícula */
-  margin: 0 auto; /* Centrar la cuadrícula */
-}
-
-.service-item {
-  position: relative;
-  background-color: #2a3039; /* Un poco más claro que el fondo para que destaque */
-  border-radius: 8px;
-  overflow: hidden; /* Importante para el efecto de despliegue */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  transition: all var(--transition-speed) ease-in-out;
-  cursor: pointer; /* Indica que es clickeable */
-
-  display: flex; /* Para alinear el título principal, icono y contenido */
-  flex-direction: column; /* Contenido apilado verticalmente */
-  padding: 1.5rem; /* Espaciado interno de la tarjeta */
-}
-
-/* Título principal del servicio */
-.service-item h3 {
-  font-size: 1.6rem;
-  margin-bottom: 0.8rem;
-  color: var(--text-color-light);
-  line-height: 1.2;
-}
-
-/* Estilo del icono de expansión (flecha) */
-.expand-icon {
-  position: absolute; /* Posicionarlo de forma absoluta dentro del item */
-  top: 1.5rem;
-  right: 1.5rem;
-  display: block;
-  width: 20px;
-  height: 20px;
-  border: solid var(--text-color-light);
-  border-width: 0 3px 3px 0;
-  transform: rotate(45deg); /* Flecha apuntando hacia abajo por defecto */
-  transition: transform var(--transition-speed) ease-in-out;
-}
-
-/* Estado "expandido" para móvil */
-.service-item.is-expanded .expand-icon {
-  transform: rotate(-135deg); /* Gira hacia arriba cuando está expandido */
-}
-
-/* Contenedor del contenido oculto/desplegable */
-.service-content {
-  max-height: 0; /* Por defecto oculto */
-  overflow: hidden;
-  opacity: 0;
-  visibility: hidden;
-  transition: max-height var(--transition-speed) ease-out,
-              opacity var(--transition-speed) ease-out,
-              visibility var(--transition-speed) ease-out;
-}
-
-/* Cuando el item está expandido */
-.service-item.is-expanded .service-content {
-  max-height: 500px; /* Suficiente altura para el contenido. Ajusta si es necesario */
-  opacity: 1;
-  visibility: visible;
-  padding-top: 1rem; /* Pequeño padding entre el título y el contenido desplegado */
-}
-
-.service-content p {
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-}
-
-.service-content .view-more-btn {
-  display: inline-block;
-  background-color: var(--primary-color);
-  color: var(--text-color-light);
-  padding: 0.6rem 1.2rem;
-  border-radius: 5px;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: background-color var(--transition-speed) ease;
-}
-
-.service-content .view-more-btn:hover {
-  background-color: #0056b3; /* Un tono más oscuro */
-}
-
-/* Estilos para el texto vertical en el lateral de la tarjeta */
-.service-folder-header {
-  position: absolute;
-  top: 50%; /* Centrar verticalmente */
-  left: 0px; /* Ajusta esto para moverlo más a la izquierda si lo necesitas */
-  transform: translateY(-50%) rotate(-90deg); /* Centra y rota 90 grados a la izquierda */
-  transform-origin: 0% 0%; /* Punto de rotación en la esquina superior izquierda del elemento */
-  
-  white-space: nowrap; /* Evita que el texto se rompa */
-  font-size: 2.5rem; /* Ajusta el tamaño de la fuente */
-  font-weight: bold;
-  color: rgba(255, 255, 255, 0.1); /* Texto casi invisible por defecto */
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  user-select: none;
-  pointer-events: none;
-  transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
-}
-
-/* Cuando el item está en hover o expandido, el título vertical se vuelve más visible */
-.service-item:hover .service-folder-header,
-.service-item.is-expanded .service-folder-header { /* is-expanded para móvil */
-  color: rgba(255, 255, 255, 0.4);
-}
-
+/* FIN NUEVA SECCIÓN DE SERVICIOS DESTACADOS */
 
 /* --- SECCIÓN CONTACTO --- */
 .contact-section {
@@ -808,94 +778,6 @@ body {
     }
 }
 
-
-/* --- Media Query para Escritorio (Servicios) --- */
-@media (min-width: 768px) {
-  .services-grid-container {
-    display: flex; /* Usamos flexbox para el efecto de expansión */
-    justify-content: center;
-    align-items: stretch; /* Asegura que todos los items tengan la misma altura */
-    gap: 0; /* Eliminar el gap si quieres que los bordes se toquen */
-    border-radius: 8px; /* Aplicar a todo el contenedor para esquinas redondeadas */
-    overflow: hidden; /* Asegura que los bordes redondeados se vean bien */
-  }
-
-  .service-item {
-    flex: 1; /* Todos los items tienen el mismo ancho inicial */
-    border-right: 1px solid rgba(255, 255, 255, 0.1); /* Separador vertical */
-    border-radius: 0; /* Quitar border-radius individuales si los tenía */
-    padding: 2rem; /* Más padding en desktop */
-    flex-direction: column; /* Contenido apilado normal */
-    justify-content: space-between; /* Espacia el contenido verticalmente */
-  }
-
-  .service-item:first-child {
-    border-top-left-radius: 8px; /* Redondear esquina del primer item */
-    border-bottom-left-radius: 8px;
-  }
-
-  .service-item:last-child {
-    border-right: none; /* Eliminar el borde derecho del último item */
-    border-top-right-radius: 8px; /* Redondear esquina del último item */
-    border-bottom-right-radius: 8px;
-  }
-
-  /* Efecto de ampliación al hacer hover en desktop */
-  .service-item:hover { /* El efecto de ampliación principal será con hover */
-    flex: 3; /* El item se amplía para ocupar más espacio */
-    background-color: var(--primary-color); /* Cambia de color al expandirse/hover */
-    /* Si quieres que se 'fije' al hacer clic en desktop, necesitarías JS y la clase .is-expanded-desktop */
-  }
-
-  /* Si deseas un efecto de clic que se "fije" en desktop, puedes usar esta clase con JS */
-  .service-item.is-expanded-desktop {
-    flex: 3;
-    background-color: var(--primary-color);
-  }
-
-  /* El título vertical se hace más visible al hacer hover/expandir */
-  .service-item:hover .service-folder-header,
-  .service-item.is-expanded-desktop .service-folder-header {
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-  /* Ocultar la flecha de expansión en desktop si no la usas */
-  .service-item .expand-icon {
-    display: none;
-  }
-
-  /* El contenido siempre es visible en desktop, pero animamos su aparición en hover */
-  .service-content {
-    max-height: none; /* No restringir altura en desktop */
-    opacity: 1;
-    visibility: visible;
-    padding-top: 0; /* No padding extra aquí */
-    transition: none; /* Desactivar transiciones de height/opacity para desktop */
-  }
-
-  /* Estilos específicos para el texto y botón que se muestran con el hover/expansión */
-  .service-item .service-content p,
-  .service-item .service-content .view-more-btn {
-    opacity: 0; /* Por defecto oculto en desktop */
-    transform: translateY(10px); /* Un pequeño desplazamiento hacia abajo */
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .service-item:hover .service-content p,
-  .service-item.is-expanded-desktop .service-content p,
-  .service-item:hover .service-content .view-more-btn,
-  .service-item.is-expanded-desktop .service-content .view-more-btn {
-    opacity: 1; /* Visible al hacer hover/expandir */
-    transform: translateY(0); /* Vuelve a su posición original */
-  }
-
-  /* El título H3 también puede cambiar, centrado en desktop */
-  .service-item h3 {
-    text-align: center;
-    margin-top: 1rem;
-  }
-}
-
 /* --- Sección Quienes Somos (About Us) --- */
 .about-us-section {
     padding: 80px 0; /* Padding superior e inferior para espacio */
@@ -1009,176 +891,204 @@ body {
     }
 }
 
-/* --- Sección Portafolio --- */
-.portfolio-section {
-    padding: 80px 0;
-    background-color: var(--background-dark); /* Fondo oscuro */
-    color: var(--text-color-light); /* Texto claro */
+/* Nuevo Portafolio Interactivo */
+.interactive-portfolio-section {
+    padding: 60px 0;
+    background-color: #1a1a1a; /* Un fondo oscuro para la sección */
+    color: var(--text-color-light);
+    overflow: hidden; /* Para contener el video de fondo si es necesario */
+}
+
+.interactive-portfolio-section .section-title {
+    font-size: 3em;
     text-align: center;
-}
-
-.portfolio-section .subtitle {
-    font-size: 0.9em;
+    margin-bottom: 20px;
     color: var(--primary-color);
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
 }
 
-.portfolio-section h2 {
-    font-size: 2.8em;
-    margin-bottom: 50px; /* Más espacio debajo del título */
+.interactive-portfolio-section .section-description {
+    font-size: 1.1em;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+    line-height: 1.6;
 }
 
-/* --- Filtros del Portafolio --- */
-.portfolio-filters {
-    margin-bottom: 50px;
-    display: flex;
-    flex-wrap: wrap; /* Permite que los botones se envuelvan en líneas nuevas */
-    justify-content: center;
-    gap: 15px; /* Espacio entre los botones */
-}
-
-.filter-btn {
-    background-color: transparent;
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
-    padding: 10px 25px;
-    border-radius: 30px; /* Bordes más redondeados */
-    font-size: 1em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-}
-
-.filter-btn:hover,
-.filter-btn.active { /* Estilo para el botón activo y al pasar el ratón */
-    background-color: var(--primary-color);
-    color: var(--background-dark); /* Color del texto del botón activo/hover */
-    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4); /* Sombra para el botón activo */
-}
-
-/* --- Cuadrícula del Portafolio --- */
-.portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Columnas responsivas */
-    gap: 25px; /* Espacio entre los elementos */
-}
-
-.portfolio-item {
+.interactive-portfolio-content {
     position: relative;
-    overflow: hidden; /* Oculta cualquier desbordamiento, especialmente útil para border-radius */
-    border-radius: 8px; /* Bordes redondeados para cada elemento */
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
-    cursor: pointer;
-    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column; /* Apilado en móvil */
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo semi-transparente para el contenido sobre el video */
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 30px;
 }
 
-.portfolio-item:hover {
-    transform: translateY(-5px); /* Pequeño efecto de elevación al pasar el ratón */
-}
-
-.portfolio-item img {
-    width: 100%;
-    height: 250px; /* Altura fija para las imágenes del portafolio */
-    object-fit: cover; /* Recorta la imagen para que rellene el espacio */
-    display: block;
-    transition: transform 0.4s ease;
-}
-
-.portfolio-item:hover img {
-    transform: scale(1.05); /* Zoom ligero en la imagen al pasar el ratón */
-}
-
-/* --- Capa de Superposición (Overlay) --- */
-.portfolio-item .overlay {
+.portfolio-background-video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+    /* Oculta los controles por defecto de YouTube y fuerza el aspect ratio */
+    /* Aquí usaremos padding-bottom para el ratio 16:9, ajusta si tu video es diferente */
+    /* Este div contenedor contendrá el iframe de YouTube */
+    z-index: 0; /* Asegura que esté en el fondo */
+    overflow: hidden; /* Importante para el recorte del video */
+    pointer-events: none; /* Desactiva interacción del mouse con el video de fondo */
+    filter: brightness(0.4); /* Oscurece el video de fondo */
+    /* El iframe de YouTube se escalará para llenar este contenedor */
+}
+
+/* Estilos para el iframe de YouTube dentro del contenedor */
+.portfolio-background-video iframe {
+    width: 100%;
+    height: 100%;
+    /* Elimina el espacio extra */
+    display: block;
+    position: absolute; /* Permite que el iframe ocupe todo el espacio */
+    top: 0;
+    left: 0;
+}
+
+.portfolio-details-wrapper,
+.portfolio-cards-wrapper {
+    position: relative; /* Para asegurar que estén sobre el video */
+    z-index: 1;
+}
+
+.portfolio-details {
+    padding: 20px;
+    text-align: center; /* Centrado en móvil */
+}
+
+.portfolio-details h3 {
+    font-size: 2em;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.portfolio-details p {
+    font-size: 1em;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.portfolio-cards-wrapper {
+    overflow-x: auto; /* Permite el scroll horizontal */
+    -webkit-overflow-scrolling: touch; /* Suaviza el scroll en iOS */
+    padding-bottom: 15px; /* Espacio para la barra de scroll */
+}
+
+.portfolio-cards-container {
+    display: flex; /* Alinea las tarjetas horizontalmente */
+    gap: 20px;
+    padding: 10px; /* Padding para que las tarjetas no toquen los bordes */
+}
+
+.portfolio-card {
+    flex-shrink: 0; /* Evita que las tarjetas se encojan */
+    width: 200px; /* Ancho fijo para las tarjetas verticales */
+    height: 280px; /* Altura fija para las tarjetas */
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    opacity: 0; /* Por defecto oculto */
-    transition: opacity 0.3s ease;
+    border: 2px solid transparent; /* Borde para el estado activo */
 }
 
-.portfolio-item:hover .overlay {
-    opacity: 1; /* Visible al pasar el ratón */
+.portfolio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
 }
 
-.overlay-content {
-    color: var(--text-color-light);
-    text-align: center;
-    padding: 20px;
+.portfolio-card.active {
+    border-color: var(--primary-color); /* Resalta la tarjeta activa */
+    box-shadow: 0 0 0 4px var(--primary-color);
 }
 
-.overlay-content h3 {
-    font-size: 1.6em;
-    margin-bottom: 10px;
+.portfolio-card img {
+    width: 100%;
+    height: 100%; /* La imagen ocupa toda la tarjeta */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio */
+    display: block;
 }
 
-.overlay-content p {
-    font-size: 0.9em;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    opacity: 0.8;
+/* Scrollbar styling (for Webkit browsers) */
+.portfolio-cards-wrapper::-webkit-scrollbar {
+    height: 8px;
 }
 
-/* --- Media Queries para Responsividad (Ajustes Adicionales) --- */
+.portfolio-cards-wrapper::-webkit-scrollbar-track {
+    background: #333;
+    border-radius: 10px;
+}
+
+.portfolio-cards-wrapper::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+.portfolio-cards-wrapper::-webkit-scrollbar-thumb:hover {
+    background: darken(var(--primary-color), 15%);
+}
+
+
+/* Media Query para Desktop */
 @media (min-width: 768px) {
-    .portfolio-grid {
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Ligeramente más grandes en tablets */
-        gap: 30px;
+    .interactive-portfolio-content {
+        flex-direction: row; /* Lado a lado en desktop */
+        gap: 50px;
+        padding: 50px;
     }
 
-    .portfolio-section h2 {
+    .portfolio-details-wrapper {
+        flex: 1; /* Ocupa el espacio disponible */
+        display: flex; /* Para centrar contenido dentro */
+        align-items: center; /* Centra verticalmente */
+    }
+
+    .portfolio-details {
+        text-align: left; /* Alinea texto a la izquierda en desktop */
+        padding: 0; /* Quita padding extra si ya está en el wrapper */
+    }
+
+    .portfolio-details h3 {
+        font-size: 2.5em;
+    }
+
+    .portfolio-details p {
+        font-size: 1.1em;
+    }
+
+    .portfolio-cards-wrapper {
+        flex: 1; /* Ocupa la otra mitad del espacio */
+        max-width: 50%; /* Limita el ancho de la sección de tarjetas */
+        padding-bottom: 0; /* No se necesita padding para scrollbar aquí si es vertical */
+    }
+}
+
+/* Ajustes para pantallas aún más grandes */
+@media (min-width: 1024px) {
+    .interactive-portfolio-section .section-title {
         font-size: 3.5em;
     }
-}
-
-@media (min-width: 1024px) {
-    .portfolio-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 columnas fijas en pantallas grandes */
+    .portfolio-details h3 {
+        font-size: 3em;
     }
-}
-
-/* --- Estilos para el mensaje de Feedback del Formulario --- */
-.form-feedback-message {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #28a745; /* Un verde vibrante para éxito */
-    color: white;
-    border-radius: 8px;
-    text-align: center;
-    font-weight: bold;
-    /* Ocultar inicialmente y preparar para la animación */
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-    /* Asegurarse de que no ocupe espacio si está oculto */
-    max-height: 0;
-    overflow: hidden;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-/* Clase para mostrar el mensaje (añadida por JS) */
-.form-feedback-message.show {
-    opacity: 1;
-    transform: translateY(0);
-    max-height: 200px; /* Suficiente altura para el mensaje */
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
-
-/* Estilo para mensajes de error (opcional) */
-.form-feedback-message.error {
-    background-color: #dc3545; /* Rojo para errores */
+    .portfolio-card {
+        width: 220px;
+        height: 300px;
+    }
 }
 
 /* --- Botón Flotante de WhatsApp --- */
