@@ -24,7 +24,7 @@
         html { scroll-behavior: smooth; }
         body { font-family: var(--fuente-principal); background-color: var(--color-primario); color: var(--color-texto); line-height: 1.6; }
 
-        /* --- PRELOADER (CORREGIDO) --- */
+        /* --- PRELOADER (CORREGIDO PARA index.html) --- */
         .preloader {
             position: fixed;
             top: 0;
@@ -37,16 +37,23 @@
             justify-content: center;
             align-items: center;
             transition: opacity 0.75s ease, visibility 0.75s ease;
+            overflow: hidden;
         }
         .preloader.hidden {
             opacity: 0;
             visibility: hidden;
         }
         .preloader-video-desktop, .preloader-video-mobile {
-            /* Reglas simplificadas para un centrado perfecto sin recortes */
-            max-width: 100%;
-            max-height: 100vh;
-            object-fit: contain;
+            /* Reglas para que el video ocupe TODA la pantalla (con recorte) */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: cover;
         }
         .preloader-video-desktop {
             display: none; 
@@ -136,6 +143,58 @@
             .preloader-video-mobile { display: none; }
             .preloader-video-desktop { display: block; }
         }
+        
+        /* Pega esto dentro de tu etiqueta <style> */
+
+        /* --- LOGO CAROUSEL --- */
+        .logo-carousel-section {
+            padding-top: 80px;
+            padding-bottom: 80px;
+            background-color: var(--color-secundario); /* Un fondo sutil para destacar la sección */
+        }
+        .carousel-title {
+            text-align: center;
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: var(--color-texto-secundario);
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .logo-slider {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        /* REEMPLAZA la regla .logo-track antigua CON ESTA */
+        .logo-track {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px; /* Espacio entre logos */
+            flex-wrap: wrap; /* Para que se ajuste en pantallas pequeñas */
+        }
+        .logo-track:hover {
+            animation-play-state: paused;
+        }
+        .logo-track img {
+            height: 40px; /* Normaliza la altura de todos los logos */
+            width: 150px;
+            margin: 0 25px;
+            filter: grayscale(1) opacity(0.7);
+            transition: filter 0.3s;
+        }
+        .logo-track img:hover {
+            filter: grayscale(0) opacity(1);
+        }
+        /* Ajuste para que no haya doble padding con la sección de servicios */
+        #servicios {
+            padding-top: 100px;
+        }
+        .logo-carousel-section + #servicios {
+            padding-top: 0;
+        }
+
     </style>
 </head>
 <body>
@@ -174,7 +233,7 @@
     <main>
         <section class="hero" id="home">
             <video id="hero-video" autoplay loop muted playsinline>
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-video-of-a-dark-sphere-interacting-with-a-3d-grid-43443-large.mp4" type="video/mp4">
+                <source src="/assets/hero-video/0_Technology_Circuit_Board_1280x720.mp4" type="video/mp4">
             </video>
             <div class="hero-content fade-in">
                 <h1 class="hero-title" data-key="heroTitle">Creatividad Multimedia Potenciada por Inteligencia Artificial</h1>
@@ -182,6 +241,19 @@
                 <a href="#contacto" class="cta-button" data-key="heroCTA">Inicia tu Proyecto</a>
             </div>
         </section>
+
+        <section class="logo-carousel-section">
+            <h3 class="carousel-title" data-key="trustedBy">Marcas que confían en nosotros</h3>
+            <div class="logo-slider">
+                <div class="logo-track">
+                    <img src="https://logoipsum.com/logo/logo-1.svg" alt="Logo Marca 1">
+                    <img src="https://logoipsum.com/logo/logo-2.svg" alt="Logo Marca 2">
+                    <img src="https://logoipsum.com/logo/logo-3.svg" alt="Logo Marca 3">
+                    <img src="https://logoipsum.com/logo/logo-4.svg" alt="Logo Marca 4">
+                </div>
+            </div>
+        </section>
+
         <section id="servicios" class="container">
             <h2 class="section-title fade-in" data-key="servicesTitle">Nuestros Servicios</h2>
             <div class="services-grid">
@@ -291,6 +363,8 @@
                     heroTitle: 'Creatividad Multimedia Potenciada por Inteligencia Artificial',
                     heroSubtitle: 'En Visual Synor fusionamos el talento artístico con la tecnología más avanzada para llevar tu marca al siguiente nivel.',
                     heroCTA: 'Inicia tu Proyecto',
+                    trustedBy: 'Marcas que confían en nosotros',
+                    exploreProfile: 'Explorar perfil',
                     servicesTitle: 'Nuestros Servicios',
                     service1Title: 'Diseño Gráfico con IA', service1Desc: 'Creamos identidades visuales impactantes y assets para campañas, utilizando IA para generar conceptos y escalar diseños.',
                     service2Title: 'Edición de Video Inteligente', service2Desc: 'Transformamos tu material crudo en historias cautivadoras. La IA nos asiste en la colorización y optimización del ritmo.',
@@ -309,6 +383,8 @@
                     heroTitle: 'Multimedia Creativity Powered by Artificial Intelligence',
                     heroSubtitle: 'At Visual Synor we merge artistic talent with advanced technology to take your brand to the next level.',
                     heroCTA: 'Start your Project',
+                    trustedBy: 'Brands that trust us',
+                    exploreProfile: 'Explore Profile',
                     servicesTitle: 'Our Services',
                     service1Title: 'Graphic Design with AI', service1Desc: 'We create impactful visual identities and assets for campaigns, using AI to generate concepts and scale designs.',
                     service2Title: 'Intelligent Video Editing', service2Desc: 'We transform your raw footage into captivating stories. AI assists us in color grading and rhythm optimization.',

@@ -13,11 +13,43 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: var(--fuente-principal); background-color: var(--color-primario); color: var(--color-texto); line-height: 1.6; }
-        .preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--color-primario); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.75s ease, visibility 0.75s ease; overflow: hidden; }
-        .preloader.hidden { opacity: 0; visibility: hidden; }
-        .preloader-video-desktop, .preloader-video-mobile { max-width: 100%; max-height: 100vh; object-fit: contain; }
-        .preloader-video-desktop { display: none; }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+        /* --- PRELOADER INDEPENDIENTE (PERFILES) --- */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-primario);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.75s ease, visibility 0.75s ease;
+            overflow: hidden;
+        }
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .preloader-video-desktop, .preloader-video-mobile {
+            /* Reglas para que el video ocupe TODA la pantalla (con recorte) */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: cover;
+        }
+        .preloader-video-desktop {
+            display: none; 
+        }
+
+        /* --- ESTILOS GENERALES --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .header { position: fixed; top: 0; width: 100%; z-index: 1000; background-color: rgba(13, 13, 13, 0.8); backdrop-filter: blur(10px); padding: 15px 0; }
         .nav { display: flex; justify-content: space-between; align-items: center; }
         .nav-left { display: flex; align-items: center; gap: 25px; }
@@ -71,8 +103,8 @@
 </head>
 <body>
     <div class="preloader" id="preloader">
-        <video autoplay muted playsinline loop class="preloader-video-desktop"><source src="assets/animacion-horizontal.mp4" type="video/mp4"></video>
-        <video autoplay muted playsinline loop class="preloader-video-mobile"><source src="assets/animacion-vertical.mp4" type="video/mp4"></video>
+        <video autoplay muted playsinline loop class="preloader-video-desktop"><source src="/animacion-visual-horizontal.mp4" type="video/mp4"></video>
+        <video autoplay muted playsinline loop class="preloader-video-mobile"><source src="/animacion-visual-vertical.mp4" type="video/mp4"></video>
     </div>
     <header class="header" id="header">
         <nav class="nav container">

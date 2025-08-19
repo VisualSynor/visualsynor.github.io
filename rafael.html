@@ -13,11 +13,43 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: var(--fuente-principal); background-color: var(--color-primario); color: var(--color-texto); line-height: 1.6; }
-        .preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--color-primario); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.75s ease, visibility 0.75s ease; overflow: hidden; }
-        .preloader.hidden { opacity: 0; visibility: hidden; }
-        .preloader-video-desktop, .preloader-video-mobile { max-width: 100%; max-height: 100vh; object-fit: contain; }
-        .preloader-video-desktop { display: none; }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+        /* --- PRELOADER INDEPENDIENTE (PERFILES) --- */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-primario);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.75s ease, visibility 0.75s ease;
+            overflow: hidden;
+        }
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .preloader-video-desktop, .preloader-video-mobile {
+            /* Reglas para que el video ocupe TODA la pantalla (con recorte) */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: cover;
+        }
+        .preloader-video-desktop {
+            display: none; 
+        }
+
+        /* --- ESTILOS GENERALES --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .header { position: fixed; top: 0; width: 100%; z-index: 1000; background-color: rgba(13, 13, 13, 0.8); backdrop-filter: blur(10px); padding: 15px 0; }
         .nav { display: flex; justify-content: space-between; align-items: center; }
         .nav-left { display: flex; align-items: center; gap: 25px; }
@@ -56,6 +88,47 @@
         .skills-list li, .education-item { background-color: #222; padding: 10px 15px; border-radius: 5px; margin-bottom: 10px; }
         .education-item h4 { font-size: 1rem; }
         .education-item p { font-size: 0.9rem; color: var(--color-texto-secundario); }
+
+        /* --- NUEVOS ESTILOS PORTAFOLIO INTERACTIVO --- */
+        .interactive-portfolio-section { padding: 60px 0; }
+        .interactive-portfolio-section .section-title { font-size: clamp(2em, 5vw, 2.5em); text-align: center; margin-bottom: 10px; color: var(--color-acento); text-transform: uppercase; letter-spacing: 2px; }
+        .interactive-portfolio-section .section-description { font-size: clamp(0.9em, 2vw, 1.1em); text-align: center; max-width: 800px; margin: 0 auto 40px; line-height: 1.6; color: var(--color-texto-secundario); }
+        .interactive-portfolio-content { max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        .portfolio-navigation { display: flex; align-items: center; justify-content: center; width: 100%; margin-bottom: 20px; gap: 15px; }
+        .nav-btn { background-color: #2a2a2a; border: none; color: var(--color-texto); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; transition: all 0.3s ease; font-size: 1em; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .nav-btn:hover { background-color: var(--color-acento); transform: scale(1.1); }
+        .pagination-dots { display: flex; gap: 8px; }
+        .pagination-dot { width: 10px; height: 10px; background-color: #555; border-radius: 50%; cursor: pointer; transition: background-color 0.3s ease, transform 0.3s ease; }
+        .pagination-dot.active { background-color: var(--color-acento); transform: scale(1.2); }
+        .portfolio-cards-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; /* Firefox */ }
+        .portfolio-cards-wrapper::-webkit-scrollbar { display: none; /* Chrome, Safari, Opera */ }
+        .portfolio-cards-container { display: flex; transition: transform 0.5s ease-in-out; width: fit-content; justify-content: flex-start; gap: 15px; padding: 10px 20px; flex-wrap: nowrap; }
+        .portfolio-card { flex: 0 0 auto; width: 120px; height: 180px; background-color: var(--color-secundario); border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.4); cursor: pointer; transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease; border: 3px solid transparent; }
+        .portfolio-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 25px rgba(0,0,0,0.6); }
+        .portfolio-card.active { border-color: var(--color-acento); transform: scale(1.05); }
+        .portfolio-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; background-color: #000; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .portfolio-details { text-align: center; padding: 20px; background: var(--color-secundario); border-radius: 12px; width: 100%; margin-top: 20px; }
+        .portfolio-details h3 { font-size: clamp(1.5em, 4vw, 2em); margin-bottom: 10px; color: var(--color-acento); text-transform: uppercase; }
+        .portfolio-details p { font-size: clamp(0.9em, 2vw, 1em); line-height: 1.5; color: var(--color-texto-secundario); }
+        .mute-toggle { position: absolute; bottom: 15px; right: 15px; background: rgba(0,0,0,0.5); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; z-index: 10; cursor: pointer; font-size: 1.1rem; }
+
+        @media (max-width: 1023px) {
+            .content-left { width: 100%; }
+        }
+
+        @media (min-width: 1024px) {
+            .interactive-portfolio-content { display: grid; grid-template-columns: 400px 1fr; gap: 50px; align-items: flex-start; }
+            .content-left { order: 1; position: sticky; top: 100px; }
+            .content-right { order: 2; }
+            .portfolio-navigation { display: none; }
+            .portfolio-cards-wrapper { overflow-x: visible; overflow-y: auto; max-height: 80vh; padding-right: 15px; }
+            .portfolio-cards-container { flex-direction: column; padding: 0; width: 100%; gap: 20px; }
+            .portfolio-card { width: 100%; height: 200px; }
+            .portfolio-details { text-align: left; margin-top: 30px; }
+        }
+
         @media (max-width: 768px) {
             .nav-menu { position: fixed; top: 0; right: -100%; width: 60%; height: 100vh; flex-direction: column; justify-content: center; align-items: center; background-color: var(--color-secundario); transition: right 0.4s ease-in-out; }
             .nav-menu.active { right: 0; }
@@ -71,8 +144,8 @@
 </head>
 <body>
     <div class="preloader" id="preloader">
-        <video autoplay muted playsinline loop class="preloader-video-desktop"><source src="assets/animacion-horizontal.mp4" type="video/mp4"></video>
-        <video autoplay muted playsinline loop class="preloader-video-mobile"><source src="assets/animacion-vertical.mp4" type="video/mp4"></video>
+        <video autoplay muted playsinline loop class="preloader-video-desktop"><source src="/animacion-visual-horizontal.mp4" type="video/mp4"></video>
+        <video autoplay muted playsinline loop class="preloader-video-mobile"><source src="/animacion-visual-vertical.mp4" type="video/mp4"></video>
     </div>
     <header class="header" id="header">
         <nav class="nav container">
@@ -103,6 +176,48 @@
                 <p class="profile-summary" data-key="summary">Diseñador gráfico enfocado en web y experiencias visuales, con experiencia en optimización, e-commerce e integración de IA para resultados eficientes.</p>
             </div>
         </div>
+
+        <section id="interactive-portfolio" class="interactive-portfolio-section">
+            <h2 class="section-title" data-key="portfolioTitle">MIS PROYECTOS DESTACADOS</h2>
+            <p class="section-description" data-key="portfolioDesc">El proceso creativo es mi brújula, guiándome a través de cada proyecto con una combinación única de estrategia, innovación y pasión por los detalles.</p>
+    
+            <div class="interactive-portfolio-content">
+                <div class="content-left">
+                    <div class="portfolio-navigation">
+                        <button id="prev-btn" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+                        <div id="pagination-dots" class="pagination-dots"></div>
+                        <button id="next-btn" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="portfolio-cards-wrapper">
+                        <div id="portfolio-cards-container" class="portfolio-cards-container">
+                            <div class="portfolio-card" data-title="Tesoros Olvidados" data-description="Producción audiovisual de la segunda temporada de una serie de aventura, encargándonos de la dirección, grabación y postproducción." data-youtube-id="Qc1ZXXjSGu8">
+                                <img src="/assets/portfolio/Tesoros-olvidados-trailer-aventura.jpeg" alt="Tesoros Olvidados">
+                            </div>
+                            <div class="portfolio-card" data-title="Very Well" data-description="Serie de comedia de turismo con enfoque en la enseñanza de inglés, un proyecto integral desde el guion hasta la edición final." data-youtube-id="bxkGkN2RxcY">
+                                <img src="/assets/portfolio/ingles-serie-turismo-verywell-comedia.jpeg" alt="Very Well">
+                            </div>
+                            <div class="portfolio-card" data-title="Ana María" data-description="Cortometraje de acción y suspenso ambientado en Cali, explorando temáticas de drama y conflicto a través de una intensa narrativa." data-youtube-id="_ATmIwS3naw">
+                                <img src="/assets/portfolio/accion-suspenso-drama-taxi-cali.jpeg" alt="Ana Maria">
+                            </div>
+                            <div class="portfolio-card" data-title="En la Otra Orilla" data-description="Serie dramática que aborda la corrupción policial y el conflicto armado, ofreciendo una perspectiva cruda y realista de la sociedad." data-youtube-id="VdxSonMgwSg">
+                                <img src="/assets/portfolio/policia-corrupcion-conflicto armado-serie-abuelos.jpg" alt="En la Otra Orilla">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="video-container">
+                        <div id="portfolio-youtube-player"></div>
+                        <button id="mute-toggle" class="mute-toggle"><i class="fas fa-volume-mute"></i></button>
+                    </div>
+                    <div class="portfolio-details">
+                        <h3 id="project-title"></h3>
+                        <p id="project-description"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <div class="profile-grid">
             <div class="profile-main">
                 <div class="content-block">
@@ -152,23 +267,28 @@
     </main>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // --- CÓDIGO PRELOADER ---
             const hidePreloader = () => { const preloader = document.getElementById('preloader'); if (preloader) { preloader.classList.add('hidden'); setTimeout(() => { preloader.style.display = 'none'; }, 800); } };
             const minTimePromise = new Promise(resolve => { setTimeout(resolve, 1200); });
             const pageLoadPromise = new Promise(resolve => { window.addEventListener('load', resolve); });
             Promise.all([minTimePromise, pageLoadPromise]).then(hidePreloader);
+
+            // --- CÓDIGO NAVEGACIÓN Y MENÚ MÓVIL ---
             const navMenu = document.getElementById('nav-menu'), navToggle = document.getElementById('nav-toggle'), navLinks = document.querySelectorAll('.nav-link');
             if (navToggle) { navToggle.addEventListener('click', () => { navMenu.classList.toggle('active'); }); }
             navLinks.forEach(link => { link.addEventListener('click', () => { if (navMenu.classList.contains('active')) { navMenu.classList.remove('active'); } }); });
+            
+            // --- CÓDIGO TRADUCTOR DE IDIOMA ---
             const translations = {
                 es: {
                     navTeam: 'Equipo', navServices: 'Servicios', navPortfolio: 'Portafolio',
                     role: 'Productor Multimedia & Estratega IA',
                     summary: 'Diseñador gráfico enfocado en web y experiencias visuales, con experiencia en optimización, e-commerce e integración de IA para resultados eficientes.',
+                    portfolioTitle: 'MIS PROYECTOS DESTACADOS',
+                    portfolioDesc: 'El proceso creativo es mi brújula, guiándome a través de cada proyecto con una combinación única de estrategia, innovación y pasión por los detalles.',
                     experienceTitle: 'Experiencia Laboral',
-                    job1Title: 'Diseñador Gráfico y Editor de Video',
-                    job1Desc: 'Edición de video y gráficos para televisión nacional. Integración de IA generativa para optimizar flujos de trabajo y reducir tiempos de producción publicitaria.',
-                    job2Title: 'Diseñador Web',
-                    job2Desc: 'Diseño y animación de gráficos para redes sociales, logrando un aumento en interacciones. Optimización SEO y diseño web para aumentar la visibilidad en búsquedas.',
+                    job1Title: 'Diseñador Gráfico y Editor de Video', job1Desc: 'Edición de video y gráficos para televisión nacional. Integración de IA generativa para optimizar flujos de trabajo y reducir tiempos de producción publicitaria.',
+                    job2Title: 'Diseñador Web', job2Desc: 'Diseño y animación de gráficos para redes sociales, logrando un aumento en interacciones. Optimización SEO y diseño web para aumentar la visibilidad en búsquedas.',
                     skillsTitle: 'Habilidades',
                     skill1: 'Animación y Gráficos', skill2: 'Implementación de IA', skill3: 'Diseño Gráfico Optimizado', skill4: 'HTML5 & CSS', skill5: 'Diseño Web Responsive',
                     educationTitle: 'Estudios',
@@ -179,11 +299,11 @@
                     navTeam: 'Team', navServices: 'Services', navPortfolio: 'Portfolio',
                     role: 'Multimedia Producer & AI Strategist',
                     summary: 'Graphic designer focused on web and visual experiences, with expertise in optimization, e-commerce, and AI integration for efficient results.',
+                    portfolioTitle: 'MY FEATURED PROJECTS',
+                    portfolioDesc: 'The creative process is my compass, guiding me through each project with a unique combination of strategy, innovation, and a passion for detail.',
                     experienceTitle: 'Work Experience',
-                    job1Title: 'Graphic Designer and Video Editor',
-                    job1Desc: 'Video and graphics editing for national television. Integration of generative AI to optimize workflows and reduce advertising production times.',
-                    job2Title: 'Web Designer',
-                    job2Desc: 'Design and animation of graphics for social media, achieving an increase in interactions. SEO optimization and web design to increase search visibility.',
+                    job1Title: 'Graphic Designer and Video Editor', job1Desc: 'Video and graphics editing for national television. Integration of generative AI to optimize workflows and reduce advertising production times.',
+                    job2Title: 'Web Designer', job2Desc: 'Design and animation of graphics for social media, achieving an increase in interactions. SEO optimization and web design to increase search visibility.',
                     skillsTitle: 'Skills',
                     skill1: 'Animation & Graphics', skill2: 'AI Implementation', skill3: 'Optimized Graphic Design', skill4: 'HTML5 & CSS', skill5: 'Responsive Web Design',
                     educationTitle: 'Education',
@@ -206,6 +326,108 @@
             window.addEventListener('click', () => { if (langDropdown.classList.contains('show')) { langDropdown.classList.remove('show'); } });
             const savedLang = localStorage.getItem('language') || 'es';
             setLanguage(savedLang);
+
+            // --- NUEVO CÓDIGO PARA PORTAFOLIO INTERACTIVO ---
+            const portfolioCardsContainer = document.getElementById('portfolio-cards-container');
+            if(portfolioCardsContainer){
+                const portfolioCards = document.querySelectorAll('.portfolio-card');
+                const projectTitle = document.getElementById('project-title');
+                const projectDescription = document.getElementById('project-description');
+                const prevBtn = document.getElementById('prev-btn');
+                const nextBtn = document.getElementById('next-btn');
+                const paginationDotsContainer = document.getElementById('pagination-dots');
+                const muteToggle = document.getElementById('mute-toggle');
+                let currentProjectIndex = 0;
+                let player;
+
+                function loadYouTubeAPI() {
+                    const tag = document.createElement('script');
+                    tag.src = "https://www.youtube.com/iframe_api";
+                    const firstScriptTag = document.getElementsByTagName('script')[0];
+                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                }
+
+                window.onYouTubeIframeAPIReady = function() {
+                    const initialVideoId = portfolioCards[0]?.getAttribute('data-youtube-id');
+                    if(initialVideoId && document.getElementById('portfolio-youtube-player')) {
+                        player = new YT.Player('portfolio-youtube-player', {
+                            videoId: initialVideoId,
+                            playerVars: { autoplay: 1, mute: 1, loop: 1, controls: 0, playlist: initialVideoId, showinfo: 0, modestbranding: 1, rel: 0 },
+                            events: { 'onReady': onPlayerReady }
+                        });
+                    }
+                };
+
+                function onPlayerReady(event) {
+                    event.target.playVideo();
+                    updateProjectDetails(0);
+                    updateMuteButton();
+                }
+
+                function createPaginationDots() {
+                    paginationDotsContainer.innerHTML = '';
+                    portfolioCards.forEach((_, index) => {
+                        const dot = document.createElement('div');
+                        dot.classList.add('pagination-dot');
+                        dot.addEventListener('click', () => showProject(index));
+                        paginationDotsContainer.appendChild(dot);
+                    });
+                }
+
+                function showProject(index) {
+                    if (index < 0) index = portfolioCards.length - 1;
+                    if (index >= portfolioCards.length) index = 0;
+                    currentProjectIndex = index;
+
+                    const cardWidth = portfolioCards[0].offsetWidth + parseInt(getComputedStyle(portfolioCards[0]).marginRight) * 2;
+                    const scrollPosition = index * cardWidth - (portfolioCardsContainer.parentElement.offsetWidth / 2) + (cardWidth / 2);
+                    portfolioCardsContainer.parentElement.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+
+                    updateProjectDetails(index);
+                }
+
+                function updateProjectDetails(index) {
+                    portfolioCards.forEach((card, i) => card.classList.toggle('active', i === index));
+                    const dots = paginationDotsContainer.querySelectorAll('.pagination-dot');
+                    dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+
+                    const card = portfolioCards[index];
+                    const title = card.getAttribute('data-title');
+                    const description = card.getAttribute('data-description');
+                    const youtubeId = card.getAttribute('data-youtube-id');
+
+                    projectTitle.textContent = title;
+                    projectDescription.textContent = description;
+
+                    if (player && typeof player.loadVideoById === 'function') {
+                         player.loadVideoById({videoId: youtubeId});
+                    }
+                }
+                
+                function updateMuteButton() {
+                    if (player && typeof player.isMuted === 'function') {
+                        if (player.isMuted()) {
+                            muteToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                        } else {
+                            muteToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                        }
+                    }
+                }
+
+                muteToggle.addEventListener('click', () => {
+                    if (player && typeof player.isMuted === 'function') {
+                        player.isMuted() ? player.unMute() : player.mute();
+                        setTimeout(updateMuteButton, 100); // Small delay to allow API to update
+                    }
+                });
+                
+                prevBtn.addEventListener('click', () => showProject(currentProjectIndex - 1));
+                nextBtn.addEventListener('click', () => showProject(currentProjectIndex + 1));
+                portfolioCards.forEach((card, index) => card.addEventListener('click', () => showProject(index)));
+
+                createPaginationDots();
+                loadYouTubeAPI();
+            }
         });
     </script>
 </body>
