@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil Rafael Valenciano - Visual Synor</title>
+    <link rel="shortcut icon" href="/assets/favicon-visualsynor.png" type="image/x-png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -12,6 +13,10 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: var(--fuente-principal); background-color: var(--color-primario); color: var(--color-texto); line-height: 1.6; }
+        .preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--color-primario); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.75s ease, visibility 0.75s ease; overflow: hidden; }
+        .preloader.hidden { opacity: 0; visibility: hidden; }
+        .preloader-video-desktop, .preloader-video-mobile { max-width: 100%; max-height: 100vh; object-fit: contain; }
+        .preloader-video-desktop { display: none; }
         .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
         .header { position: fixed; top: 0; width: 100%; z-index: 1000; background-color: rgba(13, 13, 13, 0.8); backdrop-filter: blur(10px); padding: 15px 0; }
         .nav { display: flex; justify-content: space-between; align-items: center; }
@@ -58,9 +63,17 @@
             .profile-header { flex-direction: column; text-align: center; }
             .profile-grid { grid-template-columns: 1fr; }
         }
+        @media (min-width: 768px) {
+            .preloader-video-mobile { display: none; }
+            .preloader-video-desktop { display: block; }
+        }
     </style>
 </head>
 <body>
+    <div class="preloader" id="preloader">
+        <video autoplay muted playsinline loop class="preloader-video-desktop"><source src="assets/animacion-horizontal.mp4" type="video/mp4"></video>
+        <video autoplay muted playsinline loop class="preloader-video-mobile"><source src="assets/animacion-vertical.mp4" type="video/mp4"></video>
+    </div>
     <header class="header" id="header">
         <nav class="nav container">
             <div class="nav-left">
@@ -81,7 +94,6 @@
             <div class="nav-toggle" id="nav-toggle">&#9776;</div>
         </nav>
     </header>
-
     <main class="profile-section container">
         <div class="profile-header">
             <img src="/perfiles/Synor-Rafael.png" alt="Foto de Rafael Valenciano">
@@ -140,6 +152,10 @@
     </main>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const hidePreloader = () => { const preloader = document.getElementById('preloader'); if (preloader) { preloader.classList.add('hidden'); setTimeout(() => { preloader.style.display = 'none'; }, 800); } };
+            const minTimePromise = new Promise(resolve => { setTimeout(resolve, 1200); });
+            const pageLoadPromise = new Promise(resolve => { window.addEventListener('load', resolve); });
+            Promise.all([minTimePromise, pageLoadPromise]).then(hidePreloader);
             const navMenu = document.getElementById('nav-menu'), navToggle = document.getElementById('nav-toggle'), navLinks = document.querySelectorAll('.nav-link');
             if (navToggle) { navToggle.addEventListener('click', () => { navMenu.classList.toggle('active'); }); }
             navLinks.forEach(link => { link.addEventListener('click', () => { if (navMenu.classList.contains('active')) { navMenu.classList.remove('active'); } }); });
