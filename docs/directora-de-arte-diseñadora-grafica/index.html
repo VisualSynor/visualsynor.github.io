@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Valentina Salgado - Visual Synor</title>
+    <link rel="shortcut icon" href="/assets/favicon-visualsynor.png" type="image/x-png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --color-primario: #0D0D0D; --color-secundario: #1A1A1A; --color-acento: #8A2BE2; --color-texto: #E0E0E0; --color-texto-secundario: #A0A0A0; --fuente-principal: 'Poppins', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--fuente-principal); background-color: var(--color-primario); color: var(--color-texto); line-height: 1.6; }
+        /* --- PRELOADER INDEPENDIENTE (PERFILES) --- */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-primario);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.75s ease, visibility 0.75s ease;
+            overflow: hidden;
+        }
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .preloader-video-desktop, .preloader-video-mobile {
+            /* Reglas para que el video ocupe TODA la pantalla (con recorte) */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: cover;
+        }
+        .preloader-video-desktop {
+            display: none; 
+        }
+
+        /* --- ESTILOS GENERALES --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .header { position: fixed; top: 0; width: 100%; z-index: 1000; background-color: rgba(13, 13, 13, 0.8); backdrop-filter: blur(10px); padding: 15px 0; }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        .nav-left { display: flex; align-items: center; gap: 25px; }
+        .nav-logo { font-size: 1.8rem; font-weight: 700; color: var(--color-texto); text-decoration: none; }
+        .nav-logo span { color: var(--color-acento); }
+        .nav-menu { list-style: none; display: flex; gap: 30px; }
+        .nav-link { color: var(--color-texto); text-decoration: none; font-weight: 400; transition: color 0.3s; }
+        .nav-link:hover { color: var(--color-acento); }
+        .nav-toggle { display: none; font-size: 2rem; cursor: pointer; }
+        .lang-selector { position: relative; }
+        .lang-selected { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .lang-selected img { width: 24px; border-radius: 3px; }
+        .lang-dropdown { position: absolute; top: 140%; left: 0; background-color: var(--color-secundario); border-radius: 5px; overflow: hidden; border: 1px solid #333; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; z-index: 1100; }
+        .lang-dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .lang-option { display: flex; align-items: center; gap: 8px; padding: 10px 15px; cursor: pointer; transition: background-color 0.2s; }
+        .lang-option:hover { background-color: var(--color-acento); }
+        .lang-option img { width: 24px; border-radius: 3px; }
+        .profile-section { padding-top: 120px; padding-bottom: 60px; }
+        .profile-header { display: flex; align-items: center; gap: 40px; margin-bottom: 50px; flex-wrap: wrap; }
+        .profile-header img { width: 180px; height: 180px; border-radius: 50%; border: 4px solid var(--color-acento); object-fit: cover; }
+        .profile-header-info { flex: 1; }
+        .profile-header-info h1 { font-size: 2.8rem; line-height: 1.2; }
+        .profile-header-info p { font-size: 1.2rem; color: var(--color-acento); font-weight: 600; margin-bottom: 10px; }
+        .profile-summary { color: var(--color-texto-secundario); }
+        .profile-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 50px; }
+        .profile-main, .profile-sidebar { display: flex; flex-direction: column; gap: 40px; }
+        .content-block { background: var(--color-secundario); padding: 30px; border-radius: 10px; border: 1px solid #222; }
+        .content-block h2 { font-size: 1.5rem; color: var(--color-acento); padding-bottom: 15px; margin-bottom: 20px; border-bottom: 1px solid #333; }
+        .job-item { margin-bottom: 25px; }
+        .job-item:last-child { margin-bottom: 0; }
+        .job-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+        .job-header h3 { font-size: 1.2rem; }
+        .job-header span { color: var(--color-texto-secundario); font-size: 0.9rem; }
+        .job-item p { margin-left: 15px; border-left: 2px solid var(--color-acento); padding-left: 15px; font-size: 0.95rem; color: var(--color-texto-secundario); }
+        .skills-list, .education-list { list-style: none; }
+        .skills-list li, .education-item { background-color: #222; padding: 10px 15px; border-radius: 5px; margin-bottom: 10px; }
+        .education-item h4 { font-size: 1rem; }
+        .education-item p { font-size: 0.9rem; color: var(--color-texto-secundario); }
+        @media (max-width: 768px) {
+            .nav-menu { position: fixed; top: 0; right: -100%; width: 60%; height: 100vh; flex-direction: column; justify-content: center; align-items: center; background-color: var(--color-secundario); transition: right 0.4s ease-in-out; }
+            .nav-menu.active { right: 0; }
+            .nav-toggle { display: block; z-index: 1001; }
+            .profile-header { flex-direction: column; text-align: center; }
+            .profile-grid { grid-template-columns: 1fr; }
+        }
+        @media (min-width: 768px) {
+            .preloader-video-mobile { display: none; }
+            .preloader-video-desktop { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <div class="preloader" id="preloader">
+        <video autoplay muted playsinline loop class="preloader-video-desktop"><source src="/animacion-visual-horizontal.mp4" type="video/mp4"></video>
+        <video autoplay muted playsinline loop class="preloader-video-mobile"><source src="/animacion-visual-vertical.mp4" type="video/mp4"></video>
+    </div>
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav-left">
+                <a href="/" class="nav-logo">Visual<span>Synor</span></a>
+                <div class="lang-selector">
+                    <div class="lang-selected" id="lang-selected"></div>
+                    <div class="lang-dropdown" id="lang-dropdown">
+                        <div class="lang-option" data-lang="es"><img src="https://flagcdn.com/w40/co.png" alt="Bandera Colombia"><span>ES</span></div>
+                        <div class="lang-option" data-lang="en"><img src="https://flagcdn.com/w40/us.png" alt="Bandera USA"><span>EN</span></div>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/#nosotros" class="nav-link" data-key="navTeam">Equipo</a></li>
+                <li><a href="/#servicios" class="nav-link" data-key="navServices">Servicios</a></li>
+                <li><a href="/#portafolio" class="nav-link" data-key="navPortfolio">Portafolio</a></li>
+            </ul>
+            <div class="nav-toggle" id="nav-toggle">&#9776;</div>
+        </nav>
+    </header>
+    <main class="profile-section container">
+        <div class="profile-header">
+            <img src="/perfiles/Synor-Valentina.png" alt="Foto de Valentina Salgado">
+            <div class="profile-header-info">
+                <h1>Valentina Salgado</h1>
+                <p data-key="role">Diseñadora Gráfica & Social Media</p>
+                <p class="profile-summary" data-key="summary">Diseñadora con experiencia en personajes 2D, piezas publicitarias y branding. Utilizo IA generativa para optimizar procesos y explorar variaciones creativas.</p>
+            </div>
+        </div>
+        <div class="profile-grid">
+            <div class="profile-main">
+                <div class="content-block">
+                    <h2 data-key="experienceTitle">Experiencia Laboral</h2>
+                    <div class="job-item">
+                        <div class="job-header">
+                            <h3 data-key="job1Title">Diseñadora Gráfica</h3>
+                            <span>2024 - 2025</span>
+                        </div>
+                        <p data-key="job1Desc">Creación y gestión de identidad visual, diseño de logotipos, manual de marca y materiales impresos/digitales. Creación de contenido dinámico como gráficos animados y videos corporativos.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-sidebar">
+                <div class="content-block">
+                    <h2 data-key="skillsTitle">Habilidades</h2>
+                    <ul class="skills-list">
+                        <li data-key="skill1">Inteligencia Artificial</li>
+                        <li data-key="skill2">Resolución de Problemas</li>
+                        <li data-key="skill3">Suite Adobe</li>
+                        <li data-key="skill4">Creatividad e Innovación</li>
+                        <li data-key="skill5">Branding</li>
+                    </ul>
+                </div>
+                <div class="content-block">
+                    <h2 data-key="educationTitle">Estudios</h2>
+                    <ul class="education-list">
+                        <li class="education-item">
+                            <h4 data-key="edu1Title">Tecnóloga en Producción de Multimedia</h4>
+                            <p data-key="edu1School">SENA (2023 - 2025)</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hidePreloader = () => { const preloader = document.getElementById('preloader'); if (preloader) { preloader.classList.add('hidden'); setTimeout(() => { preloader.style.display = 'none'; }, 800); } };
+            const minTimePromise = new Promise(resolve => { setTimeout(resolve, 1200); });
+            const pageLoadPromise = new Promise(resolve => { window.addEventListener('load', resolve); });
+            Promise.all([minTimePromise, pageLoadPromise]).then(hidePreloader);
+            const navMenu = document.getElementById('nav-menu'), navToggle = document.getElementById('nav-toggle'), navLinks = document.querySelectorAll('.nav-link');
+            if (navToggle) { navToggle.addEventListener('click', () => { navMenu.classList.toggle('active'); }); }
+            navLinks.forEach(link => { link.addEventListener('click', () => { if (navMenu.classList.contains('active')) { navMenu.classList.remove('active'); } }); });
+            const translations = {
+                es: {
+                    navTeam: 'Equipo', navServices: 'Servicios', navPortfolio: 'Portafolio',
+                    role: 'Diseñadora Gráfica & Social Media',
+                    summary: 'Diseñadora con experiencia en personajes 2D, piezas publicitarias y branding. Utilizo IA generativa para optimizar procesos y explorar variaciones creativas.',
+                    experienceTitle: 'Experiencia Laboral',
+                    job1Title: 'Diseñadora Gráfica',
+                    job1Desc: 'Creación y gestión de identidad visual, diseño de logotipos, manual de marca y materiales impresos/digitales. Creación de contenido dinámico como gráficos animados y videos corporativos.',
+                    skillsTitle: 'Habilidades',
+                    skill1: 'Inteligencia Artificial', skill2: 'Resolución de Problemas', skill3: 'Suite Adobe', skill4: 'Creatividad e Innovación', skill5: 'Branding',
+                    educationTitle: 'Estudios',
+                    edu1Title: 'Tecnóloga en Producción de Multimedia', edu1School: 'SENA (2023 - 2025)',
+                },
+                en: {
+                    navTeam: 'Team', navServices: 'Services', navPortfolio: 'Portfolio',
+                    role: 'Graphic Designer & Social Media',
+                    summary: 'Designer with experience in 2D characters, advertising pieces, and branding. I use generative AI to optimize processes and explore creative variations.',
+                    experienceTitle: 'Work Experience',
+                    job1Title: 'Graphic Designer',
+                    job1Desc: 'Creation and management of visual identity, logo design, brand manual, and print/digital materials. Creation of dynamic content such as animated graphics and corporate videos.',
+                    skillsTitle: 'Skills',
+                    skill1: 'Artificial Intelligence', skill2: 'Problem Solving', skill3: 'Adobe Suite', skill4: 'Creativity & Innovation', skill5: 'Branding',
+                    educationTitle: 'Education',
+                    edu1Title: 'Technologist in Multimedia Production', edu1School: 'SENA (2023 - 2025)',
+                }
+            };
+            const langSelector = document.querySelector('.lang-selector'), langSelectedContainer = document.getElementById('lang-selected'), langDropdown = document.getElementById('lang-dropdown'), langOptions = document.querySelectorAll('.lang-option');
+            langSelectedContainer.addEventListener('click', (event) => { event.stopPropagation(); langDropdown.classList.toggle('show'); });
+            function setLanguage(lang) {
+                const selectedLangOption = document.querySelector(`.lang-option[data-lang="${lang}"]`);
+                langSelectedContainer.innerHTML = selectedLangOption.innerHTML;
+                document.querySelectorAll('[data-key]').forEach(elem => {
+                    const key = elem.getAttribute('data-key');
+                    if (translations[lang] && translations[lang][key]) { elem.textContent = translations[lang][key]; }
+                });
+                localStorage.setItem('language', lang);
+            }
+            langOptions.forEach(option => { option.addEventListener('click', () => { const lang = option.getAttribute('data-lang'); setLanguage(lang); langDropdown.classList.remove('show'); }); });
+            window.addEventListener('click', () => { if (langDropdown.classList.contains('show')) { langDropdown.classList.remove('show'); } });
+            const savedLang = localStorage.getItem('language') || 'es';
+            setLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>
