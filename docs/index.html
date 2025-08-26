@@ -9,213 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --color-primario: #0D0D0D;
-            --color-secundario: #1A1A1A;
-            --color-acento: #8A2BE2;
-            --color-texto: #E0E0E0;
-            --color-texto-secundario: #A0A0A0;
-            --color-whatsapp: #25D366;
-            --fuente-principal: 'Poppins', sans-serif;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { font-family: var(--fuente-principal); background-color: var(--color-primario); color: var(--color-texto); line-height: 1.6; }
-
-        /* --- PRELOADER (CORREGIDO PARA index.html) --- */
-        .preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--color-primario);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.75s ease, visibility 0.75s ease;
-            overflow: hidden;
-        }
-        .preloader.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-        .preloader-video-desktop, .preloader-video-mobile {
-            /* Reglas para que el video ocupe TODA la pantalla (con recorte) */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: cover;
-        }
-        .preloader-video-desktop {
-            display: none; 
-        }
-
-        /* --- ESTILOS GENERALES --- */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        section { padding: 100px 0; overflow: hidden; }
-        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; font-weight: 600; color: var(--color-acento); }
-        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
-        .header { position: fixed; top: 0; width: 100%; z-index: 1000; background-color: rgba(13, 13, 13, 0.8); backdrop-filter: blur(10px); padding: 15px 0; transition: top 0.3s; }
-        .nav { display: flex; justify-content: space-between; align-items: center; }
-        .nav-left { display: flex; align-items: center; gap: 25px; }
-        .nav-logo { font-size: 1.8rem; font-weight: 700; color: var(--color-texto); text-decoration: none; }
-        .nav-logo span { color: var(--color-acento); }
-        .nav-menu { list-style: none; display: flex; gap: 30px; }
-        .nav-link { color: var(--color-texto); text-decoration: none; font-weight: 400; transition: color 0.3s; }
-        .nav-link:hover { color: var(--color-acento); }
-        .nav-toggle { display: none; font-size: 2rem; cursor: pointer; }
-        .lang-selector { position: relative; }
-        .lang-selected { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-        .lang-selected img { width: 24px; border-radius: 3px; }
-        .lang-dropdown { position: absolute; top: 140%; left: 0; background-color: var(--color-secundario); border-radius: 5px; overflow: hidden; border: 1px solid #333; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; z-index: 1100; }
-        .lang-dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        .lang-option { display: flex; align-items: center; gap: 8px; padding: 10px 15px; cursor: pointer; transition: background-color 0.2s; }
-        .lang-option:hover { background-color: var(--color-acento); }
-        .lang-option img { width: 24px; border-radius: 3px; }
-        .hero { height: 100vh; position: relative; display: flex; align-items: center; text-align: center; overflow: hidden; }
-        #hero-video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); min-width: 100%; min-height: 100%; width: auto; height: auto; z-index: -2; object-fit: cover; }
-        .hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(13, 13, 13, 0.7); z-index: -1; }
-        .hero-content { max-width: 800px; margin: 0 auto; z-index: 1; }
-        .hero-title { font-size: 3.5rem; font-weight: 700; margin-bottom: 20px; line-height: 1.2; }
-        .hero-subtitle { font-size: 1.2rem; margin-bottom: 30px; color: var(--color-texto-secundario); }
-        .cta-button { background-color: var(--color-acento); color: white; padding: 15px 30px; text-decoration: none; font-weight: 600; border-radius: 5px; transition: background-color 0.3s, transform 0.3s; display: inline-block; }
-        .cta-button:hover { background-color: #6a0dad; transform: translateY(-3px); }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .service-card { background-color: var(--color-secundario); padding: 40px 30px; border-radius: 10px; border: 1px solid rgba(138, 43, 226, 0.2); transition: transform 0.3s, box-shadow 0.3s; }
-        .service-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(138, 43, 226, 0.1); }
-        .service-card h3 { font-size: 1.5rem; color: var(--color-acento); margin-bottom: 15px; }
-        .service-card p { color: var(--color-texto-secundario); }
-        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding-bottom: 30px; }
-        .portfolio-item { position: relative; overflow: hidden; border-radius: 10px; cursor: pointer; }
-        .portfolio-item img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform 0.4s; }
-        .portfolio-item:hover img { transform: scale(1.1); }
-        .portfolio-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(138, 43, 226, 0.2), rgba(13, 13, 13, 0.9)); color: white; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; opacity: 0; transition: opacity 0.4s; }
-        .portfolio-item:hover .portfolio-overlay { opacity: 1; }
-        .portfolio-overlay h4 { font-size: 1.3rem; transform: translateY(15px); transition: transform 0.4s; }
-        .portfolio-item:hover .portfolio-overlay h4 { transform: translateY(0); }
-        .about-content { display: flex; gap: 30px; align-items: flex-start; flex-wrap: wrap; }
-        .about-text { flex: 1.5; min-width: 300px; }
-        .about-team { flex: 2; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .about-text h2 { font-size: 2.5rem; margin-bottom: 20px; }
-        .team-member { text-align: center; background-color: var(--color-secundario); padding: 30px 20px; border-radius: 10px; border: 1px solid rgba(138, 43, 226, 0.2); transition: transform 0.3s; }
-        .team-member:hover { transform: translateY(-5px); }
-        .team-member img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--color-acento); object-fit: cover; margin-bottom: 15px; }
-        .team-member-info h4 { font-size: 1.3rem; color: var(--color-texto); }
-        .team-member-info p { color: var(--color-acento); font-weight: 600; margin-bottom: 20px; }
-        .profile-button { padding: 10px 20px; font-size: 0.9rem; font-weight: 500; }
-        .contact-form { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
-        .form-group { display: flex; flex-direction: column; }
-        .form-group input, .form-group textarea { background-color: var(--color-secundario); border: 1px solid #333; border-radius: 5px; padding: 15px; color: var(--color-texto); font-family: var(--fuente-principal); font-size: 1rem; }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--color-acento); }
-        textarea { resize: vertical; min-height: 150px; }
-        .contact-form button { align-self: center; }
-        .footer { background-color: var(--color-secundario); text-align: center; padding: 40px 20px; }
-        .footer p { color: var(--color-texto-secundario); }
-        .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 40px; right: 40px; background-color: var(--color-whatsapp); color: #FFF; border-radius: 50px; text-align: center; font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 100; display: flex; align-items: center; justify-content: center; transition: transform 0.3s; }
-        .whatsapp-float:hover { transform: scale(1.1); }
-        .whatsapp-float svg { width: 32px; height: 32px; fill: white; }
-        @media (max-width: 992px) { .about-content { flex-direction: column; } }
-        @media (max-width: 768px) {
-            .hero-title { font-size: 2.5rem; }
-            .nav-menu { position: fixed; top: 0; right: -100%; width: 60%; height: 100vh; flex-direction: column; justify-content: center; align-items: center; background-color: var(--color-secundario); transition: right 0.4s ease-in-out; }
-            .nav-menu.active { right: 0; }
-            .nav-toggle { display: block; z-index: 1001; }
-            .section-title { font-size: 2rem; }
-            .whatsapp-float { width: 50px; height: 50px; bottom: 20px; right: 20px; }
-            .whatsapp-float svg { width: 28px; height: 28px; }
-        }
-        @media (max-width: 480px) {
-            .hero-title { font-size: 2.2rem; }
-            .hero-subtitle { font-size: 1rem; }
-            section { padding: 60px 0; }
-        }
-        @media (min-width: 768px) {
-            .preloader-video-mobile { display: none; }
-            .preloader-video-desktop { display: block; }
-        }
-        
-        /* Pega esto dentro de tu etiqueta <style> */
-
-        /* --- LOGO CAROUSEL --- */
-        .logo-carousel-section {
-            padding-top: 80px;
-            padding-bottom: 80px;
-            background-color: var(--color-secundario); /* Un fondo sutil para destacar la sección */
-        }
-        .carousel-title {
-            text-align: center;
-            font-weight: 500;
-            font-size: 1.1rem;
-            color: var(--color-texto-secundario);
-            margin-bottom: 40px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .logo-slider {
-            width: 100%;
-            position: relative;
-            overflow-x: auto; /* Habilita el scroll horizontal */
-            /* Efecto de difuminado en los bordes para indicar que hay más contenido */
-            -webkit-mask-image: linear-gradient(to right, transparent, white 20px, white calc(100% - 20px), transparent);
-            mask-image: linear-gradient(to right, transparent, white 20px, white calc(100% - 20px), transparent);
-            /* Oculta la barra de scroll visual */
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .logo-slider::-webkit-scrollbar {
-            display: none;
-        }
-
-        .logo-track {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            flex-wrap: nowrap; /* Impide que los logos se apilen */
-            justify-content: flex-start; /* Alinea los logos al inicio para el scroll */
-            padding: 10px 20px; /* Añade espacio en los bordes */
-        }
-        .logo-track img {
-            height: 40px;
-            width: 150px;
-            filter: grayscale(1) opacity(0.7);
-            transition: filter 0.3s;
-        }
-        .logo-track img:hover {
-            filter: grayscale(0) opacity(1);
-        }
-        /* Ajuste para que no haya doble padding con la sección de servicios */
-        #servicios {
-            padding-top: 100px;
-        }
-        .logo-carousel-section + #servicios {
-            padding-top: 0;
-        }
-
-        /* Media query para que en escritorio siga estático y centrado */
-        @media (min-width: 768px) {
-            .logo-slider {
-                overflow-x: hidden; /* Deshabilita el scroll en escritorio */
-                -webkit-mask-image: none; /* Quita el difuminado en escritorio */
-                mask-image: none;
-            }
-            .logo-track {
-                justify-content: center; /* Centra los logos en escritorio */
-                padding: 0;
-            }
-        }
-
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
@@ -266,182 +61,189 @@
             <h3 class="carousel-title" data-key="trustedBy">Marcas que confían en nosotros</h3>
             <div class="logo-slider">
                 <div class="logo-track">
-                    <img src="https://logoipsum.com/logo/logo-1.svg" alt="Logo Marca 1">
+                    <img src="/assets/marcas-aliadas/reserva-destino-hoteles-toures.png" alt="Logo Marca 1">
                     <img src="https://logoipsum.com/logo/logo-2.svg" alt="Logo Marca 2">
                     <img src="https://logoipsum.com/logo/logo-3.svg" alt="Logo Marca 3">
                     <img src="https://logoipsum.com/logo/logo-4.svg" alt="Logo Marca 4">
                 </div>
             </div>
         </section>
-
+        <!--SERVICES SECTION-->
         <section id="servicios" class="container">
-            <h2 class="section-title fade-in" data-key="servicesTitle">Nuestros Servicios</h2>
-            <div class="services-grid">
-                <div class="service-card fade-in">
-                    <h3 data-key="service1Title">Diseño Gráfico con IA</h3>
-                    <p data-key="service1Desc">Creamos identidades visuales impactantes y assets para campañas, utilizando IA para generar conceptos y escalar diseños.</p>
+            <div class="section-header">
+             <!--<p class="section-tagline" data-key="servicesTagline">Nuestros Servicios</p>-->
+                <h2 class="section-title" data-key="servicesTitle">Qué Hacemos</h2>
+                <p class="section-description" data-key="servicesDesc">Fusionamos estrategia y creatividad con el poder de la IA para ofrecer soluciones visuales que no solo impactan, sino que también convierten.</p>
+            </div>
+            <div class="what-we-do-grid">
+                <div class="service-card-new">
+                    <img src="https://images.unsplash.com/photo-1572044162444-24c9562102c7?q=80&w=1887" alt="Diseño Gráfico Abstracto" class="card-background-image">
+                    <div class="card-content">
+                        <div class="icon-container">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3 data-key="service1Title">Diseño Gráfico con IA</h3>
+                        <p data-key="service1Desc">Identidades visuales y assets para campañas, utilizando IA para acelerar la creatividad y la producción.</p>
+                    </div>
                 </div>
-                <div class="service-card fade-in">
-                    <h3 data-key="service2Title">Edición de Video Inteligente</h3>
-                    <p data-key="service2Desc">Transformamos tu material crudo en historias cautivadoras. La IA nos asiste en la colorización y optimización del ritmo.</p>
+                <div class="service-card-new">
+                    <img src="https://images.unsplash.com/photo-1551732958-251f95305646?q=80&w=1887" alt="Edición de Video Profesional" class="card-background-image">
+                    <div class="card-content">
+                        <div class="icon-container">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3 data-key="service2Title">Edición de Video Inteligente</h3>
+                        <p data-key="service2Desc">Transformamos tu material en historias cautivadoras, asistidos por IA para optimizar el ritmo y el color.</p>
+                    </div>
                 </div>
-                <div class="service-card fade-in">
-                    <h3 data-key="service3Title">Motion Graphics Dinámicos</h3>
-                    <p data-key="service3Desc">Damos vida a tu mensaje con animaciones fluidas y modernas, aprovechando herramientas de IA para efectos complejos.</p>
+                <div class="service-card-new">
+                    <img src="https://images.unsplash.com/photo-1621929763728-3b123611319b?q=80&w=1887" alt="Animación Motion Graphics" class="card-background-image">
+                    <div class="card-content">
+                        <div class="icon-container">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <h3 data-key="service3Title">Motion Graphics Dinámicos</h3>
+                        <p data-key="service3Desc">Animaciones fluidas y modernas para dar vida a tu mensaje, generando efectos complejos de forma eficiente.</p>
+                    </div>
+                </div>
+                <div class="service-card-new">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070" alt="Estrategia y Analítica" class="card-background-image">
+                    <div class="card-content">
+                        <div class="icon-container">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 data-key="service4Title">Estrategia de Contenido con IA</h3>
+                        <p data-key="service4Desc">Análisis y creación de contenido optimizado para conectar con tu audiencia y alcanzar tus objetivos.</p>
+                    </div>
                 </div>
             </div>
         </section>
+        <!--SERVICES SECTION-->
         <section id="portafolio" class="container">
             <h2 class="section-title fade-in" data-key="portfolioTitle">Proyectos Destacados</h2>
             <div class="portfolio-grid">
                 <div class="portfolio-item fade-in"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Proyecto 1"><div class="portfolio-overlay"><h4 data-key="portfolio1">Branding para Marca Tech</h4></div></div>
                 <div class="portfolio-item fade-in"><img src="https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?q=80&w=2070&auto=format&fit=crop" alt="Proyecto 2"><div class="portfolio-overlay"><h4 data-key="portfolio2">Video Publicitario Producto</h4></div></div>
                 <div class="portfolio-item fade-in"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Proyecto 3"><div class="portfolio-overlay"><h4 data-key="portfolio3">Animación de Logo</h4></div></div>
-                <div class="portfolio-item fade-in"><img src="https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?q=80&w=2070&auto=format&fit=crop" alt="Proyecto 4"><div class="portfolio-overlay"><h4 data-key="portfolio4">Campaña Redes Sociales</h4></div></div>
-                <div class="portfolio-item fade-in"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Proyecto 1"><div class="portfolio-overlay"><h4 data-key="portfolio1">Branding para Marca Tech</h4></div></div>
-                <div class="portfolio-item fade-in"><img src="https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?q=80&w=2070&auto=format&fit=crop" alt="Proyecto 2"><div class="portfolio-overlay"><h4 data-key="portfolio2">Video Publicitario Producto</h4></div></div>
+            </div>
+        </section>
+        <!--TEAM-->
+<section id="nosotros" class="container">
+    <div class="section-header">
+        <p class="section-tagline" data-key="teamTagline">Nuestro Equipo</p>
+        <h2 class="section-title" data-key="teamTitle">Conoce a los Expertos</h2>
+        <p class="section-description" data-key="teamDesc">Somos un equipo ágil y dedicado, convencido de que la mejor creatividad surge de la colaboración perfecta entre el ingenio humano y la precisión de la IA.</p>
+    </div>
 
-            </div>
-        </section>
-        <section id="nosotros" class="container">
-             <div class="about-content">
-                <div class="about-text fade-in">
-                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;" data-key="aboutTitle">Somos el Futuro de la Creatividad Digital</h2>
-                    <p style="color: var(--color-texto-secundario);" data-key="aboutDesc">Nacimos de la pasión por la comunicación visual y la fascinación por el poder de la tecnología. Somos un equipo ágil y dedicado, convencido de que la mejor creatividad surge de la colaboración perfecta entre el ingenio humano y la precisión de la inteligencia artificial.</p>
+    <div class="team-grid">
+        <div class="team-member-new fade-in">
+            <img src="/perfiles/Synor-Rafael.png" alt="Foto de Rafael Valenciano" class="member-photo">
+            <div class="member-info">
+                <h4>Rafael Valenciano</h4>
+                <p class="member-role" data-key="rafaelRole">Productor Multimedia & Estratega IA</p>
+                <p class="member-bio" data-key="rafaelBio">Experto en la fusión de narrativa visual y tecnología, liderando proyectos desde el concepto hasta la postproducción final.</p>
+                <div class="member-socials">
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" aria-label="Behance"><i class="fab fa-behance"></i></a>
                 </div>
-                <div class="about-team fade-in">
-                    <div class="team-member">
-                        <img src="/perfiles/Synor-Rafael.png" alt="Foto de Rafael Valenciano">
-                        <div class="team-member-info">
-                            <h4>Rafael Valenciano</h4>
-                            <p data-key="rafaelRole">Productor Multimedia & Estratega IA</p>
-                            <a href="/productor-multimedia-editor-de-video/" class="cta-button profile-button" data-key="exploreProfile">Explorar perfil</a>
-                        </div>
-                    </div>
-                     <div class="team-member">
-                        <img src="/perfiles/Synor-Valentina.png" alt="Foto de Valentina Salgado">
-                        <div class="team-member-info">
-                            <h4>Valentina Salgado</h4>
-                            <p data-key="valentinaRole">Diseñadora Gráfica & Social Media</p>
-                            <a href="/directora-de-arte-diseñadora-grafica/" class="cta-button profile-button" data-key="exploreProfile">Explorar perfil</a>
-                        </div>
-                    </div>
-                    <div class="team-member">
-                        <img src="/perfiles/Synor-Kevin.png" alt="Foto de Kevin Ayure">
-                        <div class="team-member-info">
-                            <h4>Kevin Ayure</h4>
-                            <p data-key="kevinRole">Animador 2D y 3D</p>
-                            <a href="/animador-2d-3d-motion-graphics/" class="cta-button profile-button" data-key="exploreProfile">Explorar perfil</a>
-                        </div>
+                <a href="/productor-multimedia-editor-de-video/" class="cta-button profile-button" data-key="exploreProfile">Explorar perfil</a>
+            </div>
+        </div>
+
+        <div class="team-member-new fade-in">
+            <img src="/perfiles/Synor-Valentina.png" alt="Foto de Valentina Salgado" class="member-photo">
+            <div class="member-info">
+                <h4>Valentina Salgado</h4>
+                <p class="member-role" data-key="valentinaRole">Directora de Arte & Diseñadora Gráfica</p>
+                <p class="member-bio" data-key="valentinaBio">Especialista en crear identidades de marca impactantes y contenido visual que captura la esencia de cada proyecto.</p>
+                <div class="member-socials">
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+                <a href="/directora-de-arte-fotógrafa-diseño-editorial/" class="cta-button profile-button" data-key="exploreProfile">Explorar perfil</a>
+            </div>
+        </div>
+
+        <div class="team-member-new fade-in">
+            <img src="/perfiles/Synor-Kevin.png" alt="Foto de Kevin Ayure" class="member-photo">
+            <div class="member-info">
+                <h4>Kevin Ayure</h4>
+                <p class="member-role" data-key="kevinRole">Animador 2D y 3D</p>
+                <p class="member-bio" data-key="kevinBio">Da vida a las ideas a través de motion graphics y animaciones dinámicas que comunican y cautivan a la audiencia.</p>
+                <div class="member-socials">
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" aria-label="ArtStation"><i class="fab fa-artstation"></i></a>
+                </div>
+                <a href="/animador-2d-3d-motion-graphics/" class="cta-button profile-button" data-key="exploreProfile">Explorar perfil</a>
+            </div>
+        </div>
+        
+        <div class="team-member-new fade-in">
+            </div>
+    </div>
+</section>
+        <!--TEAM-->
+        <section id="contacto">
+            <div class="contact-grid container">
+                <div class="contact-left">
+                    <p class="contact-tagline" data-key="contactTagline">CONTÁCTANOS</p>
+                    <h2 class="section-title">
+                        <span data-key="contactTitle1">Conecta con nosotros para </span>
+                        <span data-key="contactTitle2">asistencia</span>
+                    </h2>
+                    <p class="contact-description" data-key="contactDesc">Estamos listos para potenciar tu marca. Completa el formulario y uno de nuestros especialistas se pondrá en contacto contigo.</p>
+                    <div class="contact-socials">
+                        <a href="#" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="Behance" target="_blank"><i class="fab fa-behance"></i></a>
+                        <a href="#" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
+                <div class="contact-right">
+                    <form id="contact-form" action="https://formspree.io/f/TU_CODIGO_UNICO_AQUI" method="POST" class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group"><input type="text" name="name" required data-key="formName" placeholder="Nombre"></div>
+                            <div class="form-group"><input type="email" name="email" required data-key="formEmail" placeholder="Email"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><input type="tel" name="phone" data-key="formPhone" placeholder="Teléfono (Opcional)"></div>
+                            <div class="form-group">
+                                <select name="service" required>
+                                    <option value="" disabled selected data-key="formServiceDefault">Seleccionar servicio</option>
+                                    <option value="Diseno Grafico" data-key="formService1">Diseño Gráfico</option>
+                                    <option value="Edicion de Video" data-key="formService2">Edición de Video</option>
+                                    <option value="Motion Graphics" data-key="formService3">Motion Graphics</option>
+                                    <option value="Otro" data-key="formService4">Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group"><textarea name="message" rows="5" required data-key="formMessage" placeholder="Escribe tu comentario aquí..."></textarea></div>
+                        <button type="submit" data-key="formButton">Enviar Ahora</button>
+                    </form>
+                    <div id="form-status" class="form-status"></div>
+                </div>
             </div>
-        </section>
-        <section id="contacto" class="container">
-            <h2 class="section-title fade-in" data-key="contactTitle">Hablemos</h2>
-            <form action="#" class="contact-form fade-in">
-                <div class="form-group"><input type="text" name="name" placeholder="Tu Nombre" required data-key="formName"></div>
-                <div class="form-group"><input type="email" name="email" placeholder="Tu Email" required data-key="formEmail"></div>
-                <div class="form-group"><textarea name="message" placeholder="Cuéntanos sobre tu proyecto" required data-key="formMessage"></textarea></div>
-                <button type="submit" class="cta-button" data-key="formButton">Enviar Mensaje</button>
-            </form>
         </section>
     </main>
-    <footer class="footer">
-        <div class="container">
-            <p data-key="footerRights">&copy; 2025 Visual Synor. Todos los derechos reservados.</p>
-            <p data-key="footerMade">Diseñado en Bogotá, Colombia, con 🧠 y ❤️.</p>
+    
+    <footer class="site-footer">
+        <div class="footer-content container">
+            <a href="index.html" class="footer-logo">Visual<span>Synor</span></a>
+            <p class="copyright-text" data-key="footerRights">© 2025 Visual Synor. All rights reserved.</p>
+            <div class="footer-right">
+                <div class="social-icons">
+                    <a href="#" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" aria-label="Behance" target="_blank"><i class="fab fa-behance"></i></a>
+                    <a href="#" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+                <a href="#" class="back-to-top" id="back-to-top" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
+            </div>
         </div>
     </footer>
+    
     <a href="https://wa.me/573103423588?text=Hola!%20Vengo%20de%20la%20página%20web%20y%20quisiera%20más%20información." class="whatsapp-float" target="_blank">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-67.6-9.5-97.2-26.7l-7.1-4.2-67.7 17.9 18.1-65.8-4.7-7.5c-18.8-29.8-28.6-63.8-28.6-99.3 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
     </a>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const hidePreloader = () => {
-                const preloader = document.getElementById('preloader');
-                if (preloader) {
-                    preloader.classList.add('hidden');
-                    setTimeout(() => {
-                        preloader.style.display = 'none';
-                    }, 800);
-                }
-            };
-            const minTimePromise = new Promise(resolve => { setTimeout(resolve, 1200); });
-            const pageLoadPromise = new Promise(resolve => { window.addEventListener('load', resolve); });
-            Promise.all([minTimePromise, pageLoadPromise]).then(hidePreloader);
 
-            const navMenu = document.getElementById('nav-menu'), navToggle = document.getElementById('nav-toggle'), navLinks = document.querySelectorAll('.nav-link');
-            if (navToggle) { navToggle.addEventListener('click', () => { navMenu.classList.toggle('active'); }); }
-            navLinks.forEach(link => { link.addEventListener('click', () => { if (navMenu.classList.contains('active')) { navMenu.classList.remove('active'); } }); });
-            const faders = document.querySelectorAll('.fade-in'), appearOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
-            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-                entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); appearOnScroll.unobserve(entry.target); } });
-            }, appearOptions);
-            faders.forEach(fader => { appearOnScroll.observe(fader); });
-            const translations = {
-                es: {
-                    navServices: 'Servicios', navPortfolio: 'Portafolio', navAbout: 'Nosotros', navContact: 'Contacto',
-                    heroTitle: 'Creatividad Multimedia Potenciada por Inteligencia Artificial',
-                    heroSubtitle: 'En Visual Synor fusionamos el talento artístico con la tecnología más avanzada para llevar tu marca al siguiente nivel.',
-                    heroCTA: 'Inicia tu Proyecto',
-                    trustedBy: 'Marcas que confían en nosotros',
-                    exploreProfile: 'Explorar perfil',
-                    servicesTitle: 'Nuestros Servicios',
-                    service1Title: 'Diseño Gráfico con IA', service1Desc: 'Creamos identidades visuales impactantes y assets para campañas, utilizando IA para generar conceptos y escalar diseños.',
-                    service2Title: 'Edición de Video Inteligente', service2Desc: 'Transformamos tu material crudo en historias cautivadoras. La IA nos asiste en la colorización y optimización del ritmo.',
-                    service3Title: 'Motion Graphics Dinámicos', service3Desc: 'Damos vida a tu mensaje con animaciones fluidas y modernas, aprovechando herramientas de IA para efectos complejos.',
-                    portfolioTitle: 'Proyectos Destacados', portfolio1: 'Branding para Marca Tech', portfolio2: 'Video Publicitario Producto', portfolio3: 'Animación de Logo', portfolio4: 'Campaña Redes Sociales',
-                    aboutTitle: 'Somos el Futuro de la Creatividad Digital',
-                    aboutDesc: 'Nacimos de la pasión por la comunicación visual y la fascinación por el poder de la tecnología. Somos un equipo ágil y dedicado, convencido de que la mejor creatividad surge de la colaboración perfecta entre el ingenio humano y la precisión de la inteligencia artificial.',
-                    rafaelRole: 'Productor Multimedia & Estratega IA', valentinaRole: 'Diseñadora Gráfica & Social Media', kevinRole: 'Diseñador Gráfico & Productor Multimedia',
-                    exploreProfile: 'Explorar perfil',
-                    contactTitle: 'Hablemos',
-                    formName: 'Tu Nombre', formEmail: 'Tu Email', formMessage: 'Cuéntanos sobre tu proyecto', formButton: 'Enviar Mensaje',
-                    footerRights: '© 2025 Visual Synor. Todos los derechos reservados.', footerMade: 'Diseñado en Bogotá, Colombia, con 🧠 y ❤️.'
-                },
-                en: {
-                    navServices: 'Services', navPortfolio: 'Portfolio', navAbout: 'About Us', navContact: 'Contact',
-                    heroTitle: 'Multimedia Creativity Powered by Artificial Intelligence',
-                    heroSubtitle: 'At Visual Synor we merge artistic talent with advanced technology to take your brand to the next level.',
-                    heroCTA: 'Start your Project',
-                    trustedBy: 'Brands that trust us',
-                    exploreProfile: 'Explore Profile',
-                    servicesTitle: 'Our Services',
-                    service1Title: 'Graphic Design with AI', service1Desc: 'We create impactful visual identities and assets for campaigns, using AI to generate concepts and scale designs.',
-                    service2Title: 'Intelligent Video Editing', service2Desc: 'We transform your raw footage into captivating stories. AI assists us in color grading and rhythm optimization.',
-                    service3Title: 'Dynamic Motion Graphics', service3Desc: 'We bring your message to life with fluid, modern animations, leveraging AI tools for complex effects.',
-                    portfolioTitle: 'Featured Projects', portfolio1: 'Branding for Tech Brand', portfolio2: 'Product Advertisement Video', portfolio3: 'Logo Animation', portfolio4: 'Social Media Campaign',
-                    aboutTitle: 'We Are the Future of Digital Creativity',
-                    aboutDesc: 'Born from a passion for visual communication and a fascination with the power of technology. We are an agile and dedicated team, convinced that the best creativity arises from the perfect collaboration between human ingenuity and the precision of artificial intelligence.',
-                    rafaelRole: 'Multimedia Producer & AI Strategist', valentinaRole: 'Graphic Designer & Social Media', kevinRole: 'Graphic Designer & Multimedia Producer',
-                    exploreProfile: 'Explore Profile',
-                    contactTitle: 'Let\'s Talk',
-                    formName: 'Your Name', formEmail: 'Your Email', formMessage: 'Tell us about your project', formButton: 'Send Message',
-                    footerRights: '© 2025 Visual Synor. All rights reserved.', footerMade: 'Designed in Bogotá, Colombia, with 🧠 & ❤️.'
-                }
-            };
-            const langSelector = document.querySelector('.lang-selector'), langSelectedContainer = document.getElementById('lang-selected'), langDropdown = document.getElementById('lang-dropdown'), langOptions = document.querySelectorAll('.lang-option');
-            langSelectedContainer.addEventListener('click', (event) => { event.stopPropagation(); langDropdown.classList.toggle('show'); });
-            function setLanguage(lang) {
-                const selectedLangOption = document.querySelector(`.lang-option[data-lang="${lang}"]`);
-                langSelectedContainer.innerHTML = selectedLangOption.innerHTML;
-                document.querySelectorAll('[data-key]').forEach(elem => {
-                    const key = elem.getAttribute('data-key');
-                    if (translations[lang] && translations[lang][key]) {
-                        if(elem.tagName === 'INPUT' || elem.tagName === 'TEXTAREA') { elem.placeholder = translations[lang][key]; } 
-                        else { elem.textContent = translations[lang][key]; }
-                    }
-                });
-                localStorage.setItem('language', lang);
-            }
-            langOptions.forEach(option => { option.addEventListener('click', () => { const lang = option.getAttribute('data-lang'); setLanguage(lang); langDropdown.classList.remove('show'); }); });
-            window.addEventListener('click', () => { if (langDropdown.classList.contains('show')) { langDropdown.classList.remove('show'); } });
-            const savedLang = localStorage.getItem('language') || 'es';
-            setLanguage(savedLang);
-        });
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
