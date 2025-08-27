@@ -120,8 +120,27 @@
         .cta-button:hover { background-color: #6a0dad; transform: translateY(-3px); }
 
         /* --- FOOTER --- */
-        .footer { background-color: #080808; text-align: center; padding: 40px 20px; }
-        .footer p { color: var(--color-texto-secundario); }
+        .site-footer { background-color: #080808; padding: 25px 0; border-top: 1px solid #333; }
+        .footer-content { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        .footer-logo { font-size: 1.5rem; font-weight: 600; color: var(--color-texto); text-decoration: none; }
+        .footer-logo span { color: var(--color-acento); }
+        .copyright-text { color: var(--color-texto-secundario); font-size: 0.9rem; }
+        .footer-right { display: flex; align-items: center; gap: 20px; }
+        .social-icons a { color: var(--color-texto-secundario); font-size: 1.2rem; transition: color 0.3s, transform 0.3s; border: 1px solid #444; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; text-decoration: none; }
+        .social-icons a:hover { color: var(--color-acento); border-color: var(--color-acento); transform: translateY(-3px); }
+        .back-to-top { color: var(--color-texto); background-color: var(--color-acento); width: 40px; height: 40px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; text-decoration: none; transition: background-color 0.3s, transform 0.3s; }
+        .back-to-top:hover { background-color: #6a0dad; transform: translateY(-3px); }
+
+        @media (max-width: 768px) {
+        .whatsapp-float { width: 50px; height: 50px; bottom: 20px; right: 20px; }
+        .whatsapp-float svg { width: 28px; height: 28px; }
+        .footer-content { flex-direction: column; gap: 25px; }
+}
+
+        /* --- WHATSAPP FLOAT --- */
+        .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 40px; right: 40px; background-color: var(--color-whatsapp); color: #FFF; border-radius: 50px; text-align: center; font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 100; display: flex; align-items: center; justify-content: center; transition: transform 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        .whatsapp-float svg { width: 32px; height: 32px; fill: white; }
 
         /* --- RESPONSIVIDAD --- */
         @media (max-width: 1023px) {

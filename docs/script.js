@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- TRADUCTOR DE IDIOMA ---
     const translations = {
         es: {
-            navServices: 'Servicios', navPortfolio: 'Portafolio', navAbout: 'Nosotros', navContact: 'Contacto',
+            navServices: 'Servicios', navPortfolio: 'Portafolio', navPlanes: 'Planes' ,navAbout: 'Nosotros', navContact: 'Contacto',
             heroTitle: 'Creatividad Multimedia Potenciada por Inteligencia Artificial',
             heroSubtitle: 'En Visual Synor fusionamos el talento artístico con la tecnología más avanzada para llevar tu marca al siguiente nivel.',
             heroCTA: 'Inicia tu Proyecto',
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
             footerRights: '© 2025 Visual Synor. All rights reserved.'
         },
         en: {
-            navServices: 'Services', navPortfolio: 'Portfolio', navAbout: 'About Us', navContact: 'Contact',
+            navServices: 'Services', navPortfolio: 'Portfolio', navPlanes: 'Plans', navAbout: 'About Us', navContact: 'Contact',
             heroTitle: 'Multimedia Creativity Powered by Artificial Intelligence',
             heroSubtitle: 'At Visual Synor we merge artistic talent with the most advanced technology to take your brand to the next level.',
             heroCTA: 'Start your Project',
