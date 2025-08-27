@@ -193,7 +193,7 @@ async function handleSubmit(event) {
         'Accept': 'application/json'
     }
   }).then(response => {
-    if (response.ok) {ß
+    if (response.ok) {
       formStatus.innerHTML = "¡Gracias por tu mensaje! Te contactaremos pronto.";
       formStatus.style.color = "var(--color-acento)";
       form.reset();
