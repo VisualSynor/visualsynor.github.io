@@ -179,33 +179,43 @@ teamTagline: 'Our Team',
     const savedLang = localStorage.getItem('language') || 'es';
     setLanguage(savedLang);
 
-    // --- FORMULARIO DE CONTACTO (AJAX) ---
-    const form = document.getElementById('contact-form');
-    const formStatus = document.getElementById('form-status');
-    async function handleSubmit(event) {
-        event.preventDefault();
-        const data = new FormData(event.target);
-        try {
-            const response = await fetch(event.target.action, { method: form.method, body: data, headers: { 'Accept': 'application/json' } });
-            if (response.ok) {
-                formStatus.innerHTML = "¡Gracias por tu mensaje! Te contactaremos pronto.";
-                formStatus.style.color = "var(--color-acento)";
-                form.reset();
-            } else {
-                const responseData = await response.json();
-                if (Object.hasOwn(responseData, 'errors')) {
-                    formStatus.innerHTML = responseData["errors"].map(error => error["message"]).join(", ");
-                } else {
-                    formStatus.innerHTML = "Oops! Hubo un problema al enviar tu formulario.";
-                }
-                formStatus.style.color = "red";
-            }
-        } catch (error) {
-            formStatus.innerHTML = "Oops! Hubo un problema al enviar tu formulario.";
-            formStatus.style.color = "red";
-        }
+// --- FORMULARIO DE CONTACTO (VERSIÓN COMPATIBLE CON CAPTCHA) ---
+const form = document.getElementById('contact-form');
+const formStatus = document.getElementById('form-status');
+
+async function handleSubmit(event) {
+  event.preventDefault();
+  const data = new FormData(event.target);
+  fetch(event.target.action, {
+    method: form.method,
+    body: data,
+    headers: {
+        'Accept': 'application/json'
     }
-    if (form) { form.addEventListener("submit", handleSubmit); }
+  }).then(response => {
+    if (response.ok) {ß
+      formStatus.innerHTML = "¡Gracias por tu mensaje! Te contactaremos pronto.";
+      formStatus.style.color = "var(--color-acento)";
+      form.reset();
+    } else {
+      response.json().then(data => {
+        if (Object.hasOwn(data, 'errors')) {
+          formStatus.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+        } else {
+          formStatus.innerHTML = "Oops! Hubo un problema al enviar tu formulario.";
+        }
+        formStatus.style.color = "red";
+      })
+    }
+  }).catch(error => {
+    formStatus.innerHTML = "Oops! Hubo un problema al enviar tu formulario.";
+    formStatus.style.color = "red";
+  });
+}
+
+if (form) {
+    form.addEventListener("submit", handleSubmit)
+}
 
     // --- BOTÓN "VOLVER ARRIBA" ---
     const backToTopButton = document.getElementById("back-to-top");
